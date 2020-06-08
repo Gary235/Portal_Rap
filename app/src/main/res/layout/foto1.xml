@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo_degradado_oscuro">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+
+        android:scaleX="2"
+        android:scaleY="2"
+        android:src="@drawable/fotoinicial_1"
+        app:layout_constraintTop_toTopOf="parent"
+         />
+
+    <TextView
+        android:id="@+id/texto1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:elevation="2dp"
+        android:fontFamily="sans-serif-black"
+
+        android:text="Entrena"
+        android:textColor="#fff"
+        android:textSize="35dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/texto2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="500dp"
+        android:layout_marginRight="16dp"
+        android:elevation="2dp"
+
+        android:fontFamily="sans-serif-light"
+        android:text="Practica tus habilidades para Rapear
+sobre todas las bases que puedas."
+        android:textAlignment="center"
+        android:textColor="#fff"
+
+        android:textSize="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/circuloblancoizquierda"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="650dp"
+
+        android:layout_marginRight="20dp"
+        android:background="@drawable/circulo_blanco"
+        app:layout_constraintRight_toLeftOf="@+id/circuloblancomedio"
+
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/circulo_blanco"
+        android:id="@+id/circuloblancomedio"
+        android:backgroundTint="#BAFFFFFF"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="650dp"
+
+        />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/circulo_blanco"
+        android:id="@+id/circuloblancoderecha"
+
+        android:backgroundTint="#BAFFFFFF"
+        app:layout_constraintLeft_toRightOf="@id/circuloblancomedio"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="650dp"
+
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
