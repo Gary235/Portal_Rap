@@ -25,11 +25,11 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomnavigation"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="60dp"
         app:layout_constraintBottom_toBottomOf="@+id/frameLayout"
         android:visibility="gone"
-        app:itemIconTint="@color/tab_item"
-        app:itemTextColor="@color/tab_item"
+        app:itemIconTint="@color/tab_item_icon"
+        app:itemTextColor="@color/tab_item_text"
         android:background="@drawable/bottomnav"
 
         app:layout_constraintEnd_toEndOf="parent"
