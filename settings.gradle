@@ -1,2 +1,5 @@
+include ':jtds-1.3.1'
+include ':mssql-jdbc-8.2.2.jre13'
+include ':mssql-jdbc-8.2.2.jre11'
 include ':app'
 rootProject.name = "PortalRap"
