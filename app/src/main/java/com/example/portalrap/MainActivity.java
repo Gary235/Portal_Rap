@@ -69,8 +69,6 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-
-
     public void PasaraFragmentRegistro()
     {
         Fragment fragreg;
@@ -79,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         transaccionFragment.replace(R.id.frameLayout, fragreg);
         transaccionFragment.commit();
     }
+
     public void PasaraFragmentSlider()
     {
         pager.setVisibility(View.VISIBLE);

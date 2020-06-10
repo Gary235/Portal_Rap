@@ -60,10 +60,10 @@ public class adaptadorBases extends BaseAdapter {
 
         btnFav.setFocusable(false);
         btnPlay.setFocusable(false);
-        /*miBase = getItem(position);
+        miBase = getItem(position);
         Nombre.setText(miBase._Nombre);
         Artista.setText(miBase._Artista);
-*/
+
 
 
         return vista;

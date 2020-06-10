@@ -4,13 +4,18 @@ import android.app.Fragment;
 import android.os.Bundle;
 
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -22,10 +27,12 @@ public class FragBases extends Fragment implements View.OnClickListener {
     ImageButton btnOrdenar, btnFiltrar,btnBuscar,btnUsar;
     EditText edtBuscar;
     ListView listabases;
+    ArrayList<Integer> arraydeposiciones = new ArrayList<>();
     ArrayList<Base> arrBases = new ArrayList<>();
     adaptadorBases adaptador;
     Base unaBase = new Base();
-
+    int contadordeitems = 0;
+    Toast toast1;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -46,27 +53,22 @@ public class FragBases extends Fragment implements View.OnClickListener {
 
 
         listabases = v.findViewById(R.id.listabases);
-        listabases.setOnItemClickListener(listener);
+        for(int i= 0;i<3;i++){
 
-         unaBase._Artista = "Artista";
-         unaBase._Nombre = "Nombre";
-         arrBases.add(unaBase);
+            unaBase._Nombre="sss";
+            unaBase._Artista="aaa";
+            arrBases.add(unaBase);
 
-
+        }
         listabases.setAdapter(adaptador);
+
+
+
+
         return v;
     }
 
-    private ListView.OnItemClickListener listener = new ListView.OnItemClickListener(){
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Log.d("Funciona","siiiiiiiiii");
 
-            btnUsar.setVisibility(View.VISIBLE);
-
-
-        }
-    };
 
 
     @Override
