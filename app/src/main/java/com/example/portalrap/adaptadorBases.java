@@ -1,6 +1,7 @@
 package com.example.portalrap;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class adaptadorBases extends BaseAdapter {
-    private ArrayList<Base> arrBases = new ArrayList<>();
+    private ArrayList<Base> arrBases;
     private Context miContexto;
     Base miBase = new Base();
     TextView Nombre,Artista;
@@ -24,7 +25,11 @@ public class adaptadorBases extends BaseAdapter {
     }
 
     @Override
-    public int getCount() { return arrBases.size(); }
+    public int getCount() {
+
+        Log.d("Tamnio","Size: " + arrBases.size());
+
+        return arrBases.size(); }
 
     @Override
     public Base getItem(int position) {
@@ -34,7 +39,9 @@ public class adaptadorBases extends BaseAdapter {
     }
 
     @Override
-    public long getItemId(int position) { return position; }
+    public long getItemId(int position) {
+
+        return position; }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -52,10 +59,10 @@ public class adaptadorBases extends BaseAdapter {
         Artista = vista.findViewById(R.id.nombreArtista);
 
 
-        miBase = getItem(position);
+        /*miBase = getItem(position);
         Nombre.setText(miBase._Nombre);
         Artista.setText(miBase._Artista);
-
+*/
 
 
         return vista;

@@ -1,6 +1,7 @@
 package com.example.portalrap;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class adaptadorGrabacionesUsuario extends BaseAdapter {
-    private ArrayList<Grabacion> arrGrabacion = new ArrayList<>();
+    private ArrayList<Grabacion> arrGrabacion;
     private Context miContexto;
     Grabacion miGrabacion = new Grabacion();
     ImageButton btnFav,btnPlay;
@@ -24,12 +25,19 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
     }
 
     @Override
-    public int getCount() { return arrGrabacion.size(); }
+    public int getCount() {
+
+        Log.d("Tamnio","Size: " + arrGrabacion.size());
+
+
+        return arrGrabacion.size(); }
 
     @Override
     public Grabacion getItem(int position) {
-        miGrabacion = arrGrabacion.get(position);
-        return miGrabacion;
+
+        Grabacion grab;
+        grab = arrGrabacion.get(position);
+        return grab;
     }
 
     @Override
@@ -50,10 +58,10 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
         btnPlay = vista.findViewById(R.id.btnPlaylista);
         Nombre = vista.findViewById(R.id.textolista);
 
-
+/*
         miGrabacion= getItem(position);
         Nombre.setText(miGrabacion._Nombre);
-
+*/
 
         return vista;
     }
