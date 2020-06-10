@@ -1,19 +1,19 @@
 package com.example.portalrap;
 
-import android.widget.Button;
 import android.widget.ImageButton;
 
 public class Grabacion {
 
     String _Nombre;
-    ImageButton _Play,_Fav;
+    ImageButton _btnPlay,_btnFav;
+    //Boolean _Fav;
 
-
-    public Grabacion( String nom, ImageButton play, ImageButton fav){
+    public Grabacion( String nom, ImageButton btnplay, ImageButton btnfav /* Boolean fav*/){
 
         _Nombre = nom;
-        _Play = play;
-        _Fav = fav;
+        _btnPlay = btnplay;
+        _btnFav = btnfav;
+       // _Fav = fav;
 
     }
     public Grabacion( ){

@@ -54,8 +54,8 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
         });
 
         miGrabacion._Nombre = "Nombre";
-        miGrabacion._Fav= null;
-        miGrabacion._Play = null;
+        miGrabacion._btnFav= null;
+        miGrabacion._btnPlay = null;
         arrGrabaciones.add(miGrabacion);
 
 
@@ -67,8 +67,8 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
 
-        Button botonapretado;
-        botonapretado = (Button)v;
+        ImageButton botonapretado;
+        botonapretado = (ImageButton)v;
         int idbotonapretado = botonapretado.getId();
         MainActivity main=(MainActivity) getActivity();
 

@@ -16,7 +16,7 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
     Grabacion miGrabacion = new Grabacion();
     ImageButton btnFav,btnPlay;
     TextView Nombre;
-
+   // Boolean fav;
 
     public adaptadorGrabacionesUsuario(ArrayList<Grabacion> arrayGrabacion, Context contexto) {
         arrGrabacion = arrayGrabacion;
@@ -28,9 +28,8 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
 
     @Override
     public Grabacion getItem(int position) {
-        Grabacion grab;
-        grab = arrGrabacion.get(position);
-        return grab;
+        miGrabacion = arrGrabacion.get(position);
+        return miGrabacion;
     }
 
     @Override
