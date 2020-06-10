@@ -68,7 +68,7 @@
         android:autofillHints=""
 
         android:background="@drawable/edttext_sinmarcos"
-        android:drawableStart="@drawable/icono_candado"
+        android:drawableStart="@drawable/ic_icono_candado"
         android:drawablePadding="10dp"
 
         android:inputType="textPassword"
