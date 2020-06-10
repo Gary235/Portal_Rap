@@ -58,6 +58,8 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
         btnPlay = vista.findViewById(R.id.btnPlaylista);
         Nombre = vista.findViewById(R.id.textolista);
 
+        btnPlay.setFocusable(false);
+        btnFav.setFocusable(false);
 /*
         miGrabacion= getItem(position);
         Nombre.setText(miGrabacion._Nombre);

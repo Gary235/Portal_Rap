@@ -58,7 +58,8 @@ public class adaptadorBases extends BaseAdapter {
         Nombre = vista.findViewById(R.id.nombreBase);
         Artista = vista.findViewById(R.id.nombreArtista);
 
-
+        btnFav.setFocusable(false);
+        btnPlay.setFocusable(false);
         /*miBase = getItem(position);
         Nombre.setText(miBase._Nombre);
         Artista.setText(miBase._Artista);

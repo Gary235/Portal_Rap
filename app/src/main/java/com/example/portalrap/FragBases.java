@@ -46,31 +46,28 @@ public class FragBases extends Fragment implements View.OnClickListener {
 
 
         listabases = v.findViewById(R.id.listabases);
-        listabases.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                Log.d("Funciona","siiiiiiiiii");
+        listabases.setOnItemClickListener(listener);
 
-
-            }
-        });
-
-
-
-        for(int i=0;i<20;i++)
-        {
-            unaBase._Artista = "Artista";
-            unaBase._Nombre = "Nombre";
-
-
-            arrBases.add(unaBase);
-
-        }
+         unaBase._Artista = "Artista";
+         unaBase._Nombre = "Nombre";
+         arrBases.add(unaBase);
 
 
         listabases.setAdapter(adaptador);
         return v;
     }
+
+    private ListView.OnItemClickListener listener = new ListView.OnItemClickListener(){
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Log.d("Funciona","siiiiiiiiii");
+
+            btnUsar.setVisibility(View.VISIBLE);
+
+
+        }
+    };
+
 
     @Override
     public void onClick(View v) {
