@@ -52,6 +52,10 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
         Nombre = vista.findViewById(R.id.textolista);
 
 
-        return null;
+        miGrabacion= getItem(position);
+        Nombre.setText(miGrabacion._Nombre);
+
+
+        return vista;
     }
 }

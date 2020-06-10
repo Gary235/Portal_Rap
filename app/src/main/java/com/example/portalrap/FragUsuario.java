@@ -20,6 +20,7 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
     ListView lista;
     ArrayList<Grabacion> arrGrabaciones = new ArrayList<>();
     adaptadorGrabacionesUsuario adaptador;
+    Grabacion miGrabacion = new Grabacion();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,7 +53,13 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
             }
         });
 
+        miGrabacion._Nombre = "Nombre";
+        miGrabacion._Fav= null;
+        miGrabacion._Play = null;
+        arrGrabaciones.add(miGrabacion);
 
+
+        lista.setAdapter(adaptador);
 
         return v;
     }
