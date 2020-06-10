@@ -3,16 +3,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".FragBases"
-    android:background="#fff"
-    >
+    android:background="#fff">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:id="@+id/fondo1"
+        android:background="@drawable/fondo_degradado_oscuro"
+        tools:ignore="MissingConstraints" />
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:id="@+id/fondo2"
+        android:background="@drawable/stroke_blanco"
+        tools:ignore="MissingConstraints" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Bases"
 
+        android:textColor="#fff"
+        android:textSize="35dp"
+        app:layout_constraintBottom_toBottomOf="@id/fondo2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/fondo2" />
 
+    <EditText
+        android:id="@+id/edtBuscar"
+        android:layout_width="230dp"
+        android:layout_height="40dp"
 
-
-
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/edt_blanco_redondeado"
+        android:drawableLeft="@drawable/ic_icono_buscar"
+        android:hint="     Buscar"
+        android:textColorHint="#837D7D"
+        app:layout_constraintBottom_toBottomOf="@id/fondo1"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
