@@ -25,7 +25,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomnavigation"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="70dp"
         app:layout_constraintBottom_toBottomOf="@+id/frameLayout"
         android:visibility="gone"
         app:itemIconTint="@color/tab_item_icon"

@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -22,10 +23,10 @@ public class FragBases extends Fragment implements View.OnClickListener {
     ImageButton btnOrdenar, btnFiltrar,btnBuscar,btnUsar;
     EditText edtBuscar;
     ListView listabases;
+    ArrayList<Integer> arraydeposiciones = new ArrayList<>();
     ArrayList<Base> arrBases = new ArrayList<>();
     adaptadorBases adaptador;
     Base unaBase = new Base();
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -46,27 +47,27 @@ public class FragBases extends Fragment implements View.OnClickListener {
 
 
         listabases = v.findViewById(R.id.listabases);
-        listabases.setOnItemClickListener(listener);
 
-         unaBase._Artista = "Artista";
-         unaBase._Nombre = "Nombre";
-         arrBases.add(unaBase);
+        for(int i= 0;i<3;i++){
 
+            unaBase._Nombre="sss";
+            unaBase._Artista="aaa";
+            unaBase.checkBox=false;
+            arrBases.add(unaBase);
 
+        }
         listabases.setAdapter(adaptador);
+        listabases.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+
         return v;
     }
 
-    private ListView.OnItemClickListener listener = new ListView.OnItemClickListener(){
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Log.d("Funciona","siiiiiiiiii");
 
-            btnUsar.setVisibility(View.VISIBLE);
-
-
-        }
-    };
 
 
     @Override

@@ -111,7 +111,6 @@
         android:layout_height="90dp"
         android:id="@+id/btnusar"
 
-        android:visibility="gone"
         android:translationZ="20dp"
         android:elevation="20dp"
         android:src="@drawable/ic_icono_usar"

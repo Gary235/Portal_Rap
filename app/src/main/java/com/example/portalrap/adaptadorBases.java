@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -16,7 +17,8 @@ public class adaptadorBases extends BaseAdapter {
     private Context miContexto;
     Base miBase = new Base();
     TextView Nombre,Artista;
-    ImageButton btnPlay,btnFav;
+    ImageButton btnFav;
+    CheckBox check;
     //Boolean Fav;
     public adaptadorBases(ArrayList<Base> arrayBases,Context contexto)
     {
@@ -25,11 +27,7 @@ public class adaptadorBases extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
-
-        Log.d("Tamnio","Size: " + arrBases.size());
-
-        return arrBases.size(); }
+    public int getCount() { return arrBases.size(); }
 
     @Override
     public Base getItem(int position) {
@@ -54,16 +52,19 @@ public class adaptadorBases extends BaseAdapter {
 
 
         btnFav = vista.findViewById(R.id.btnFavlista);
-        btnPlay = vista.findViewById(R.id.btnPlaylista);
         Nombre = vista.findViewById(R.id.nombreBase);
         Artista = vista.findViewById(R.id.nombreArtista);
+        check = vista.findViewById(R.id.checkbox);
 
         btnFav.setFocusable(false);
-        btnPlay.setFocusable(false);
-        /*miBase = getItem(position);
+        check.setFocusable(false);
+        Nombre.setFocusable(false);
+        Artista.setFocusable(false);
+        miBase = getItem(position);
         Nombre.setText(miBase._Nombre);
         Artista.setText(miBase._Artista);
-*/
+
+
 
 
         return vista;

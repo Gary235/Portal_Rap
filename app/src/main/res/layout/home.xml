@@ -59,6 +59,7 @@
         android:elevation="20dp"
         android:translationZ="20dp"
         android:text="Entrenar"
+        android:textColor="#fff"
         android:textAllCaps="false"
         android:textSize="30dp"
         android:background="@drawable/btn_redondeado_negro_2"
