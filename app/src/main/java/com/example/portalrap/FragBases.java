@@ -4,14 +4,9 @@ import android.app.Fragment;
 import android.os.Bundle;
 
 import android.util.Log;
-import android.view.ActionMode;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -32,8 +27,6 @@ public class FragBases extends Fragment implements View.OnClickListener {
     ArrayList<Base> arrBases = new ArrayList<>();
     adaptadorBases adaptador;
     Base unaBase = new Base();
-    int contadordeitems = 0;
-    Toast toast1;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -59,6 +52,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
 
             unaBase._Nombre="sss";
             unaBase._Artista="aaa";
+            unaBase.checkBox=false;
             arrBases.add(unaBase);
 
         }
@@ -66,12 +60,9 @@ public class FragBases extends Fragment implements View.OnClickListener {
         listabases.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("funciona","siiiiii");
+
             }
         });
-
-
-
 
         return v;
     }

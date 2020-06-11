@@ -27,11 +27,7 @@ public class adaptadorBases extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
-
-        Log.d("Tamnio","Size: " + arrBases.size());
-
-        return arrBases.size(); }
+    public int getCount() { return arrBases.size(); }
 
     @Override
     public Base getItem(int position) {
@@ -67,6 +63,9 @@ public class adaptadorBases extends BaseAdapter {
         miBase = getItem(position);
         Nombre.setText(miBase._Nombre);
         Artista.setText(miBase._Artista);
+
+
+
 
         return vista;
     }
