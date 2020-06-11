@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -53,6 +54,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
 
 
         listabases = v.findViewById(R.id.listabases);
+
         for(int i= 0;i<3;i++){
 
             unaBase._Nombre="sss";
@@ -61,6 +63,12 @@ public class FragBases extends Fragment implements View.OnClickListener {
 
         }
         listabases.setAdapter(adaptador);
+        listabases.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("funciona","siiiiii");
+            }
+        });
 
 
 

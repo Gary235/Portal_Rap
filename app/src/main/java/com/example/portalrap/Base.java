@@ -1,18 +1,20 @@
 package com.example.portalrap;
 
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 
 public class Base {
     String _Nombre,_Artista;
-    ImageButton _btnPlay,_btnFav;
+    ImageButton _btnFav;
+    CheckBox checkBox;
     //Boolean _Fav;
 
-    public Base( String nom, ImageButton btnplay, ImageButton btnfav, String artista /*Boolean fav*/){
+    public Base( String nom, ImageButton btnfav, String artista, CheckBox che /*Boolean fav*/){
 
         _Nombre = nom;
         _Artista = artista;
-        _btnPlay = btnplay;
         _btnFav = btnfav;
+        checkBox = che;
         //_Fav = fav;
     }
     public Base( ){
