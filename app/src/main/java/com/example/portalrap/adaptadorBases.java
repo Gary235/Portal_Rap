@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -20,6 +21,8 @@ public class adaptadorBases extends BaseAdapter {
     ImageButton btnFav;
     CheckBox check;
     //Boolean Fav;
+    public static int aja = 0;
+
     public adaptadorBases(ArrayList<Base> arrayBases,Context contexto)
     {
         arrBases = arrayBases;
@@ -36,10 +39,9 @@ public class adaptadorBases extends BaseAdapter {
         return bas;
     }
 
-    @Override
-    public long getItemId(int position) {
 
-        return position; }
+    @Override
+    public long getItemId(int position) { return position; }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -55,6 +57,7 @@ public class adaptadorBases extends BaseAdapter {
         Nombre = vista.findViewById(R.id.nombreBase);
         Artista = vista.findViewById(R.id.nombreArtista);
         check = vista.findViewById(R.id.checkbox);
+        check.setTag(position);
 
         btnFav.setFocusable(false);
         check.setFocusable(false);
@@ -64,6 +67,36 @@ public class adaptadorBases extends BaseAdapter {
         Nombre.setText(miBase._Nombre);
         Artista.setText(miBase._Artista);
 
+        if(FragBases.isActionMode)
+        {
+            check.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            check.setVisibility(View.GONE);
+        }
+
+        check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                int position = (int) buttonView.getTag();
+
+                if(FragBases.UserSelection.contains(arrBases.get(position)))
+                {
+                    FragBases.UserSelection.remove(arrBases.get(position));
+                    aja = aja - 1;
+                }
+                else
+                {
+                    FragBases.UserSelection.add(arrBases.get(position));
+                    aja = aja + 1;
+                }
+
+                FragBases.actionMode.setTitle(FragBases.UserSelection.size()+ " Bases seleccionadas");
+
+            }
+        });
 
 
 
