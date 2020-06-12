@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     PagerAdapter pagerAdapter;
     BottomNavigationView bottom;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,7 +110,14 @@ public class MainActivity extends AppCompatActivity {
         transaccionFragment.replace(R.id.frameLayout, fragmodo);
         transaccionFragment.commit();
     }
-
+    public void PasaraFragmentEstimulo()
+    {
+        Fragment fragestimulo;
+        fragestimulo = new FragEstimulo();
+        transaccionFragment=adminFragment.beginTransaction();
+        transaccionFragment.replace(R.id.frameLayout, fragestimulo);
+        transaccionFragment.commit();
+    }
 
 
 }
