@@ -100,7 +100,14 @@ public class MainActivity extends AppCompatActivity {
         transaccionFragment.replace(R.id.frameLayout, fraghome);
         transaccionFragment.commit();
     }
-
+    public void PasaraFragmentModo()
+    {
+        Fragment fragmodo;
+        fragmodo = new FragModo();
+        transaccionFragment=adminFragment.beginTransaction();
+        transaccionFragment.replace(R.id.frameLayout, fragmodo);
+        transaccionFragment.commit();
+    }
 
 
 
