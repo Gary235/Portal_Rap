@@ -43,6 +43,8 @@
 
         />
 
+
+
     <Button
         android:id="@+id/btnInfo"
         android:layout_width="40dp"
@@ -59,6 +61,11 @@
         app:layout_constraintTop_toTopOf="@id/textotitulo" />
 
 
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/viewpager2"
+    />
     <ImageButton
         android:layout_width="100dp"
         android:layout_height="100dp"
