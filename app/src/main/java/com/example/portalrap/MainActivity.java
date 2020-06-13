@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
         transaccionFragment.replace(R.id.frameLayout, fragreg);
         transaccionFragment.commit();
     }
-
     public void PasaraFragmentSlider()
     {
         pager.setVisibility(View.VISIBLE);
@@ -126,5 +125,12 @@ public class MainActivity extends AppCompatActivity {
         transaccionFragment.replace(R.id.frameLayout, fragduracion);
         transaccionFragment.commit();
     }
-
+    public void PasaraFragmentElegirBases()
+    {
+        Fragment fragelegirbases;
+        fragelegirbases = new FragElegirBases();
+        transaccionFragment=adminFragment.beginTransaction();
+        transaccionFragment.replace(R.id.frameLayout, fragelegirbases);
+        transaccionFragment.commit();
+    }
 }
