@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class FragDuracion extends Fragment implements View.OnClickListener {
@@ -18,7 +19,7 @@ public class FragDuracion extends Fragment implements View.OnClickListener {
     ImageButton btnSiguiente,btnAnterior,btnInfo;
     Button btnSec1,btnSec2,btnSec3,btnSec4,btnSec5,btnMin1,btnMin2,btnMin3,btnMin4,btnMin5;
     TextView txtDurMin,txtDurSec;
-    public static int SegundosElegidos =-1, MinutosElegidos = -1;
+    String desdedur;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,8 +55,15 @@ public class FragDuracion extends Fragment implements View.OnClickListener {
         btnSiguiente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity main=(MainActivity) getActivity();
-                main.PasaraFragmentElegirBases();
+                if(MainActivity.Segundos != -1 && MainActivity.Minutos != -1)
+                {
+                    MainActivity main=(MainActivity) getActivity();
+                    main.PasaraFragBases(desdedur);
+                }
+                else{
+                    Toast toast1 = Toast.makeText(getActivity(),"Tiempo de Duración inválido", Toast.LENGTH_SHORT);
+                    toast1.show();
+                }
             }
         });
         btnAnterior.setOnClickListener(new View.OnClickListener() {
@@ -101,36 +109,36 @@ public class FragDuracion extends Fragment implements View.OnClickListener {
         {
             case R.id.btn10segdeduracion:
                 txtDurSec.setText(btnSec1.getText().toString());
-                SegundosElegidos = 10;
+                MainActivity.Segundos = 10;
                 break;
             case R.id.btn20segdeduracion:
                 txtDurSec.setText(btnSec2.getText().toString());
-                SegundosElegidos = 20;break;
+                MainActivity.Segundos = 20;break;
             case R.id.btn30segdeduracion:
                 txtDurSec.setText(btnSec3.getText().toString());
-                SegundosElegidos = 30;break;
+                MainActivity.Segundos = 30;break;
             case R.id.btn40segdeduracion:
                 txtDurSec.setText(btnSec4.getText().toString());
-                SegundosElegidos = 40;break;
+                MainActivity.Segundos = 40;break;
             case R.id.btn50segdeduracion:
                 txtDurSec.setText(btnSec5.getText().toString());
-                SegundosElegidos = 50;break;
+                MainActivity.Segundos = 50;break;
             case  R.id.btn0mindeduracion:
                 txtDurMin.setText(btnMin1.getText().toString());
-                MinutosElegidos = 0;
+                MainActivity.Minutos = 0;
                 break;
             case  R.id.btn1mindeduracion:
                 txtDurMin.setText(btnMin2.getText().toString());
-                MinutosElegidos = 1; break;
+                MainActivity.Minutos = 1; break;
             case  R.id.btn2mindeduracion:
                 txtDurMin.setText(btnMin3.getText().toString());
-                MinutosElegidos = 2;break;
+                MainActivity.Minutos = 2;break;
             case  R.id.btn3mindeduracion:
                 txtDurMin.setText(btnMin4.getText().toString());
-                MinutosElegidos = 3;break;
+                MainActivity.Minutos = 3;break;
             case  R.id.btn4mindeduracion:
                 txtDurMin.setText(btnMin5.getText().toString());
-                MinutosElegidos = 4;break;
+                MainActivity.Minutos = 4;break;
 
         }
 

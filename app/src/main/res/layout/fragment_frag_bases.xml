@@ -96,5 +96,33 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         />
+    <ImageButton
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/botonsiguientedebases"
 
+        android:elevation="20dp"
+        android:src="@drawable/ic_flecha_blanca_derecha"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginLeft="150dp"
+        android:background="@drawable/btn_redondeado_negro"
+        />
+
+    <ImageButton
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/botonanteriordebases"
+
+        android:elevation="20dp"
+        android:src="@drawable/ic_flecha_negra_izquierda"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginRight="150dp"
+        android:background="@drawable/circulo_stroke_negro_grueso"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

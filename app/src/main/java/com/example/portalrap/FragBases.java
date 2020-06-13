@@ -31,7 +31,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
 
     int textlength=0;
     ArrayList<Base> array_sort = new ArrayList<>();
-    ImageButton btnOrdenar, btnFiltrar;
+    ImageButton btnOrdenar, btnFiltrar,btnSiguiente,btnAnterior;
     EditText edtBuscar;
     ListView listabases;
     ArrayList<Base> arrBases = new ArrayList<>();
@@ -43,7 +43,17 @@ public class FragBases extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+
+
+        String desdedur = getArguments().getString("desdedur");
+        Log.d("DesdeDur: ",desdedur);
         View v = inflater.inflate(R.layout.fragment_frag_bases, container, false);
+        if (desdedur != "si") {
+
+        btnAnterior = v.findViewById(R.id.botonanteriordebases);
+        btnSiguiente = v.findViewById(R.id.botonsiguientedebases);
+        btnSiguiente.setVisibility(View.GONE);
+        btnAnterior.setVisibility(View.GONE);
 
         btnOrdenar = v.findViewById(R.id.ordenar);
         btnFiltrar = v.findViewById(R.id.filtrar);
@@ -53,12 +63,64 @@ public class FragBases extends Fragment implements View.OnClickListener {
         btnOrdenar.setOnClickListener(this);
 
         adaptador = new adaptadorBases(arrBases,getActivity());
-
-
         listabases = v.findViewById(R.id.listabases);
         listabases.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
         listabases.setMultiChoiceModeListener(modeListener);
         listabases.setAdapter(adaptador);
+
+            for(int i =0;i<10;i++)
+            {
+                Base unaBase = new Base();
+                unaBase._Nombre = "Beat #"+ i;
+                unaBase._Artista = "Artista #"+i;
+                arrBases.add(unaBase);
+            }
+
+            edtBuscar.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    textlength = edtBuscar.getText().length();
+                    array_sort.clear();
+                    for (int i = 0; i < arrBases.size(); i++) {
+                        if (textlength <= arrBases.get(i)._Nombre.length()) {
+                            if (arrBases.get(i)._Nombre.toString().contains(edtBuscar.getText().toString())) {
+                                array_sort.add(arrBases.get(i));
+                            }
+                        }
+                    }
+                    adaptador2 = new adaptadorBases(array_sort,getActivity());
+                    listabases.setAdapter(adaptador2);
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+        return v;
+        }
+        else {
+
+            btnAnterior = v.findViewById(R.id.botonanteriordebases);
+            btnSiguiente = v.findViewById(R.id.botonsiguientedebases);
+            btnOrdenar = v.findViewById(R.id.ordenar);
+            btnFiltrar = v.findViewById(R.id.filtrar);
+            edtBuscar = v.findViewById(R.id.edtBuscar);
+
+            btnFiltrar.setOnClickListener(this);
+            btnOrdenar.setOnClickListener(this);
+            btnAnterior.setOnClickListener(this);
+            btnSiguiente.setOnClickListener(this);
+
+            adaptador = new adaptadorBases(arrBases,getActivity());
+            listabases = v.findViewById(R.id.listabases);
+            listabases.setPadding(10,0,10,300);
+            listabases.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
+            listabases.setMultiChoiceModeListener(modeListener);
+            listabases.setAdapter(adaptador);
+
             for(int i =0;i<10;i++)
             {
                 Base unaBase = new Base();
@@ -91,7 +153,8 @@ public class FragBases extends Fragment implements View.OnClickListener {
                 }
             });
 
-        return v;
+            return v;
+        }
     }
 
 
@@ -123,14 +186,19 @@ public class FragBases extends Fragment implements View.OnClickListener {
 
         if(item.getItemId() == R.id.usar && adaptadorBases.aja > 0)
         {
-            //ir a entrenar predeterminado
-            Log.d("entro?","sisiisis");
+            if(MainActivity.PosModo == -1 || MainActivity.Frecuencia == -1 || MainActivity.Segundos == -1 || MainActivity.Minutos == -1)
+            {
+                Log.d("Entrenamiento: ","Predeterminado");
+            }
+            else
+            {
+                Log.d("Entrenamiento: ","Personalizado");
+            }
             return true;
         }
         else {
             Toast toast1 = Toast.makeText(getActivity(),"Ninguna Base fue seleccionada", Toast.LENGTH_SHORT);
             toast1.show();
-
             return false;
         }
         }
@@ -162,6 +230,14 @@ public class FragBases extends Fragment implements View.OnClickListener {
 
 
         }
+         else if(idbotonapretado == R.id.botonsiguientedebases)
+         {
+             //PasarAFragmentdeEntrenar
+         }
+         else if(idbotonapretado == R.id.botonanteriordebases)
+         {
+             main.PasaraFragmentDuracion();
+         }
 
     }
 }

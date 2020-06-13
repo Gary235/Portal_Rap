@@ -10,19 +10,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class FragEstimulo extends Fragment implements View.OnClickListener {
 
     ImageButton btnSiguiente,btnAnterior,btnInfo;
     Button btnsec1,btnsec2,btnsec3,btnsec4,btnsec5;
     TextView txtfrecelegida;
-    public static int Frecuencia = -1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_frag_estimulo, container, false);
-
         txtfrecelegida = v.findViewById(R.id.estimuloelegido);
         btnAnterior = v.findViewById(R.id.botonanteriordeestimulo);
         btnSiguiente = v.findViewById(R.id.botonsiguientedeestimulo);
@@ -49,8 +48,17 @@ public class FragEstimulo extends Fragment implements View.OnClickListener {
         btnSiguiente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity main=(MainActivity) getActivity();
-                main.PasaraFragmentDuracion();
+
+                if(MainActivity.Frecuencia == -1 )
+                {
+                    MainActivity main=(MainActivity) getActivity();
+                    main.PasaraFragmentDuracion();
+                }
+                else {
+                    Toast toast1 = Toast.makeText(getActivity(),"Frecuencia de Estimulo inválida", Toast.LENGTH_SHORT);
+                    toast1.show();
+                }
+
             }
         });
         btnAnterior.setOnClickListener(new View.OnClickListener() {
@@ -80,27 +88,27 @@ public class FragEstimulo extends Fragment implements View.OnClickListener {
         if(idboton2 == R.id.btn2seg)
         {
             txtfrecelegida.setText(btnsec1.getText().toString());
-            Frecuencia = 0;
+            MainActivity.Frecuencia = 0;
         }
         if(idboton2 == R.id.btn5seg)
         {
             txtfrecelegida.setText(btnsec2.getText().toString());
-            Frecuencia = 1;
+            MainActivity.Frecuencia = 1;
         }
         if(idboton2 == R.id.btn10seg)
         {
             txtfrecelegida.setText(btnsec3.getText().toString());
-            Frecuencia = 2;
+            MainActivity.Frecuencia = 2;
         }
         if(idboton2 == R.id.btn20seg)
         {
             txtfrecelegida.setText(btnsec4.getText().toString());
-            Frecuencia = 3;
+            MainActivity.Frecuencia = 3;
         }
         if(idboton2 == R.id.btn30seg)
         {
             txtfrecelegida.setText(btnsec5.getText().toString());
-            Frecuencia = 4;
+            MainActivity.Frecuencia = 4;
         }
     }
 

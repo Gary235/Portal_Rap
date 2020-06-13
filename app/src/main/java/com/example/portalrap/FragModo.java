@@ -25,14 +25,12 @@ public class FragModo extends Fragment implements View.OnClickListener {
         Adapter1 adapter1;
         ArgbEvaluator argbEvaluator = new ArgbEvaluator();
         List<Model> lista =  new ArrayList<>();
-        public static int POS = -1;
         ImageButton btnSiguiente, btnInfo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_frag_modo,container,false);
-
         viewPager = v.findViewById(R.id.viewpager2);
         btnInfo = v.findViewById(R.id.botoninfodemodo);
         btnSiguiente = v.findViewById(R.id.botonsiguientedemodo);
@@ -49,22 +47,13 @@ public class FragModo extends Fragment implements View.OnClickListener {
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-                POS = position;
-
+                MainActivity.PosModo = position;
             }
-
             @Override
             public void onPageSelected(int position) {
-
-                Log.d("Modo","Posiciondesde2: " + POS);
-
             }
-
             @Override
             public void onPageScrollStateChanged(int state) {
-
-                Log.d("Modo","Posiciondesde3: " + POS);
             }
         });
 

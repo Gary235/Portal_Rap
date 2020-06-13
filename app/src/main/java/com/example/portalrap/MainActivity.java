@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     ViewPager pager;
     PagerAdapter pagerAdapter;
     BottomNavigationView bottom;
-
+    public static int PosModo = -1, Frecuencia = -1, Segundos = -1 , Minutos = -1;
 
 
     @Override
@@ -31,13 +31,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         bottom = findViewById(R.id.bottomnavigation);
         pager = findViewById(R.id.pager);
 
         bottom.setOnNavigationItemSelectedListener(listenernav);
-
-
 
         adminFragment = getFragmentManager();
         Fragment fraginisesion;
@@ -58,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.item2:
                     fragseleccionado = new FragBases();
+                    Bundle args = new Bundle();
+                    args.putString("desdedur","no");
+                    fragseleccionado.setArguments(args);
                     break;
                 case R.id.item3:
                     fragseleccionado = new FragUsuario();
@@ -125,12 +125,15 @@ public class MainActivity extends AppCompatActivity {
         transaccionFragment.replace(R.id.frameLayout, fragduracion);
         transaccionFragment.commit();
     }
-    public void PasaraFragmentElegirBases()
+    public void PasaraFragBases(String desdedur)
     {
-        Fragment fragelegirbases;
-        fragelegirbases = new FragElegirBases();
+        Fragment fragbases;
+        fragbases = new FragBases();
+        Bundle args = new Bundle();
+        args.putString("desdedur","si");
+        fragbases.setArguments(args);
         transaccionFragment=adminFragment.beginTransaction();
-        transaccionFragment.replace(R.id.frameLayout, fragelegirbases);
+        transaccionFragment.replace(R.id.frameLayout, fragbases);
         transaccionFragment.commit();
     }
 }
