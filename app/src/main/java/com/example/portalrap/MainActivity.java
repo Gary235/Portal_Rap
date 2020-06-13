@@ -118,6 +118,13 @@ public class MainActivity extends AppCompatActivity {
         transaccionFragment.replace(R.id.frameLayout, fragestimulo);
         transaccionFragment.commit();
     }
-
+    public void PasaraFragmentDuracion()
+    {
+        Fragment fragduracion;
+        fragduracion = new FragDuracion();
+        transaccionFragment=adminFragment.beginTransaction();
+        transaccionFragment.replace(R.id.frameLayout, fragduracion);
+        transaccionFragment.commit();
+    }
 
 }

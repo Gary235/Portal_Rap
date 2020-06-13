@@ -78,8 +78,6 @@ public class FragModo extends Fragment implements View.OnClickListener {
         ImageButton botonapretado = (ImageButton)v;
         int idboton = botonapretado.getId();
 
-
-
         if(idboton == R.id.botoninfodemodo)
         {
             AlertDialog.Builder mensaje;
