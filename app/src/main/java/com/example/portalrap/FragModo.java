@@ -31,6 +31,17 @@ public class FragModo extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_frag_modo,container,false);
+
+        MainActivity.PosModo = -1;
+
+        Setear(v);
+        ListenersAdicionales();
+
+        return v;
+    }
+
+    public void Setear(View v)
+    {
         viewPager = v.findViewById(R.id.viewpager2);
         btnInfo = v.findViewById(R.id.botoninfodemodo);
         btnSiguiente = v.findViewById(R.id.botonsiguientedemodo);
@@ -44,6 +55,10 @@ public class FragModo extends Fragment implements View.OnClickListener {
         adapter1 = new Adapter1(lista,getActivity());
         viewPager.setAdapter(adapter1);
         viewPager.setPadding(130,0,130,0);
+    }
+
+    public void ListenersAdicionales()
+    {
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -56,8 +71,6 @@ public class FragModo extends Fragment implements View.OnClickListener {
             public void onPageScrollStateChanged(int state) {
             }
         });
-
-        return v;
     }
 
 

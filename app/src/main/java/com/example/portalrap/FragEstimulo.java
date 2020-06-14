@@ -23,6 +23,18 @@ public class FragEstimulo extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_frag_estimulo, container, false);
+
+        MainActivity.Frecuencia =-1;
+
+        Setear(v);
+        ListenersAdicionales();
+
+
+        return v;
+    }
+
+    public void Setear(View v)
+    {
         txtfrecelegida = v.findViewById(R.id.estimuloelegido);
         btnAnterior = v.findViewById(R.id.botonanteriordeestimulo);
         btnSiguiente = v.findViewById(R.id.botonsiguientedeestimulo);
@@ -32,6 +44,16 @@ public class FragEstimulo extends Fragment implements View.OnClickListener {
         btnsec3 = v.findViewById(R.id.btn10seg);
         btnsec4 = v.findViewById(R.id.btn20seg);
         btnsec5 = v.findViewById(R.id.btn30seg);
+
+        btnsec1.setOnClickListener(this);
+        btnsec2.setOnClickListener(this);
+        btnsec3.setOnClickListener(this);
+        btnsec4.setOnClickListener(this);
+        btnsec5.setOnClickListener(this);
+    }
+
+    public void ListenersAdicionales(){
+
         btnInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,14 +90,9 @@ public class FragEstimulo extends Fragment implements View.OnClickListener {
                 main.PasaraFragmentModo();
             }
         });
-        btnsec1.setOnClickListener(this);
-        btnsec2.setOnClickListener(this);
-        btnsec3.setOnClickListener(this);
-        btnsec4.setOnClickListener(this);
-        btnsec5.setOnClickListener(this);
 
 
-        return v;
+
     }
 
     @Override

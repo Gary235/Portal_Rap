@@ -25,9 +25,12 @@ public class FragDuracion extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_frag_duracion, container, false);
+
+        MainActivity.Segundos = -1;
+        MainActivity.Minutos = -1;
+
         Setear(v);
         Listeners();
-
 
         return v;
     }
@@ -49,6 +52,18 @@ public class FragDuracion extends Fragment implements View.OnClickListener {
         btnMin5 = v.findViewById(R.id.btn4mindeduracion);
         txtDurSec = v.findViewById(R.id.duracionelegidosec);
         txtDurMin = v.findViewById(R.id.duracionelegidomin);
+
+        btnSec1.setOnClickListener(this);
+        btnSec2.setOnClickListener(this);
+        btnSec3.setOnClickListener(this);
+        btnSec4.setOnClickListener(this);
+        btnSec5.setOnClickListener(this);
+        btnMin1.setOnClickListener(this);
+        btnMin2.setOnClickListener(this);
+        btnMin3.setOnClickListener(this);
+        btnMin4.setOnClickListener(this);
+        btnMin5.setOnClickListener(this);
+
     }
     public void Listeners(){
 
@@ -87,16 +102,7 @@ public class FragDuracion extends Fragment implements View.OnClickListener {
             }
         });
 
-        btnSec1.setOnClickListener(this);
-        btnSec2.setOnClickListener(this);
-        btnSec3.setOnClickListener(this);
-        btnSec4.setOnClickListener(this);
-        btnSec5.setOnClickListener(this);
-        btnMin1.setOnClickListener(this);
-        btnMin2.setOnClickListener(this);
-        btnMin3.setOnClickListener(this);
-        btnMin4.setOnClickListener(this);
-        btnMin5.setOnClickListener(this);
+
     }
 
     @Override
