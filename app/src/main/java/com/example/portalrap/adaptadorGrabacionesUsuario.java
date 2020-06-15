@@ -60,10 +60,11 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
 
         btnPlay.setFocusable(false);
         btnFav.setFocusable(false);
-/*
-        miGrabacion= getItem(position);
+        Nombre.setFocusable(false);
+
+        miGrabacion = getItem(position);
         Nombre.setText(miGrabacion._Nombre);
-*/
+
 
         return vista;
     }

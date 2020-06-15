@@ -54,7 +54,6 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
         });
 
         miGrabacion._Nombre = "Nombre";
-
         arrGrabaciones.add(miGrabacion);
 
 
@@ -73,8 +72,7 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
 
         if(idbotonapretado == R.id.btneditar)
         {
-
-
+            main.PasaraFragEditarPerfil();
         }
         else if(idbotonapretado == R.id.btnfav)
         {

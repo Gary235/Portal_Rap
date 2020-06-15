@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
 
         bottom = findViewById(R.id.bottomnavigation);
         pager = findViewById(R.id.pager);
@@ -136,4 +139,21 @@ public class MainActivity extends AppCompatActivity {
         transaccionFragment.replace(R.id.frameLayout, fragbases);
         transaccionFragment.commit();
     }
+    public void PasaraFragEditarPerfil()
+    {
+        Fragment frageditar;
+        frageditar = new FragEditarPerfil();
+        transaccionFragment=adminFragment.beginTransaction();
+        transaccionFragment.replace(R.id.frameLayout, frageditar);
+        transaccionFragment.commit();
+    }
+    public void PasaraFragUsuario()
+    {
+        Fragment fragusu;
+        fragusu = new FragUsuario();
+        transaccionFragment=adminFragment.beginTransaction();
+        transaccionFragment.replace(R.id.frameLayout, fragusu);
+        transaccionFragment.commit();
+    }
+
 }
