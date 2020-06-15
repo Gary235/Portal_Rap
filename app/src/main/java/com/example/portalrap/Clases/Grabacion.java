@@ -1,10 +1,12 @@
-package com.example.portalrap;
+package com.example.portalrap.Clases;
 
 import android.widget.ImageButton;
 
 public class Grabacion {
 
-    String _Nombre;
+
+
+    private String _Nombre;
     ImageButton _btnPlay,_btnFav;
     //Boolean _Fav;
 
@@ -20,5 +22,11 @@ public class Grabacion {
 
 
     }
+    public String get_Nombre() {
+        return _Nombre;
+    }
 
+    public void set_Nombre(String _Nombre) {
+        this._Nombre = _Nombre;
+    }
 }

@@ -24,6 +24,9 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.example.portalrap.Adaptadores.adaptadorBases;
+import com.example.portalrap.Clases.Base;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,8 +97,8 @@ public class FragBases extends Fragment implements View.OnClickListener {
         for(int i =0;i<10;i++)
         {
             Base unaBase = new Base();
-            unaBase._Nombre = "Beat #"+ i;
-            unaBase._Artista = "Artista #"+i;
+            unaBase.set_Nombre("Beat #"+ i);;
+            unaBase.set_Artista("Artista #"+i);
             arrBases.add(unaBase);
         }
 
@@ -130,6 +133,9 @@ public class FragBases extends Fragment implements View.OnClickListener {
                     else
                     {
                         Log.d("Entrenamiento: ","Personalizado");
+
+
+
                     }
                     return true;
                 }
@@ -155,8 +161,8 @@ public class FragBases extends Fragment implements View.OnClickListener {
                 textlength = edtBuscar.getText().length();
                 array_sort.clear();
                 for (int i = 0; i < arrBases.size(); i++) {
-                    if (textlength <= arrBases.get(i)._Nombre.length()) {
-                        if (arrBases.get(i)._Nombre.toString().contains(edtBuscar.getText().toString())) {
+                    if (textlength <= arrBases.get(i).get_Nombre().length()) {
+                        if (arrBases.get(i).get_Nombre().toString().contains(edtBuscar.getText().toString())) {
                             array_sort.add(arrBases.get(i));
                         }
                     }

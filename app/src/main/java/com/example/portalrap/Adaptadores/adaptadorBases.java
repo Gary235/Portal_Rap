@@ -1,7 +1,6 @@
-package com.example.portalrap;
+package com.example.portalrap.Adaptadores;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,10 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.example.portalrap.Clases.Base;
+import com.example.portalrap.FragBases;
+import com.example.portalrap.R;
 
 import java.util.ArrayList;
 
@@ -64,8 +67,8 @@ public class adaptadorBases extends BaseAdapter {
         Nombre.setFocusable(false);
         Artista.setFocusable(false);
         miBase = getItem(position);
-        Nombre.setText(miBase._Nombre);
-        Artista.setText(miBase._Artista);
+        Nombre.setText(miBase.get_Nombre());
+        Artista.setText(miBase.get_Artista());
 
         if(FragBases.isActionMode)
         {

@@ -13,6 +13,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.portalrap.Adaptadores.SliderPageAdapter;
+import com.example.portalrap.FragmentsEntrenamiento.FragDuracion;
+import com.example.portalrap.FragmentsEntrenamiento.FragEstimulo;
+import com.example.portalrap.FragmentsEntrenamiento.FragModo;
+import com.example.portalrap.FragmentsInicio.FragFoto1;
+import com.example.portalrap.FragmentsInicio.FragFoto2;
+import com.example.portalrap.FragmentsInicio.FragFoto3;
+import com.example.portalrap.FragmentsInicio.FragIniciarSesion;
+import com.example.portalrap.FragmentsInicio.FragRegistro;
+import com.example.portalrap.FragmentsUsuario.FragEditarPerfil;
+import com.example.portalrap.FragmentsUsuario.FragUsuario;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;

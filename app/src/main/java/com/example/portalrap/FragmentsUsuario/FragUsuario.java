@@ -1,4 +1,4 @@
-package com.example.portalrap;
+package com.example.portalrap.FragmentsUsuario;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -12,6 +12,11 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
+
+import com.example.portalrap.Adaptadores.adaptadorGrabacionesUsuario;
+import com.example.portalrap.Clases.Grabacion;
+import com.example.portalrap.MainActivity;
+import com.example.portalrap.R;
 
 import java.util.ArrayList;
 
@@ -53,7 +58,7 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
             }
         });
 
-        miGrabacion._Nombre = "Nombre";
+        miGrabacion.set_Nombre("Nombre");
         arrGrabaciones.add(miGrabacion);
 
 

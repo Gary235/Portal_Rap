@@ -1,4 +1,4 @@
-package com.example.portalrap;
+package com.example.portalrap.FragmentsEntrenamiento;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -10,6 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import androidx.viewpager.widget.ViewPager;
+
+import com.example.portalrap.Adaptadores.Adapter1;
+import com.example.portalrap.MainActivity;
+import com.example.portalrap.Clases.Model;
+import com.example.portalrap.R;
 
 import java.util.ArrayList;
 import java.util.List;

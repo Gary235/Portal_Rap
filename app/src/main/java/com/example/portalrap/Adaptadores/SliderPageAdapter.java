@@ -1,4 +1,4 @@
-package com.example.portalrap;
+package com.example.portalrap.Adaptadores;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

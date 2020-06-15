@@ -1,4 +1,4 @@
-package com.example.portalrap;
+package com.example.portalrap.Adaptadores;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.example.portalrap.Clases.Grabacion;
+import com.example.portalrap.R;
 
 import java.util.ArrayList;
 
@@ -63,7 +66,7 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
         Nombre.setFocusable(false);
 
         miGrabacion = getItem(position);
-        Nombre.setText(miGrabacion._Nombre);
+        Nombre.setText(miGrabacion.get_Nombre());
 
 
         return vista;

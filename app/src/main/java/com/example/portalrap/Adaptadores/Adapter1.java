@@ -1,4 +1,4 @@
-package com.example.portalrap;
+package com.example.portalrap.Adaptadores;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
+
+import com.example.portalrap.Clases.Model;
+import com.example.portalrap.R;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.portalrap;
+package com.example.portalrap.FragmentsEntrenamiento;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.portalrap.MainActivity;
+import com.example.portalrap.R;
 
 public class FragEstimulo extends Fragment implements View.OnClickListener {
 

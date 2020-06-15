@@ -1,4 +1,4 @@
-package com.example.portalrap;
+package com.example.portalrap.Clases;
 
 import android.annotation.SuppressLint;
 import android.os.StrictMode;

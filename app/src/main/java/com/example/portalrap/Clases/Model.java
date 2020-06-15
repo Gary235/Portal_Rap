@@ -1,4 +1,4 @@
-package com.example.portalrap;
+package com.example.portalrap.Clases;
 
 public class Model {
 
