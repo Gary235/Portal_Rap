@@ -1,17 +1,13 @@
 package com.example.portalrap;
 
-import android.animation.ArgbEvaluator;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
 import androidx.viewpager.widget.ViewPager;
 
@@ -23,7 +19,6 @@ public class FragModo extends Fragment implements View.OnClickListener {
 
         ViewPager viewPager;
         Adapter1 adapter1;
-        ArgbEvaluator argbEvaluator = new ArgbEvaluator();
         List<Model> lista =  new ArrayList<>();
         ImageButton btnSiguiente, btnInfo;
 
