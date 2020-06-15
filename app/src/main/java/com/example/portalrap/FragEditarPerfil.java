@@ -18,8 +18,7 @@ import android.widget.TextView;
 
 public class FragEditarPerfil extends Fragment {
 
-    ImageButton btnVolver, btnVernoVerContra;
-    Button btnCambiar;
+    ImageButton btnVolver, btnVernoVerContra,btnCambiar;
     TextView cambiarFoto;
     EditText edtNombre,edtContra;
     Boolean Ver = false;
@@ -45,23 +44,11 @@ public class FragEditarPerfil extends Fragment {
         cambiarFoto = v.findViewById(R.id.txtCambiarFoto);
         edtNombre = v.findViewById(R.id.edtNombreUsuariodeEditar);
         edtContra = v.findViewById(R.id.edtContradeEditar);
+
+        btnCambiar.setElevation(10000);
+        btnCambiar.setTranslationZ(100);
     }
-    DialogInterface.OnClickListener escuchador = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
 
-            if(which == -1)
-            {
-                MainActivity main=(MainActivity) getActivity();
-                main.PasaraFragUsuario();
-            }
-            else if(which == -2)
-            {
-                dialog.cancel();
-            }
-
-        }
-    };
     public void ListenersAdicionales(){
         btnVolver.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +88,14 @@ public class FragEditarPerfil extends Fragment {
             @Override
             public void onClick(View v) {
                 //alertDialog
+                AlertDialog.Builder mensaje;
+                mensaje = new AlertDialog.Builder(getActivity());
+                mensaje.setTitle("Confirmar Cambio");
+                mensaje.setMessage("Todos lo cambios que hayas hecho se confirmaran");
+                mensaje.setPositiveButton("Aceptar",escuchador2);
+                mensaje.setNegativeButton("Cancelar", escuchador2);
+                mensaje.create();
+                mensaje.show();
             }
         });
 
@@ -112,5 +107,36 @@ public class FragEditarPerfil extends Fragment {
         });
 
     }
+    DialogInterface.OnClickListener escuchador = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
 
+            if(which == -1)
+            {
+                MainActivity main=(MainActivity) getActivity();
+                main.PasaraFragUsuario();
+            }
+            else if(which == -2)
+            {
+                dialog.cancel();
+            }
+
+        }
+    };
+    DialogInterface.OnClickListener escuchador2 = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+
+            if(which == -1)
+            {
+                MainActivity main=(MainActivity) getActivity();
+                main.PasaraFragUsuario();
+            }
+            else if(which == -2)
+            {
+                dialog.cancel();
+            }
+
+        }
+    };
 }
