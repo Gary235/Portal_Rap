@@ -23,6 +23,7 @@ import com.example.portalrap.FragmentsInicio.FragFoto3;
 import com.example.portalrap.FragmentsInicio.FragIniciarSesion;
 import com.example.portalrap.FragmentsInicio.FragRegistro;
 import com.example.portalrap.FragmentsUsuario.FragEditarPerfil;
+import com.example.portalrap.FragmentsUsuario.FragFavoritos;
 import com.example.portalrap.FragmentsUsuario.FragUsuario;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

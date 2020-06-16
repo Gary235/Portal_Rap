@@ -1,7 +1,6 @@
 package com.example.portalrap.Adaptadores;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.portalrap.Clases.Base;
 import com.example.portalrap.FragBases;
-import com.example.portalrap.FragFavoritos;
+import com.example.portalrap.FragmentsUsuario.FragFavoritos;
 import com.example.portalrap.R;
 
 import java.util.ArrayList;

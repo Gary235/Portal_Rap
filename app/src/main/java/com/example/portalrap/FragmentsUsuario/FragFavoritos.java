@@ -1,6 +1,8 @@
-package com.example.portalrap;
+package com.example.portalrap.FragmentsUsuario;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -23,6 +26,10 @@ import com.example.portalrap.Adaptadores.adaptadorBases;
 import com.example.portalrap.Adaptadores.adaptadorGrabacionesUsuario;
 import com.example.portalrap.Clases.Base;
 import com.example.portalrap.Clases.Grabacion;
+import com.example.portalrap.FragMiniReproductor;
+import com.example.portalrap.FragmentsInicio.FragIniciarSesion;
+import com.example.portalrap.MainActivity;
+import com.example.portalrap.R;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,6 +48,9 @@ public class FragFavoritos extends Fragment implements View.OnClickListener{
     public static Boolean isActionMode = false;
     public static ActionMode actionMode = null;
     public static List<Base> UserSelection = new ArrayList<>();
+    FragmentManager adminFragment;
+    FragmentTransaction transaccionFragment;
+    FrameLayout holder;
 
 
     @Override
@@ -48,6 +58,12 @@ public class FragFavoritos extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_frag_favoritos, container, false);
 
+        adminFragment = getFragmentManager();
+        Fragment fragminireproductor;
+        fragminireproductor = new FragMiniReproductor();
+        transaccionFragment=adminFragment.beginTransaction();
+        transaccionFragment.replace(R.id.holder, fragminireproductor);
+        transaccionFragment.commit();
 
         btnBeats = v.findViewById(R.id.grabadofavoritos);
         btnGrabado = v.findViewById(R.id.beatsfavoritos);
@@ -55,6 +71,7 @@ public class FragFavoritos extends Fragment implements View.OnClickListener{
         lista = v.findViewById(R.id.listagrabacionesbasesfav);
         delineado = v.findViewById(R.id.lineadelineado);
         delineado2 = v.findViewById(R.id.lineadelineado2);
+        holder = v.findViewById(R.id.holder);
 
         btnGrabado.setOnClickListener(this);
         btnBeats.setOnClickListener(this);
@@ -79,6 +96,7 @@ public class FragFavoritos extends Fragment implements View.OnClickListener{
 
         lista.setAdapter(adaptadorGrabacionesUsuarioFav);
 
+
         return v;
     }
 
@@ -96,13 +114,11 @@ public class FragFavoritos extends Fragment implements View.OnClickListener{
             delineado.setVisibility(View.VISIBLE);
             lista.setAdapter(adaptadorGrabacionesUsuarioFav);
             lista.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-            lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            lista.setOnItemClickListener(new AbsListView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     //reproducir
-                    MediaPlayer mp = MediaPlayer.create(getActivity(), R.raw.grabacion);
-                    mp.start();
-                    Toast.makeText(getActivity(), "Reproduciendo audio", Toast.LENGTH_SHORT).show();
+
 
                 }
             });
@@ -118,9 +134,8 @@ public class FragFavoritos extends Fragment implements View.OnClickListener{
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     //reproducir
-                    MediaPlayer mp = MediaPlayer.create(getActivity(), R.raw.beat);
-                    mp.start();
-                    Toast.makeText(getActivity(), "Reproduciendo audio", Toast.LENGTH_SHORT).show();
+                    holder.setVisibility(View.VISIBLE);
+
 
                 }
             });
