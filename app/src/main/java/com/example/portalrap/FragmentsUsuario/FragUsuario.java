@@ -26,7 +26,6 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
     ListView lista;
     ArrayList<Grabacion> arrGrabaciones = new ArrayList<>();
     adaptadorGrabacionesUsuario adaptador;
-    Grabacion miGrabacion = new Grabacion();
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -58,8 +57,14 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
             }
         });
 
-        miGrabacion.set_Nombre("Nombre");
-        arrGrabaciones.add(miGrabacion);
+        for(int i = 0; i<4;i++){
+            Grabacion miGrabacion = new Grabacion();
+
+            miGrabacion.set_Nombre("Nombre " + i);
+            arrGrabaciones.add(miGrabacion);
+
+        }
+
 
 
         lista.setAdapter(adaptador);
@@ -81,8 +86,7 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
         }
         else if(idbotonapretado == R.id.btnfav)
         {
-
-
+            main.PasaraFragFavoritos();
         }
 
 

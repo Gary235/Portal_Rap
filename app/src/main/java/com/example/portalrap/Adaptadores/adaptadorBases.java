@@ -1,6 +1,7 @@
 package com.example.portalrap.Adaptadores;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.portalrap.Clases.Base;
 import com.example.portalrap.FragBases;
+import com.example.portalrap.FragFavoritos;
 import com.example.portalrap.R;
 
 import java.util.ArrayList;
@@ -70,7 +72,7 @@ public class adaptadorBases extends BaseAdapter {
         Nombre.setText(miBase.get_Nombre());
         Artista.setText(miBase.get_Artista());
 
-        if(FragBases.isActionMode)
+        if(FragBases.isActionMode || FragFavoritos.isActionMode)
         {
             check.setVisibility(View.VISIBLE);
         }
@@ -96,7 +98,24 @@ public class adaptadorBases extends BaseAdapter {
                     aja = aja + 1;
                 }
 
-                FragBases.actionMode.setTitle(FragBases.UserSelection.size()+ " Bases seleccionadas");
+                if(FragFavoritos.UserSelection.contains(arrBases.get(position)))
+                {
+                    FragFavoritos.UserSelection.remove(arrBases.get(position));
+                    aja = aja - 1;
+                }
+                else
+                {
+                    FragFavoritos.UserSelection.add(arrBases.get(position));
+                    aja = aja + 1;
+                }
+
+                if(FragFavoritos.isActionMode)
+                {
+                    FragFavoritos.actionMode.setTitle(FragFavoritos.UserSelection.size() + " Bases seleccionadas");
+                }
+                else {
+                    FragBases.actionMode.setTitle(FragBases.UserSelection.size()+ " Bases seleccionadas");
+                }
 
             }
         });

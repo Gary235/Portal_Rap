@@ -18,15 +18,14 @@
         />
 
     <ImageButton
-        android:layout_width="30dp"
-        android:layout_height="40dp"
+        android:layout_width="25dp"
+        android:layout_height="60dp"
 
         android:id="@+id/flechitabajodeeditarperfil"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@id/textotitulodeeditarperfil"
         app:layout_constraintBottom_toBottomOf="@id/textotitulodeeditarperfil"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="5dp"
         android:background="@drawable/btn_transparente"
         android:src="@drawable/ic_flecha_fina_negra_abajo"
         android:scaleType="center"

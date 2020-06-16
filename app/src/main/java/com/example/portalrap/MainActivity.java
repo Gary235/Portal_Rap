@@ -166,5 +166,13 @@ public class MainActivity extends AppCompatActivity {
         transaccionFragment.replace(R.id.frameLayout, fragusu);
         transaccionFragment.commit();
     }
+    public void PasaraFragFavoritos()
+    {
+        Fragment fragFav;
+        fragFav = new FragFavoritos();
+        transaccionFragment=adminFragment.beginTransaction();
+        transaccionFragment.replace(R.id.frameLayout, fragFav);
+        transaccionFragment.commit();
+    }
 
 }

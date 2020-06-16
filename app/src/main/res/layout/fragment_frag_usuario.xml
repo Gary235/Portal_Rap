@@ -78,8 +78,8 @@
 
         app:layout_constraintTop_toTopOf="@id/linea"
         android:layout_marginTop= "20dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         />
 
     <ImageButton
