@@ -44,8 +44,9 @@
         android:textAllCaps="false"
         android:textColor="#000"
         android:textColorHint="#797777"
-        android:hint="   Nombre de Usuario"
+        android:hint="Nombre de Usuario"
         android:textIsSelectable="true"
+        android:paddingStart="20dp"
 
         app:layout_constraintTop_toBottomOf="@id/text"
         android:layout_marginLeft="40dp"
@@ -53,24 +54,25 @@
        />
 
     <EditText
-    android:id="@+id/editcontra"
-    android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:layout_marginTop="40dp"
+        android:id="@+id/editcontra"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
 
-    android:background="@drawable/edttext_conmarcos"
-    android:cursorVisible="true"
-    android:singleLine="true"
-    android:textAllCaps="false"
-    android:textColor="#000"
-    android:textColorHint="#797777"
-    android:hint="   Contraseña"
-    android:textIsSelectable="true"
-    android:inputType="textPassword"
+        android:background="@drawable/edttext_conmarcos"
+        android:cursorVisible="true"
+        android:singleLine="true"
+        android:textAllCaps="false"
+        android:textColor="#000"
+        android:textColorHint="#797777"
+        android:hint="Contraseña"
+        android:textIsSelectable="true"
+        android:inputType="textPassword"
+        android:paddingStart="20dp"
 
-    app:layout_constraintTop_toBottomOf="@id/editusuario"
-    android:layout_marginLeft="40dp"
-    android:layout_marginRight="215dp"
+        app:layout_constraintTop_toBottomOf="@id/editusuario"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="215dp"
     />
 
     <EditText
@@ -85,9 +87,10 @@
         android:textAllCaps="false"
         android:textColor="#000"
         android:textColorHint="#797777"
-        android:hint="   Confirmación"
+        android:hint="Confirmación"
         android:textIsSelectable="true"
         android:inputType="textPassword"
+        android:paddingStart="20dp"
 
         app:layout_constraintTop_toBottomOf="@id/editusuario"
         android:layout_marginLeft="205dp"

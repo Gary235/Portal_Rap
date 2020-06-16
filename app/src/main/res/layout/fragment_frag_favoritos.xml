@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#fff">
+
+
+    <ImageView
+        android:id="@+id/fondo2"
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:background="@drawable/edttext_conmarcos"
+
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="60dp"
+
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="70dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Favoritos"
+        android:id="@+id/textotitulodefavoritos"
+        android:textColor="#000"
+        android:textSize="30dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="10dp"
+        />
+    <ImageButton
+        android:layout_width="25dp"
+        android:layout_height="60dp"
+
+        android:id="@+id/flechitabajodefavoritos"
+
+        android:layout_marginLeft="20dp"
+        app:layout_constraintBottom_toBottomOf="@id/textotitulodefavoritos"
+        app:layout_constraintTop_toTopOf="@id/textotitulodefavoritos"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:background="@drawable/btn_transparente"
+        android:src="@drawable/ic_flecha_fina_negra_abajo"
+        />
+
+    <ImageButton
+        android:id="@+id/grabadofavoritos"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+
+        android:layout_marginRight="150dp"
+        android:background="@drawable/btn_transparente"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_icono_grabado"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="100dp"
+ />
+
+    <ImageButton
+        android:id="@+id/beatsfavoritos"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+
+        android:layout_marginLeft="150dp"
+        android:background="@drawable/btn_transparente"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_icono_bases"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="100dp" />
+
+    <ImageView
+        android:id="@+id/linea"
+        android:layout_width="match_parent"
+        android:layout_height="0.7dp"
+        android:layout_marginTop="10dp"
+        android:background="#000"
+        app:layout_constraintTop_toBottomOf="@id/grabadofavoritos" />
+
+    <ImageView
+        android:id="@+id/lineadelineado"
+        android:layout_width="70dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="9dp"
+        android:background="#000"
+        app:layout_constraintLeft_toLeftOf="@id/grabadofavoritos"
+        app:layout_constraintRight_toRightOf="@id/grabadofavoritos"
+        app:layout_constraintTop_toBottomOf="@id/grabadofavoritos" />
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/lineadelineado2"
+        android:layout_width="70dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="9dp"
+        android:background="#000"
+        app:layout_constraintLeft_toLeftOf="@id/beatsfavoritos"
+        app:layout_constraintRight_toRightOf="@id/beatsfavoritos"
+        app:layout_constraintTop_toBottomOf="@id/beatsfavoritos" />
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listagrabacionesbasesfav"
+
+        android:layout_marginBottom="100dp"
+        android:layout_marginTop="180dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:id="@+id/holder"
+        android:visibility="gone"
+        android:layout_marginBottom="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        android:elevation="20dp"
+        android:translationZ="20dp"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

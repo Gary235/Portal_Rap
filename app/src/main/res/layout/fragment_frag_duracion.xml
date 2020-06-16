@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#fff">
+
+
+    <ImageView
+        android:id="@+id/fondo2"
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:background="@drawable/edttext_conmarcos"
+
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="80dp"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="60dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Elegir Duración"
+        android:id="@+id/textotitulodeduracion"
+        android:textColor="#000"
+        android:textSize="25dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="25dp"
+        />
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+
+        android:background="@drawable/ic_paso_3"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+
+        />
+
+    <ImageButton
+        android:id="@+id/botoninfodeduracion"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+
+        android:src="@drawable/ic_letra_i"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/btn_info"
+        app:layout_constraintBottom_toBottomOf="@id/textotitulodeduracion"
+        app:layout_constraintRight_toLeftOf="@id/textotitulodeduracion"
+        app:layout_constraintTop_toTopOf="@id/textotitulodeduracion" />
+
+    <ImageView
+        android:layout_width="350dp"
+        android:layout_height="270dp"
+
+        android:id="@+id/recuadro"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="120dp"
+        android:background="@drawable/circulo_stroke_negro_grueso"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:id="@+id/flechitabajo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/recuadro"
+        android:layout_marginTop="230dp"
+        android:background="@drawable/ic_flecha_fina_negra_abajo"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:id="@+id/flechitarriba"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/recuadro"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/ic_flecha_fina_negra_arriba"
+        />
+
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="150dp"
+           app:layout_constraintLeft_toLeftOf="parent"
+           app:layout_constraintRight_toRightOf="parent"
+           app:layout_constraintTop_toTopOf="@id/recuadro"
+           app:layout_constraintBottom_toBottomOf="@id/recuadro"
+           android:orientation="horizontal"
+           >
+           <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/recuadro"
+            app:layout_constraintBottom_toBottomOf="@id/recuadro"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <Button
+                    android:id="@+id/btn0mindeduracion"
+                    android:layout_width="150dp"
+                    android:layout_height="70dp"
+                    android:text="0m"
+                    android:textSize="20dp"
+                    android:textAllCaps="false"
+                    android:textColor="#000"
+                    android:background="@drawable/btn_transparente"
+                    />
+                <Button
+                    android:id="@+id/btn1mindeduracion"
+                    android:layout_width="150dp"
+                    android:layout_height="70dp"
+                    android:text="1m"
+                    android:textSize="20dp"
+                    android:textAllCaps="false"
+                    android:textColor="#000"
+                    android:background="@drawable/btn_transparente"
+                    />
+                <Button
+                    android:id="@+id/btn2mindeduracion"
+                    android:layout_width="150dp"
+                    android:layout_height="70dp"
+                    android:text="2m"
+                    android:textSize="20dp"
+                    android:textAllCaps="false"
+                    android:textColor="#000"
+                    android:background="@drawable/btn_transparente"
+                    />
+                <Button
+                    android:id="@+id/btn3mindeduracion"
+                    android:layout_width="150dp"
+                    android:layout_height="70dp"
+                    android:text="3m"
+                    android:textSize="20dp"
+                    android:textAllCaps="false"
+                    android:textColor="#000"
+                    android:background="@drawable/btn_transparente"
+                    />
+                <Button
+                    android:id="@+id/btn4mindeduracion"
+                    android:layout_width="150dp"
+                    android:layout_height="70dp"
+                    android:text="4m"
+                    android:textSize="20dp"
+                    android:textAllCaps="false"
+                    android:textColor="#000"
+                    android:background="@drawable/btn_transparente"
+                    />
+
+            </LinearLayout>
+        </ScrollView>
+           <ScrollView
+               android:layout_width="wrap_content"
+               android:layout_height="150dp"
+               app:layout_constraintLeft_toLeftOf="parent"
+               app:layout_constraintRight_toRightOf="parent"
+               app:layout_constraintTop_toTopOf="@id/recuadro"
+               app:layout_constraintBottom_toBottomOf="@id/recuadro"
+               >
+
+               <LinearLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="vertical"
+                   >
+                   <Button
+                       android:id="@+id/btn10segdeduracion"
+                       android:layout_width="150dp"
+                       android:layout_height="70dp"
+                       android:text="10s"
+                       android:textSize="20dp"
+                       android:textAllCaps="false"
+                       android:textColor="#000"
+                       android:background="@drawable/btn_transparente"
+                       />
+                   <Button
+                       android:id="@+id/btn20segdeduracion"
+                       android:layout_width="150dp"
+                       android:layout_height="70dp"
+                       android:text="20s"
+                       android:textSize="20dp"
+                       android:textAllCaps="false"
+                       android:textColor="#000"
+                       android:background="@drawable/btn_transparente"
+                       />
+                   <Button
+                       android:id="@+id/btn30segdeduracion"
+                       android:layout_width="150dp"
+                       android:layout_height="70dp"
+                       android:text="30s"
+                       android:textSize="20dp"
+                       android:textAllCaps="false"
+                       android:textColor="#000"
+                       android:background="@drawable/btn_transparente"
+                       />
+                   <Button
+                       android:id="@+id/btn40segdeduracion"
+                       android:layout_width="150dp"
+                       android:layout_height="70dp"
+                       android:text="40s"
+                       android:textSize="20dp"
+                       android:textAllCaps="false"
+                       android:textColor="#000"
+                       android:background="@drawable/btn_transparente"
+                       />
+                   <Button
+                       android:id="@+id/btn50segdeduracion"
+                       android:layout_width="150dp"
+                       android:layout_height="70dp"
+                       android:text="50s"
+                       android:textSize="20dp"
+                       android:textAllCaps="false"
+                       android:textColor="#000"
+                       android:background="@drawable/btn_transparente"
+                       />
+
+               </LinearLayout>
+           </ScrollView>
+       </LinearLayout>
+
+    <ImageView
+        android:layout_width="2500dp"
+        android:layout_height="80dp"
+
+        android:id="@+id/recuadro2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recuadro"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rec_stroke_negro2"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/duracionelegidomin"
+
+        android:text=""
+        android:layout_marginRight="130dp"
+        android:fontFamily="sans-serif-medium"
+        app:layout_constraintBottom_toBottomOf="@id/recuadro2"
+        app:layout_constraintTop_toTopOf="@id/recuadro2"
+        app:layout_constraintRight_toRightOf="@id/recuadro2"
+        app:layout_constraintLeft_toLeftOf="@id/recuadro2"
+        android:textAllCaps="false"
+        android:textColor="#fff"
+        android:textSize="55dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="/"
+        android:fontFamily="sans-serif-medium"
+        app:layout_constraintBottom_toBottomOf="@id/recuadro2"
+        app:layout_constraintTop_toTopOf="@id/recuadro2"
+        app:layout_constraintRight_toRightOf="@id/recuadro2"
+        app:layout_constraintLeft_toLeftOf="@id/recuadro2"
+        android:textAllCaps="false"
+        android:textColor="#fff"
+        android:textSize="55dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/duracionelegidosec"
+
+        android:text=""
+        android:layout_marginLeft="130dp"
+        android:fontFamily="sans-serif-medium"
+        app:layout_constraintBottom_toBottomOf="@id/recuadro2"
+        app:layout_constraintTop_toTopOf="@id/recuadro2"
+        app:layout_constraintRight_toRightOf="@id/recuadro2"
+        app:layout_constraintLeft_toLeftOf="@id/recuadro2"
+        android:textAllCaps="false"
+        android:textColor="#fff"
+        android:textSize="55dp"
+        />
+    <ImageButton
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/botonsiguientededuracion"
+
+        android:elevation="20dp"
+        android:src="@drawable/ic_flecha_blanca_derecha"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginLeft="150dp"
+        android:background="@drawable/btn_redondeado_negro"
+        />
+
+    <ImageButton
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/botonanteriordeduracion"
+
+        android:elevation="20dp"
+        android:src="@drawable/ic_flecha_negra_izquierda"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginRight="150dp"
+        android:background="@drawable/circulo_stroke_negro_grueso"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

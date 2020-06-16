@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#fff">
+
+    <ImageView
+        android:id="@+id/fondo2"
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:background="@drawable/edttext_conmarcos"
+
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="80dp"
+
+        />
+
+    <ImageButton
+        android:layout_width="25dp"
+        android:layout_height="60dp"
+
+        android:id="@+id/flechitabajodeeditarperfil"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textotitulodeeditarperfil"
+        app:layout_constraintBottom_toBottomOf="@id/textotitulodeeditarperfil"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/btn_transparente"
+        android:src="@drawable/ic_flecha_fina_negra_abajo"
+        android:scaleType="center"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:text="Editar Perfil"
+        android:id="@+id/textotitulodeeditarperfil"
+        android:textColor="#000"
+        android:textSize="30dp"
+        app:layout_constraintLeft_toLeftOf="@id/flechitabajodeeditarperfil"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="20dp"
+        />
+
+    <ImageButton
+        android:id="@+id/btnCambiar"
+        android:layout_width="180dp"
+        android:layout_height="43dp"
+
+        android:src="@drawable/ic_palabra_cambiar"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/btn_redondeado_negro_2"
+        android:elevation="100dp"
+        android:translationZ="100dp"
+        app:layout_constraintBottom_toBottomOf="@id/cardfondo"
+        app:layout_constraintEnd_toEndOf="@id/cardfondo" />
+
+    <ImageView
+        android:id="@+id/cardfondo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="110dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="130dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        android:translationZ="10dp"
+        android:background="@drawable/rectangulo_redondeado_girs"
+        />
+
+    <ImageView
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:id="@+id/foto"
+
+        app:layout_constraintLeft_toLeftOf="@id/cardfondo"
+        app:layout_constraintRight_toRightOf="@id/cardfondo"
+        app:layout_constraintTop_toTopOf="@id/cardfondo"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/logo"
+        android:background="@drawable/rec_stroke_negro2"
+        android:elevation="11dp"
+        />
+
+    <TextView
+        android:id="@+id/txtCambiarFoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="5dp"
+        android:elevation="11dp"
+        android:fontFamily="sans-serif-light"
+        android:text="Cambiar foto de perfil"
+
+        android:textColor="#FF0000"
+        android:textSize="20dp"
+        app:layout_constraintLeft_toLeftOf="@id/foto"
+        app:layout_constraintRight_toRightOf="@id/foto"
+
+        app:layout_constraintTop_toBottomOf="@id/foto" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/edtNombreUsuariodeEditar"
+
+        app:layout_constraintLeft_toLeftOf="@id/cardfondo"
+        app:layout_constraintRight_toRightOf="@id/cardfondo"
+        app:layout_constraintTop_toTopOf="@id/cardfondo"
+
+
+        android:background="@drawable/edttext_conmarcos"
+        android:layout_marginTop="250dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:elevation="11dp"
+
+        android:textColor="#000"
+        android:text="*Usuario*"
+        android:paddingStart="13dp"
+        />
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/edtContradeEditar"
+
+        app:layout_constraintLeft_toLeftOf="@id/cardfondo"
+        app:layout_constraintRight_toRightOf="@id/cardfondo"
+        app:layout_constraintTop_toTopOf="@id/cardfondo"
+
+        android:background="@drawable/edttext_conmarcos"
+        android:layout_marginTop="320dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:elevation="11dp"
+
+        android:paddingStart="20dp"
+        android:text="12345678"
+        android:textColor="#000"
+        android:inputType="textPassword"
+        />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ojo"
+
+        android:elevation="12dp"
+        app:layout_constraintRight_toRightOf="@id/edtContradeEditar"
+        app:layout_constraintTop_toTopOf="@id/edtContradeEditar"
+        app:layout_constraintBottom_toBottomOf="@id/edtContradeEditar"
+        android:layout_marginRight="20dp"
+
+        android:src="@drawable/ic_ojo_tachado"
+        android:background="@drawable/btn_transparente"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

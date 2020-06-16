@@ -1,4 +1,4 @@
-package com.example.portalrap;
+package com.example.portalrap.FragmentsInicio;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.Nullable;
+
+import com.example.portalrap.MainActivity;
+import com.example.portalrap.R;
 
 public class FragRegistro extends Fragment implements View.OnClickListener{
 

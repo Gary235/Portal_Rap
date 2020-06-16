@@ -1,4 +1,4 @@
-package com.example.portalrap;
+package com.example.portalrap.Clases;
 
 import android.annotation.SuppressLint;
 import android.os.StrictMode;
@@ -17,7 +17,7 @@ public class BD {
 
     @SuppressLint("NewApi")
     public Connection CONN() {
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+        /*StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                 .permitAll().build();
         StrictMode.setThreadPolicy(policy);
         Connection conn = null;
@@ -36,8 +36,13 @@ public class BD {
         } catch (Exception e) {
             Log.e("ERRO", e.getMessage());
         }
-        return conn;
+
+         */
+        return null;
+
     }
+
+
 }
 
 

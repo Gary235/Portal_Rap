@@ -1,4 +1,4 @@
-package com.example.portalrap;
+package com.example.portalrap.FragmentsUsuario;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -13,6 +13,11 @@ import android.widget.ListView;
 
 import androidx.annotation.Nullable;
 
+import com.example.portalrap.Adaptadores.adaptadorGrabacionesUsuario;
+import com.example.portalrap.Clases.Grabacion;
+import com.example.portalrap.MainActivity;
+import com.example.portalrap.R;
+
 import java.util.ArrayList;
 
 public class FragUsuario extends Fragment implements View.OnClickListener{
@@ -21,7 +26,6 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
     ListView lista;
     ArrayList<Grabacion> arrGrabaciones = new ArrayList<>();
     adaptadorGrabacionesUsuario adaptador;
-    Grabacion miGrabacion = new Grabacion();
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -53,9 +57,14 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
             }
         });
 
-        miGrabacion._Nombre = "Nombre";
+        for(int i = 0; i<4;i++){
+            Grabacion miGrabacion = new Grabacion();
 
-        arrGrabaciones.add(miGrabacion);
+            miGrabacion.set_Nombre("Nombre " + i);
+            arrGrabaciones.add(miGrabacion);
+
+        }
+
 
 
         lista.setAdapter(adaptador);
@@ -73,13 +82,11 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
 
         if(idbotonapretado == R.id.btneditar)
         {
-
-
+            main.PasaraFragEditarPerfil();
         }
         else if(idbotonapretado == R.id.btnfav)
         {
-
-
+            main.PasaraFragFavoritos();
         }
 
 
