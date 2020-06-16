@@ -46,7 +46,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recfondo"
-        
         android:background="@drawable/rectangulo_redondeadoarriba_blanco"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="350dp"

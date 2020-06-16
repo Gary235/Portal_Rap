@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo_degradado_oscuro"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+    <ImageView
+        android:id="@+id/recfondo"
+        android:layout_width="426dp"
+        android:layout_height="277dp"
+        android:layout_marginTop="128dp"
+        android:background="@drawable/rectangulo_redondeadoarriba_blanco"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="-14dp" />
+
+    <TextView
+        android:layout_width="117dp"
+        android:layout_height="67dp"
+        android:layout_marginLeft="152dp"
+        android:layout_marginTop="76dp"
+        android:background="@drawable/btn_redondeado_negro_2"
+        android:fontFamily="sans-serif-medium"
+
+        android:text="3:40"
+        android:textColor="#fff"
+        android:textSize="50dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/nombreBaseSeleccionada"
+        android:layout_width="147dp"
+        android:layout_height="41dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="412dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Base #001"
+        android:textColor="#fff"
+        android:textSize="25dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/nombreArtistaSeleccionado"
+        android:layout_width="151dp"
+        android:layout_height="26dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="456dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Artista #001"
+        android:textColor="#808080"
+        android:textSize="15dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        />
+
+    <Button
+        android:id="@+id/BeatEntrenamientoDestacado"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="364dp"
+        android:layout_marginTop="412dp"
+        android:background="@drawable/ic_icono_nofav"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <SeekBar
+        android:id="@+id/Barra"
+        android:layout_width="396dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="12dp"
+        android:layout_weight="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nombreArtistaSeleccionado"></SeekBar>
+
+    <Button
+        android:id="@+id/Play"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="200dp"
+        android:layout_marginTop="52dp"
+        android:background="@drawable/ic_icono_play"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Barra" />
+
+    <Button
+        android:id="@+id/Rebobinar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="52dp"
+        android:background="@drawable/rebobinar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Barra" />
+
+    <Button
+        android:id="@+id/Adelantar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="270dp"
+        android:layout_marginTop="52dp"
+        android:background="@drawable/adelantar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Barra" />
+
+    <Button
+        android:id="@+id/btnGrabar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="200dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/ic_icono_grabado"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Play" />
+
+    
+
+</androidx.constraintlayout.widget.ConstraintLayout>
