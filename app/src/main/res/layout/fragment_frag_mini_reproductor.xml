@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorPrimaryDark">
+    android:background="#fff">
 
     <ImageButton
         android:layout_width="35dp"
@@ -26,7 +26,7 @@
         android:id="@+id/txtdeholder"
 
         android:text=""
-        android:textColor="#fff"
+        android:textColor="#000"
         android:textSize="32dp"
         android:layout_marginLeft="100dp"
         app:layout_constraintLeft_toLeftOf="parent"
