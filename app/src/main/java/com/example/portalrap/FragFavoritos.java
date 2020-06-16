@@ -1,8 +1,6 @@
 package com.example.portalrap;
 
-import android.app.AlertDialog;
 import android.app.Fragment;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -19,12 +17,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.media.MediaPlayer;
 
 import com.example.portalrap.Adaptadores.adaptadorBases;
 import com.example.portalrap.Adaptadores.adaptadorGrabacionesUsuario;
 import com.example.portalrap.Clases.Base;
 import com.example.portalrap.Clases.Grabacion;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,8 +69,7 @@ public class FragFavoritos extends Fragment implements View.OnClickListener{
             miGrabacion.set_Nombre("Nombre Grab Favorito " + i);
             arrGrabacionesFav.add(miGrabacion);
         }
-        for(int i =0;i<10;i++)
-        {
+        for(int i =0;i<10;i++) {
             Base unaBase = new Base();
             unaBase.set_Nombre("Beat Fav #" + i);;
             unaBase.set_Artista("Artista Fav #" + i);
@@ -97,7 +96,16 @@ public class FragFavoritos extends Fragment implements View.OnClickListener{
             delineado.setVisibility(View.VISIBLE);
             lista.setAdapter(adaptadorGrabacionesUsuarioFav);
             lista.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+            lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    //reproducir
+                    MediaPlayer mp = MediaPlayer.create(getActivity(), R.raw.grabacion);
+                    mp.start();
+                    Toast.makeText(getActivity(), "Reproduciendo audio", Toast.LENGTH_SHORT).show();
 
+                }
+            });
         }
         else if(idbotonapretado == R.id.beatsfavoritos){
 
@@ -106,7 +114,16 @@ public class FragFavoritos extends Fragment implements View.OnClickListener{
             lista.setAdapter(adaptadorBasesFav);
             lista.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
 
+            lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    //reproducir
+                    MediaPlayer mp = MediaPlayer.create(getActivity(), R.raw.beat);
+                    mp.start();
+                    Toast.makeText(getActivity(), "Reproduciendo audio", Toast.LENGTH_SHORT).show();
 
+                }
+            });
             lista.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
                 @Override
                 public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
@@ -145,9 +162,6 @@ public class FragFavoritos extends Fragment implements View.OnClickListener{
                     UserSelection.clear();
                 }
             });
-
-
-
 
 
         }
