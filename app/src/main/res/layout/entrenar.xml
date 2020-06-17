@@ -37,6 +37,7 @@
 
 
 
+
     <TextView
         android:id="@+id/nombreBaseSeleccionada"
         android:layout_width="147dp"
