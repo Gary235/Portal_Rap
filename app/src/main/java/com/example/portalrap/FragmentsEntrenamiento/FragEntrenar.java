@@ -117,6 +117,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                 break;
             case R.id.btnColadeentrenar:
 
+                main.PasaraFragCola();
                 break;
             case R.id.btnrepetirbasedeentrenar:
 

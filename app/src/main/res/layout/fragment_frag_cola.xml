@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/fondo_degradado_oscuro">
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/btnVOlverdecola"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+
+        android:src="@drawable/ic_flecha_fina_abajo_blanca"
+        android:background="@drawable/btn_transparente"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sonando"
+
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="30dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="sans-serif-black"
+        android:textColor="#fff"
+        android:textSize="40dp"
+        android:text="Sonando"
+        />
+
+    <ImageView
+        android:id="@+id/fondo2"
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:background="@drawable/edttext_conmarcos"
+
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="160dp"
+        />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

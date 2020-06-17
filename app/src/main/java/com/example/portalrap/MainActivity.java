@@ -17,6 +17,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.portalrap.Adaptadores.SliderPageAdapter;
 import com.example.portalrap.Clases.Base;
+import com.example.portalrap.FragmentsEntrenamiento.FragCola;
 import com.example.portalrap.FragmentsEntrenamiento.FragDuracion;
 import com.example.portalrap.FragmentsEntrenamiento.FragEntrenar;
 import com.example.portalrap.FragmentsEntrenamiento.FragEstimulo;
@@ -194,6 +195,13 @@ public class MainActivity extends AppCompatActivity {
         transaccionFragment.replace(R.id.frameLayout, fragentrenar);
         transaccionFragment.commit();
     }
-
+    public void PasaraFragCola()
+    {
+        Fragment fragcola;
+        fragcola = new FragCola();
+        transaccionFragment=adminFragment.beginTransaction();
+        transaccionFragment.replace(R.id.frameLayout, fragcola);
+        transaccionFragment.commit();
+    }
 
 }

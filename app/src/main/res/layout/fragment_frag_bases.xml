@@ -67,7 +67,7 @@
         app:layout_constraintBottom_toBottomOf="@id/fondo1debases"
         app:layout_constraintLeft_toLeftOf="parent" />
 
-
+<!-->
     <ImageButton
         android:id="@+id/ordenar"
         android:layout_width="wrap_content"
@@ -93,7 +93,7 @@
         app:layout_constraintBottom_toBottomOf="@id/edtBuscar"
         android:layout_marginLeft="15dp"
         />
-
+<-->
     <ImageView
         android:layout_width="60dp"
         android:layout_height="60dp"

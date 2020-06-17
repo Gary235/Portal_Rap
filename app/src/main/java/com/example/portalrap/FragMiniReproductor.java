@@ -20,7 +20,7 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
     ImageButton btnplay;
     TextView txtnombre;
     Boolean f = false;
-    MediaPlayer mediaplayer;
+    MediaPlayer mediaplayer = new MediaPlayer();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,8 +56,8 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
                 btnplay.setImageResource(R.drawable.ic_icono_play);
                 Log.d("Entrenamiento: ","Predeterminado");
 
-                mediaplayer.stop();
-                mediaplayer.seekTo(0);
+                mediaplayer.pause();
+
                 f = false;
             }
 
