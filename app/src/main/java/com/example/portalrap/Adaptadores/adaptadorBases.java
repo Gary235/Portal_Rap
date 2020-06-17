@@ -1,6 +1,7 @@
 package com.example.portalrap.Adaptadores;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +72,7 @@ public class adaptadorBases extends BaseAdapter {
         Nombre.setText(miBase.get_Nombre());
         Artista.setText(miBase.get_Artista());
 
+
         if(FragBases.isActionMode || FragFavoritos.isActionMode)
         {
             check.setVisibility(View.VISIBLE);
@@ -85,31 +87,40 @@ public class adaptadorBases extends BaseAdapter {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 int position = (int) buttonView.getTag();
+                ArrayList<Integer> checkedlist = new ArrayList<>();
 
-                if(FragBases.UserSelection.contains(arrBases.get(position)))
+                Log.d("pos","" + position);
+                Log.d("pos","" + isChecked);
+
+                if (isChecked)
                 {
-                    FragBases.UserSelection.remove(arrBases.get(position));
-                    aja = aja - 1;
+                    arrBases.get(position).setCheckBox(true);
                 }
                 else
                 {
+                    arrBases.get(position).setCheckBox(false);
+                }
+
+                if(FragBases.UserSelection.contains(arrBases.get(position))) {
+                    FragBases.UserSelection.remove(arrBases.get(position));
+                    aja = aja - 1;
+
+                }
+                else {
                     FragBases.UserSelection.add(arrBases.get(position));
                     aja = aja + 1;
                 }
 
-                if(FragFavoritos.UserSelection.contains(arrBases.get(position)))
-                {
+                if(FragFavoritos.UserSelection.contains(arrBases.get(position))) {
                     FragFavoritos.UserSelection.remove(arrBases.get(position));
                     aja = aja - 1;
                 }
-                else
-                {
+                else {
                     FragFavoritos.UserSelection.add(arrBases.get(position));
                     aja = aja + 1;
                 }
 
-                if(FragFavoritos.isActionMode)
-                {
+                if(FragFavoritos.isActionMode) {
                     FragFavoritos.actionMode.setTitle(FragFavoritos.UserSelection.size() + " Bases seleccionadas");
                 }
                 else {
@@ -119,6 +130,19 @@ public class adaptadorBases extends BaseAdapter {
             }
         });
 
+        Log.d("checkbooox","" + arrBases.get(0).getCheckBox());
+        /*for(int i = 0;i<arrBases.size();i++)
+        {
+            if(arrBases.get(i).getCheckBox())
+            {
+                arrBases.get(i).setCheckBox(true);
+            }
+            else {
+                arrBases.get(i).setCheckBox(false);
+            }
+            check.setChecked(miBase.getCheckBox());
+
+        }*/
 
 
         return vista;
