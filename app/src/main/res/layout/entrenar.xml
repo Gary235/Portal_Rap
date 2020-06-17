@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo_degradado_oscuro"
@@ -21,12 +20,11 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/TiempoFree"
-        android:layout_width="117dp"
-        android:layout_height="67dp"
+        android:id="@+id/TiempoFreedeentrenar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="152dp"
-        android:layout_marginTop="76dp"
-        android:background="@drawable/btn_redondeado_negro_2"
+        android:layout_marginTop="50dp"
         android:fontFamily="sans-serif-medium"
 
         android:text="3:40"
@@ -35,11 +33,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-
-
     <TextView
-        android:id="@+id/nombreBaseSeleccionada"
+        android:id="@+id/nombreBaseSeleccionadadeentrenar"
         android:layout_width="147dp"
         android:layout_height="41dp"
         android:layout_marginStart="4dp"
@@ -52,7 +47,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/nombreArtistaSeleccionado"
+        android:id="@+id/nombreArtistaSeleccionadodeentrenar"
         android:layout_width="151dp"
         android:layout_height="26dp"
         android:layout_marginStart="4dp"
@@ -66,18 +61,19 @@
 
         />
 
-    <Button
-        android:id="@+id/BeatEntrenamientoDestacado"
+    <ImageButton
+        android:id="@+id/favdeentrenar"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="364dp"
         android:layout_marginTop="412dp"
-        android:background="@drawable/ic_icono_nofav"
+        android:background="@drawable/btn_transparente"
+        android:src="@drawable/ic_icono_nofav_blanco"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <SeekBar
-        android:id="@+id/Barra"
+        android:id="@+id/Barradeentrenar"
         android:layout_width="396dp"
         android:layout_height="47dp"
         android:layout_marginTop="12dp"
@@ -85,69 +81,65 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nombreArtistaSeleccionado"></SeekBar>
+        app:layout_constraintTop_toBottomOf="@+id/nombreArtistaSeleccionadodeentrenar"></SeekBar>
 
-    <Button
-        android:id="@+id/Play"
+    <ImageButton
+        android:id="@+id/Playdeentrenar"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="200dp"
         android:layout_marginTop="52dp"
-        android:background="@drawable/ic_icono_play"
+        android:background="@drawable/ic_icono_play_blanco"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Barra" />
+        app:layout_constraintTop_toBottomOf="@+id/Barradeentrenar" />
 
-    <Button
-        android:id="@+id/Rebobinar"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="130dp"
-        android:layout_marginTop="52dp"
-        android:background="@drawable/rebobinar"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Barra" />
 
-    <Button
-        android:id="@+id/Adelantar"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="270dp"
-        android:layout_marginTop="52dp"
-        android:background="@drawable/adelantar"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Barra" />
-
-    <Button
-        android:id="@+id/btnGrabar"
+    <ImageButton
+        android:id="@+id/btnGrabardeentrenar"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="200dp"
         android:layout_marginTop="40dp"
-        android:background="@drawable/ic_icono_grabado"
+        android:background="@drawable/btn_transparente"
+        android:src="@drawable/ic_icono_grabar_blanco"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Play" />
+        app:layout_constraintTop_toBottomOf="@+id/Playdeentrenar" />
 
-    <Button
-        android:id="@+id/btnAleatorio"
+    <ImageButton
+        android:id="@+id/btnrepetirbasedeentrenar"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="60dp"
-        android:background="@drawable/ic_aleatorio"
+        android:background="@drawable/btn_transparente"
+        android:src="@drawable/ic_repetir_verde"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Play" />
+        app:layout_constraintTop_toBottomOf="@+id/Playdeentrenar" />
 
-    <Button
-        android:id="@+id/btnOrdenar"
+    <ImageButton
+        android:id="@+id/btnColadeentrenar"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="60dp"
-        android:background="@drawable/ic_icono_ordenar"
+        android:background="@drawable/btn_transparente"
+        android:src="@drawable/ic_icono_cola_blanco"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Play" />
+        app:layout_constraintTop_toBottomOf="@+id/Playdeentrenar" />
 
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/btnVOlverdeentrenar"
 
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+
+        android:src="@drawable/ic_flecha_fina_abajo_blanca"
+        android:background="@drawable/btn_transparente"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

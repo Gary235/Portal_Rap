@@ -61,8 +61,8 @@ public class FragEditarPerfil extends Fragment {
                 mensaje = new AlertDialog.Builder(getActivity());
                 mensaje.setTitle("Volver");
                 mensaje.setMessage("Todos lo cambios que hayas hecho no se confirmaran");
-                mensaje.setPositiveButton("Aceptar",escuchador);
-                mensaje.setNegativeButton("Cancelar", escuchador);
+                mensaje.setPositiveButton("Aceptar",escuchador2);
+                mensaje.setNegativeButton("Cancelar", escuchador2);
                 mensaje.create();
                 mensaje.show();
             }
@@ -110,22 +110,7 @@ public class FragEditarPerfil extends Fragment {
         });
 
     }
-    DialogInterface.OnClickListener escuchador = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
 
-            if(which == -1)
-            {
-                MainActivity main=(MainActivity) getActivity();
-                main.PasaraFragUsuario();
-            }
-            else if(which == -2)
-            {
-                dialog.cancel();
-            }
-
-        }
-    };
     DialogInterface.OnClickListener escuchador2 = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {

@@ -129,17 +129,11 @@ public class FragBases extends Fragment implements View.OnClickListener {
             public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                 if(item.getItemId() == R.id.usar && adaptadorBases.aja > 0)
                 {
-                    if(MainActivity.PosModo == -1 || MainActivity.Frecuencia == -1 || MainActivity.Segundos == -1 || MainActivity.Minutos == -1)
-                    {
-                        Log.d("Entrenamiento: ","Predeterminado");
-                    }
-                    else
-                    {
-                        Log.d("Entrenamiento: ","Personalizado");
+                    //mandarAFragmentEntrenar
+                    item.setVisible(false);
+                    MainActivity main=(MainActivity) getActivity();
+                    main.PasaraFragEntrenar();
 
-
-
-                    }
                     return true;
                 }
                 else {
@@ -165,7 +159,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
                 array_sort.clear();
                 for (int i = 0; i < Beats.size(); i++) {
                     if (textlength <= Beats.get(i).getNombre().length()) {
-                        if (Beats.get(i).getNombre().toString().contains(edtBuscar.getText().toString())) {
+                        if (Beats.get(i).getNombre().toLowerCase().contains(edtBuscar.getText().toString().toLowerCase()) || Beats.get(i).getArtista().toLowerCase().contains(edtBuscar.getText().toString().toLowerCase())) {
                             array_sort.add(Beats.get(i));
                         }
                     }
@@ -204,6 +198,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
          else if(idbotonapretado == R.id.botonsiguientedebases)
          {
              //PasarAFragmentdeEntrenar
+             main.PasaraFragEntrenar();
          }
          else if(idbotonapretado == R.id.botonanteriordebases)
          {

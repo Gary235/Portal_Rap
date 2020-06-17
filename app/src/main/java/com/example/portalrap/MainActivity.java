@@ -18,6 +18,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.portalrap.Adaptadores.SliderPageAdapter;
 import com.example.portalrap.Clases.Base;
 import com.example.portalrap.FragmentsEntrenamiento.FragDuracion;
+import com.example.portalrap.FragmentsEntrenamiento.FragEntrenar;
 import com.example.portalrap.FragmentsEntrenamiento.FragEstimulo;
 import com.example.portalrap.FragmentsEntrenamiento.FragModo;
 import com.example.portalrap.FragmentsInicio.FragFoto1;
@@ -183,7 +184,16 @@ public class MainActivity extends AppCompatActivity {
         transaccionFragment.replace(R.id.frameLayout, fragFav);
         transaccionFragment.commit();
     }
+    public void PasaraFragEntrenar()
+    {
 
+        bottom.setVisibility(View.GONE);
+        Fragment fragentrenar;
+        fragentrenar = new FragEntrenar();
+        transaccionFragment=adminFragment.beginTransaction();
+        transaccionFragment.replace(R.id.frameLayout, fragentrenar);
+        transaccionFragment.commit();
+    }
 
 
 }
