@@ -44,7 +44,6 @@ public class adaptadorBases extends BaseAdapter {
         return bas;
     }
 
-
     @Override
     public long getItemId(int position) { return position; }
 
@@ -69,8 +68,8 @@ public class adaptadorBases extends BaseAdapter {
         Nombre.setFocusable(false);
         Artista.setFocusable(false);
         miBase = getItem(position);
-        Nombre.setText(miBase.get_Nombre());
-        Artista.setText(miBase.get_Artista());
+        Nombre.setText(miBase.getNombre());
+        Artista.setText(miBase.getArtista());
 
 
         if(FragBases.isActionMode || FragFavoritos.isActionMode)
