@@ -88,8 +88,8 @@ public class FragFavoritos extends Fragment implements View.OnClickListener{
         }
         for(int i =0;i<10;i++) {
             Base unaBase = new Base();
-            unaBase.set_Nombre("Beat Fav #" + i);;
-            unaBase.set_Artista("Artista Fav #" + i);
+            unaBase.setNombre("Beat Fav #" + i);;
+            unaBase.setArtista("Artista Fav #" + i);
             arrBasesFav.add(unaBase);
         }
 

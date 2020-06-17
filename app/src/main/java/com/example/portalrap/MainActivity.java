@@ -3,7 +3,9 @@ package com.example.portalrap;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -14,6 +16,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.portalrap.Adaptadores.SliderPageAdapter;
+import com.example.portalrap.Clases.Base;
 import com.example.portalrap.FragmentsEntrenamiento.FragDuracion;
 import com.example.portalrap.FragmentsEntrenamiento.FragEstimulo;
 import com.example.portalrap.FragmentsEntrenamiento.FragModo;
@@ -25,7 +28,12 @@ import com.example.portalrap.FragmentsInicio.FragRegistro;
 import com.example.portalrap.FragmentsUsuario.FragEditarPerfil;
 import com.example.portalrap.FragmentsUsuario.FragFavoritos;
 import com.example.portalrap.FragmentsUsuario.FragUsuario;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -175,5 +183,7 @@ public class MainActivity extends AppCompatActivity {
         transaccionFragment.replace(R.id.frameLayout, fragFav);
         transaccionFragment.commit();
     }
+
+
 
 }

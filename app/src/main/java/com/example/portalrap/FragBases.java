@@ -2,6 +2,7 @@ package com.example.portalrap;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 
 import android.text.Editable;
@@ -22,10 +23,20 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.portalrap.Adaptadores.adaptadorBases;
+import com.example.portalrap.Clases.BD;
 import com.example.portalrap.Clases.Base;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,16 +51,18 @@ public class FragBases extends Fragment implements View.OnClickListener {
     TextView txtTitulo;
     EditText edtBuscar;
     ListView listabases;
-    ArrayList<Base> arrBases = new ArrayList<>();
     adaptadorBases adaptador,adaptador2;
     public static Boolean isActionMode = false;
     public static List<Base> UserSelection = new ArrayList<>();
     public static ActionMode actionMode = null;
+    FirebaseFirestore db;
+    ArrayList<Base> Beats = new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
+         db = FirebaseFirestore.getInstance();
 
         String desdedur = getArguments().getString("desdedur");
         View v = inflater.inflate(R.layout.fragment_frag_bases, container, false);
@@ -88,22 +101,12 @@ public class FragBases extends Fragment implements View.OnClickListener {
         btnSiguiente.setOnClickListener(this);
         btnInfo.setOnClickListener(this);
 
-        adaptador = new adaptadorBases(arrBases,getActivity());
         listabases = v.findViewById(R.id.listabases);
         listabases.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
 
-        listabases.setAdapter(adaptador);
-
-        for(int i =0;i<10;i++)
-        {
-            Base unaBase = new Base();
-            unaBase.set_Nombre("Beat #"+ i);;
-            unaBase.set_Artista("Artista #"+i);
-            arrBases.add(unaBase);
-        }
-
-
+        obtenerListaBases();
     }
+
     public void  ListenersAdicionales(){
 
         listabases.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
@@ -153,7 +156,6 @@ public class FragBases extends Fragment implements View.OnClickListener {
                 UserSelection.clear();
             }
         });
-
         edtBuscar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -161,10 +163,10 @@ public class FragBases extends Fragment implements View.OnClickListener {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 textlength = edtBuscar.getText().length();
                 array_sort.clear();
-                for (int i = 0; i < arrBases.size(); i++) {
-                    if (textlength <= arrBases.get(i).get_Nombre().length()) {
-                        if (arrBases.get(i).get_Nombre().toString().contains(edtBuscar.getText().toString())) {
-                            array_sort.add(arrBases.get(i));
+                for (int i = 0; i < Beats.size(); i++) {
+                    if (textlength <= Beats.get(i).getNombre().length()) {
+                        if (Beats.get(i).getNombre().toString().contains(edtBuscar.getText().toString())) {
+                            array_sort.add(Beats.get(i));
                         }
                     }
                 }
@@ -178,7 +180,9 @@ public class FragBases extends Fragment implements View.OnClickListener {
             }
         });
 
+
     }
+
     @Override
     public void onClick(View v) {
         ImageButton botonapretado;
@@ -217,4 +221,22 @@ public class FragBases extends Fragment implements View.OnClickListener {
          }
 
     }
+
+    private void obtenerListaBases() {
+        db.collection("Beats").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
+                for (DocumentSnapshot document : snapshots) {
+                    Base beat = document.toObject(Base.class);
+                    assert beat != null;
+                    beat.setId(document.getId());
+                    Beats.add(beat);
+                }
+                adaptador = new adaptadorBases(Beats,getActivity());
+                listabases.setAdapter(adaptador);
+
+            }
+        });
+    }
+
 }

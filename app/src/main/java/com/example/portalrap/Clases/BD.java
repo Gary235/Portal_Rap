@@ -23,7 +23,6 @@ public class BD {
         Connection conn = null;
         String ConnURL = null;
         try {
-
             Class.forName(classs);
             ConnURL = "jdbc:jtds:sqlserver://" + ip + ";"
                     + "databaseName=" + db + ";user=" + un + ";password="
@@ -36,7 +35,6 @@ public class BD {
         } catch (Exception e) {
             Log.e("ERRO", e.getMessage());
         }
-
          */
         return null;
 
@@ -44,5 +42,4 @@ public class BD {
 
 
 }
-
 
