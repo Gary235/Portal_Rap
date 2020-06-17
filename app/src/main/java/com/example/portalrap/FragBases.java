@@ -153,6 +153,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
                 UserSelection.clear();
             }
         });
+
         edtBuscar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }

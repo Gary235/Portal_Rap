@@ -7,6 +7,8 @@ public class Base {
 
     private String _Nombre,_Artista;
     ImageButton _btnFav;
+
+
     Boolean checkBox;
     //Boolean _Fav;
 
@@ -22,6 +24,13 @@ public class Base {
 
 
     }
+    public Boolean getCheckBox() {
+        return checkBox;
+    }
+    public void setCheckBox(Boolean checkBox) {
+        this.checkBox = checkBox;
+    }
+
     public String get_Nombre() {
         return _Nombre;
     }
