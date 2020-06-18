@@ -39,14 +39,14 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             //personalizado
             btnRepetir.setImageResource(R.drawable.ic_icono_repetir);
             btnCola.setImageResource(R.drawable.ic_icono_cola_verde);
-            txtDuracion.setText(MainActivity.Minutos + " : " + MainActivity.Segundos);
+            txtDuracion.setText(MainActivity.Minutos + ":" + MainActivity.Segundos);
 
         }
         else {
             //predeterminado
             btnRepetir.setImageResource(R.drawable.ic_repetir_verde);
             btnCola.setImageResource(R.drawable.ic_icono_cola_blanco);
-            txtDuracion.setText("5 : 0");
+            txtDuracion.setText("5:0");
 
         }
 
