@@ -20,7 +20,6 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
     Grabacion miGrabacion = new Grabacion();
     ImageButton btnFav,btnPlay;
     TextView Nombre;
-   // Boolean fav;
 
     public adaptadorGrabacionesUsuario(ArrayList<Grabacion> arrayGrabacion, Context contexto) {
         arrGrabacion = arrayGrabacion;
@@ -49,8 +48,8 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View vista;
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        final View vista;
 
         LayoutInflater inflador;
         inflador = (LayoutInflater) miContexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -66,9 +65,51 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
         Nombre.setFocusable(false);
 
         miGrabacion = getItem(position);
-        Nombre.setText(miGrabacion.get_Nombre());
+        Nombre.setText(miGrabacion.getNombre());
+
+        btnPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!miGrabacion.getPlay())
+                {
+                    miGrabacion.setPlay(true);
+                    btnPlay.setImageResource(R.drawable.ic_icono_pausa);
+                }
+                else {
+                    miGrabacion.setPlay(false);
+                    btnPlay.setImageResource(R.drawable.ic_icono_play);
+                }
+            }
+        });
+        btnFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Favoritos","" + miGrabacion.getFav());
+
+                int position = (int) vista.getTag();
+
+                if(!miGrabacion.getFav())
+                {
+                    miGrabacion.setFav(true);
+                    btnFav.setImageResource(R.drawable.ic_icono_corazon);
+                }
+                else {
+                    miGrabacion.setFav(false);
+                    btnFav.setImageResource(R.drawable.ic_icono_nofav);
+                }
+            }
+        });
+        if(!miGrabacion.getFav())
+        {
+            btnFav.setImageResource(R.drawable.ic_icono_nofav);
+        }
+        else {
+            btnFav.setImageResource(R.drawable.ic_icono_corazon);
+        }
 
 
         return vista;
     }
+
+
 }

@@ -1,32 +1,31 @@
 package com.example.portalrap.Clases;
 
-import android.widget.ImageButton;
 
 public class Grabacion {
 
+    private String Nombre,Id;
+    private Boolean Fav,Play;
 
-
-    private String _Nombre;
-    ImageButton _btnPlay,_btnFav;
-    //Boolean _Fav;
-
-    public Grabacion( String nom, ImageButton btnplay, ImageButton btnfav /* Boolean fav*/){
-
-        _Nombre = nom;
-        _btnPlay = btnplay;
-        _btnFav = btnfav;
-       // _Fav = fav;
-
-    }
-    public Grabacion( ){
-
-
-    }
-    public String get_Nombre() {
-        return _Nombre;
+    public Grabacion(String nombre, String id, Boolean fav, Boolean play) {
+        Nombre = nombre;
+        Id = id;
+        Fav = fav;
+        Play = play;
     }
 
-    public void set_Nombre(String _Nombre) {
-        this._Nombre = _Nombre;
+    public Grabacion() {
     }
+
+
+    public String getNombre() { return Nombre; }
+    public void setNombre(String nombre) { Nombre = nombre; }
+
+    public String getId() { return Id; }
+    public void setId(String id) { Id = id; }
+
+    public Boolean getFav() { return Fav; }
+    public void setFav(Boolean fav) { Fav = fav; }
+
+    public Boolean getPlay() { return Play; }
+    public void setPlay(Boolean play) { Play = play; }
 }

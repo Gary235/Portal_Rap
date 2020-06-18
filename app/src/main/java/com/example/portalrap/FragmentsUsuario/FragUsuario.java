@@ -13,10 +13,17 @@ import android.widget.ListView;
 
 import androidx.annotation.Nullable;
 
+import com.example.portalrap.Adaptadores.adaptadorBases;
 import com.example.portalrap.Adaptadores.adaptadorGrabacionesUsuario;
+import com.example.portalrap.Clases.Base;
 import com.example.portalrap.Clases.Grabacion;
 import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -26,10 +33,14 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
     ListView lista;
     ArrayList<Grabacion> arrGrabaciones = new ArrayList<>();
     adaptadorGrabacionesUsuario adaptador;
+    FirebaseFirestore db;
+    ArrayList<Grabacion> Grabaciones = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
+
+        db = FirebaseFirestore.getInstance();
         View v=inflater.inflate(R.layout.fragment_frag_usuario, container, false);
 
         btneditar =  v.findViewById(R.id.btneditar);
@@ -38,7 +49,6 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
         btneditar.setOnClickListener(this);
         btnfav.setOnClickListener(this);
 
-        adaptador = new adaptadorGrabacionesUsuario(arrGrabaciones,getActivity());
 
         lista = v.findViewById(R.id.lista);
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -57,17 +67,7 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
             }
         });
 
-        for(int i = 0; i<4;i++){
-            Grabacion miGrabacion = new Grabacion();
-
-            miGrabacion.set_Nombre("Nombre " + i);
-            arrGrabaciones.add(miGrabacion);
-
-        }
-
-
-
-        lista.setAdapter(adaptador);
+        obtenerListaGrabaciones();
 
         return v;
     }
@@ -91,4 +91,23 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
 
 
     }
+
+
+    private void obtenerListaGrabaciones() {
+        db.collection("Grabaciones").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
+                for (DocumentSnapshot document : snapshots) {
+                    Grabacion grab = document.toObject(Grabacion.class);
+                    assert grab != null;
+                    grab.setId(document.getId());
+                    Grabaciones.add(grab);
+                }
+                adaptador = new adaptadorGrabacionesUsuario(Grabaciones,getActivity());
+                lista.setAdapter(adaptador);
+
+            }
+        });
+    }
+
 }

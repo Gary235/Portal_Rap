@@ -1,7 +1,6 @@
 package com.example.portalrap;
 
 import android.app.Fragment;
-import android.content.res.AssetManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
@@ -11,12 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.media.SoundPool;
 
-import androidx.annotation.Nullable;
-
-import java.io.IOException;
 
 
 public class FragMiniReproductor extends Fragment implements View.OnClickListener{

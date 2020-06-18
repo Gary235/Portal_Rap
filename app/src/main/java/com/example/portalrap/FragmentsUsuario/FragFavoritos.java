@@ -83,7 +83,7 @@ public class FragFavoritos extends Fragment implements View.OnClickListener{
         for(int i = 0; i<10;i++){
             Grabacion miGrabacion = new Grabacion();
 
-            miGrabacion.set_Nombre("Nombre Grab Favorito " + i);
+            miGrabacion.setNombre("Nombre Grab Favorito " + i);
             arrGrabacionesFav.add(miGrabacion);
         }
         for(int i =0;i<10;i++) {
