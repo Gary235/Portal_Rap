@@ -95,8 +95,8 @@ public class FragBases extends Fragment implements View.OnClickListener {
         //btnFiltrar = v.findViewById(R.id.filtrar);
         edtBuscar = v.findViewById(R.id.edtBuscar);
 
-        btnFiltrar.setOnClickListener(this);
-        btnOrdenar.setOnClickListener(this);
+        //btnFiltrar.setOnClickListener(this);
+        //btnOrdenar.setOnClickListener(this);
         btnAnterior.setOnClickListener(this);
         btnSiguiente.setOnClickListener(this);
         btnInfo.setOnClickListener(this);
