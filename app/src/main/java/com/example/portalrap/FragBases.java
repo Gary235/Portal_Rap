@@ -91,8 +91,8 @@ public class FragBases extends Fragment implements View.OnClickListener {
         btnAnterior = v.findViewById(R.id.botonanteriordebases);
         btnSiguiente = v.findViewById(R.id.botonsiguientedebases);
 
-        btnOrdenar = v.findViewById(R.id.ordenar);
-        btnFiltrar = v.findViewById(R.id.filtrar);
+        //btnOrdenar = v.findViewById(R.id.ordenar);
+        //btnFiltrar = v.findViewById(R.id.filtrar);
         edtBuscar = v.findViewById(R.id.edtBuscar);
 
         btnFiltrar.setOnClickListener(this);
@@ -185,7 +185,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
         MainActivity main=(MainActivity) getActivity();
 
 
-         if(idbotonapretado == R.id.ordenar)
+        /* if(idbotonapretado == R.id.ordenar)
         {
 
 
@@ -194,8 +194,8 @@ public class FragBases extends Fragment implements View.OnClickListener {
         {
 
 
-        }
-         else if(idbotonapretado == R.id.botonsiguientedebases)
+        }*/
+        if(idbotonapretado == R.id.botonsiguientedebases)
          {
              //PasarAFragmentdeEntrenar
              main.PasaraFragEntrenar();
