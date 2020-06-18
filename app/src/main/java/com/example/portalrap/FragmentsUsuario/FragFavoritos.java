@@ -20,18 +20,15 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.media.MediaPlayer;
 
 import com.example.portalrap.Adaptadores.adaptadorBases;
 import com.example.portalrap.Adaptadores.adaptadorGrabacionesUsuario;
 import com.example.portalrap.Clases.Base;
 import com.example.portalrap.Clases.Grabacion;
 import com.example.portalrap.FragMiniReproductor;
-import com.example.portalrap.FragmentsInicio.FragIniciarSesion;
 import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -135,6 +132,7 @@ public class FragFavoritos extends Fragment implements View.OnClickListener{
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     //reproducir
                     holder.setVisibility(View.VISIBLE);
+                    lista.setPadding(0,0,0,100);
 
                 }
             });

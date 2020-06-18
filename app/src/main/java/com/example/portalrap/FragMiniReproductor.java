@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.portalrap.FragmentsUsuario.FragFavoritos;
 
 
 public class FragMiniReproductor extends Fragment implements View.OnClickListener{
@@ -46,7 +47,7 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
 
         if(idbotonapretado == R.id.btnPlaydeholder) {
 
-                txtnombre.setText("beat");
+                txtnombre.setText("Beat Predeterminado");
                 Log.d("Reproductor","Playing: " + mediaplayer.isPlaying());
                 if(mediaplayer.isPlaying()){
                     mediaplayer.pause();
