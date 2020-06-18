@@ -154,8 +154,8 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="188dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="192dp"
         android:fontFamily="sans-serif-black"
         android:text="Beat #001"
         android:textColor="#04B404"
@@ -183,19 +183,20 @@
         android:layout_marginLeft="186dp"
         android:layout_marginTop="360dp"
         android:fontFamily="sans-serif-black"
-        android:text="Artista #001"
+        android:text="Artista #002"
         android:textColor="#808080"
         android:textSize="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="40dp"
         android:layout_marginTop="360dp"
         android:fontFamily="sans-serif-black"
-        android:text="Beat #001"
+        android:text="Beat #002"
         android:textColor="#808080"
         android:textSize="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -218,7 +219,7 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="40dp"
         android:layout_marginTop="484dp"
         android:fontFamily="sans-serif-black"
         android:text="Beat #001"
@@ -227,6 +228,78 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="188dp"
+        android:layout_marginTop="532dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Artista #002"
+        android:textColor="#808080"
+        android:textSize="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="532dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Beat #002"
+        android:textColor="#808080"
+        android:textSize="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="532dp"
+        android:background="@drawable/btn_transparente"
+        android:src="@drawable/ic_icono_nofav_blanco"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+    <ImageButton
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="484dp"
+        android:background="@drawable/btn_transparente"
+        android:src="@drawable/ic_icono_nofav_blanco"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+    <ImageButton
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="188dp"
+        android:background="@drawable/btn_transparente"
+        android:src="@drawable/ic_icono_nofav_blanco"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="1dp"
+        android:layout_marginTop="360dp"
+        android:background="@drawable/btn_transparente"
+        android:src="@drawable/ic_icono_nofav_blanco"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
