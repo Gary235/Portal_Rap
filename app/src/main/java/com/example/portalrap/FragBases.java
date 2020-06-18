@@ -57,14 +57,14 @@ public class FragBases extends Fragment implements View.OnClickListener {
     public static ActionMode actionMode = null;
     FirebaseFirestore db;
     ArrayList<Base> Beats = new ArrayList<>();
-
+    String desdedur;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-         db = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
+        desdedur = getArguments().getString("desdedur");
 
-        String desdedur = getArguments().getString("desdedur");
         View v = inflater.inflate(R.layout.fragment_frag_bases, container, false);
         Setear(v);
         ListenersAdicionales();
@@ -130,9 +130,23 @@ public class FragBases extends Fragment implements View.OnClickListener {
                 if(item.getItemId() == R.id.usar && adaptadorBases.aja > 0)
                 {
                     //mandarAFragmentEntrenar
-                    item.setVisible(false);
+                    setMenuVisibility(false);
+                    isActionMode = false;
+                    actionMode = null;
+                    item.collapseActionView();
+                    item.setEnabled(false);
+                    item = null;
+
                     MainActivity main=(MainActivity) getActivity();
-                    main.PasaraFragEntrenar();
+                    if (desdedur == "si")
+                    {
+                        main.PasaraFragTodoListo(desdedur);
+
+                    }
+                    else {
+                        main.PasaraFragTodoListo("no");
+
+                    }
 
                     return true;
                 }
@@ -198,7 +212,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
         if(idbotonapretado == R.id.botonsiguientedebases)
          {
              //PasarAFragmentdeEntrenar
-             main.PasaraFragEntrenar();
+             main.PasaraFragTodoListo(desdedur);
          }
          else if(idbotonapretado == R.id.botonanteriordebases)
          {

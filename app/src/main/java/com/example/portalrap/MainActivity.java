@@ -22,6 +22,7 @@ import com.example.portalrap.FragmentsEntrenamiento.FragDuracion;
 import com.example.portalrap.FragmentsEntrenamiento.FragEntrenar;
 import com.example.portalrap.FragmentsEntrenamiento.FragEstimulo;
 import com.example.portalrap.FragmentsEntrenamiento.FragModo;
+import com.example.portalrap.FragmentsEntrenamiento.FragTodoListo;
 import com.example.portalrap.FragmentsInicio.FragFoto1;
 import com.example.portalrap.FragmentsInicio.FragFoto2;
 import com.example.portalrap.FragmentsInicio.FragFoto3;
@@ -203,5 +204,18 @@ public class MainActivity extends AppCompatActivity {
         transaccionFragment.replace(R.id.frameLayout, fragcola);
         transaccionFragment.commit();
     }
+    public void PasaraFragTodoListo(String desdedur)
+    {
+        Fragment frglisto;
+        frglisto = new FragTodoListo();
+        Bundle args = new Bundle();
+        args.putString("desdedur", desdedur);
+        frglisto.setArguments(args);
+        transaccionFragment=adminFragment.beginTransaction();
+        transaccionFragment.replace(R.id.frameLayout, frglisto);
+        transaccionFragment.commit();
+    }
+
+
 
 }
