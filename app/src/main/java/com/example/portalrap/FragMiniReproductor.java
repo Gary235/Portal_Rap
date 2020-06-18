@@ -1,6 +1,7 @@
 package com.example.portalrap;
 
 import android.app.Fragment;
+import android.content.res.AssetManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
@@ -11,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.media.SoundPool;
+
+import androidx.annotation.Nullable;
 
 import java.io.IOException;
 
@@ -20,18 +24,21 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
     ImageButton btnplay;
     TextView txtnombre;
     Boolean f = false;
-    MediaPlayer mediaplayer = new MediaPlayer();
+    MediaPlayer mediaplayer;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_frag_mini_reproductor, container, false);
 
+
         btnplay = v.findViewById(R.id.btnPlaydeholder);
         txtnombre = v.findViewById(R.id.txtdeholder);
 
         btnplay.setOnClickListener(this);
 
+        mediaplayer = MediaPlayer.create(getActivity(), R.raw.beatreal);
         return v;
     }
 
@@ -44,22 +51,19 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
         MainActivity main=(MainActivity) getActivity();
 
         if(idbotonapretado == R.id.btnPlaydeholder) {
-            mediaplayer = MediaPlayer.create(getActivity(), R.raw.beat);
-            txtnombre.setText("beat");
 
-            if(!f){
-                btnplay.setImageResource(R.drawable.ic_icono_pausa);
-                mediaplayer.start();
-                f = true;
-            }
-            else {
-                btnplay.setImageResource(R.drawable.ic_icono_play);
-                Log.d("Entrenamiento: ","Predeterminado");
-
-                mediaplayer.pause();
-
-                f = false;
-            }
+                txtnombre.setText("beat");
+                Log.d("Reproductor","Playing: " + mediaplayer.isPlaying());
+                if(mediaplayer.isPlaying()){
+                    mediaplayer.pause();
+                    btnplay.setImageResource(R.drawable.ic_icono_play);
+                    f = true;
+                }
+                else {
+                   btnplay.setImageResource(R.drawable.ic_icono_pausa);
+                   mediaplayer.start();
+                   f = false;
+                }
 
 
         }

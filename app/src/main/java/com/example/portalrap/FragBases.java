@@ -133,7 +133,6 @@ public class FragBases extends Fragment implements View.OnClickListener {
                 if(item.getItemId() == R.id.usar && adaptadorBases.aja > 0)
                 {
                     //mandarAFragmentEntrenar
-                    ((AppCompatActivity)getActivity()).getSupportActionBar();
                     MainActivity main=(MainActivity) getActivity();
                     if (desdedur == "si")
                     {
