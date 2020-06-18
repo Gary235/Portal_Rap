@@ -20,10 +20,12 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
     Grabacion miGrabacion = new Grabacion();
     ImageButton btnFav,btnPlay;
     TextView Nombre;
+    adaptadorGrabacionesUsuario adaptadorGrabacionesUsuario = null;
 
     public adaptadorGrabacionesUsuario(ArrayList<Grabacion> arrayGrabacion, Context contexto) {
         arrGrabacion = arrayGrabacion;
         miContexto = contexto;
+        this.adaptadorGrabacionesUsuario = this;
     }
 
     @Override
@@ -67,7 +69,7 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
         miGrabacion = getItem(position);
         Nombre.setText(miGrabacion.getNombre());
 
-        btnPlay.setOnClickListener(new View.OnClickListener() {
+        /*btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!miGrabacion.getPlay())
@@ -86,7 +88,6 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
             public void onClick(View v) {
                 Log.d("Favoritos","" + miGrabacion.getFav());
 
-                int position = (int) vista.getTag();
 
                 if(!miGrabacion.getFav())
                 {
@@ -105,7 +106,7 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
         }
         else {
             btnFav.setImageResource(R.drawable.ic_icono_corazon);
-        }
+        }*/
 
 
         return vista;
