@@ -1,8 +1,10 @@
 package com.example.portalrap;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import android.text.Editable;
@@ -25,6 +27,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.portalrap.Adaptadores.adaptadorBases;
 import com.example.portalrap.Clases.BD;
@@ -130,13 +133,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
                 if(item.getItemId() == R.id.usar && adaptadorBases.aja > 0)
                 {
                     //mandarAFragmentEntrenar
-                    setMenuVisibility(false);
-                    isActionMode = false;
-                    actionMode = null;
-                    item.collapseActionView();
-                    item.setEnabled(false);
-                    item = null;
-
+                    ((AppCompatActivity)getActivity()).getSupportActionBar();
                     MainActivity main=(MainActivity) getActivity();
                     if (desdedur == "si")
                     {
