@@ -1,15 +1,11 @@
 package com.example.portalrap;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Fragment;
-import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,20 +21,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.portalrap.Adaptadores.adaptadorBases;
-import com.example.portalrap.Clases.BD;
 import com.example.portalrap.Clases.Base;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -51,7 +41,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
     ArrayList<Base> array_sort = new ArrayList<>();
     ImageButton btnOrdenar, btnFiltrar,btnSiguiente,btnAnterior,btnInfo;
     ImageView fondo1,paso4;
-    TextView txtTitulo;
+    TextView txtTitulo,lbl,lbl2,lbl3;
     EditText edtBuscar;
     ListView listabases;
     adaptadorBases adaptador,adaptador2;
@@ -61,6 +51,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
     FirebaseFirestore db;
     ArrayList<Base> Beats = new ArrayList<>();
     String desdedur;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -93,16 +84,39 @@ public class FragBases extends Fragment implements View.OnClickListener {
         txtTitulo = v.findViewById(R.id.txtTitulodeBases);
         btnAnterior = v.findViewById(R.id.botonanteriordebases);
         btnSiguiente = v.findViewById(R.id.botonsiguientedebases);
+        edtBuscar = v.findViewById(R.id.edtBuscar);
+        lbl = v.findViewById(R.id.textolabel1debases);
+        lbl2 = v.findViewById(R.id.textolabel2debases);
+        lbl3 = v.findViewById(R.id.textolabel3debases);
 
         //btnOrdenar = v.findViewById(R.id.ordenar);
         //btnFiltrar = v.findViewById(R.id.filtrar);
-        edtBuscar = v.findViewById(R.id.edtBuscar);
-
         //btnFiltrar.setOnClickListener(this);
         //btnOrdenar.setOnClickListener(this);
         btnAnterior.setOnClickListener(this);
         btnSiguiente.setOnClickListener(this);
         btnInfo.setOnClickListener(this);
+
+        if(MainActivity.PosModo == 0)
+        { lbl.setText("Aleatorio"); }
+        else if(MainActivity.PosModo == 1)
+        { lbl.setText("Objetos");}
+        else
+        { lbl.setText("Palabras");}
+
+        if(MainActivity.Frecuencia == 0)
+        { lbl2.setText("2s"); }
+        else if(MainActivity.Frecuencia == 1)
+        { lbl2.setText("5s");}
+        else if(MainActivity.Frecuencia == 2)
+        { lbl2.setText("10s");}
+        else if(MainActivity.Frecuencia == 3)
+        { lbl2.setText("20s");}
+        else if(MainActivity.Frecuencia == 4)
+        { lbl2.setText("30s");}
+        lbl3.setText(MainActivity.Minutos + "m / " + MainActivity.Segundos + "s");
+
+        adaptadorBases.aja = 0;
 
         listabases = v.findViewById(R.id.listabases);
         listabases.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
@@ -137,11 +151,9 @@ public class FragBases extends Fragment implements View.OnClickListener {
                     if (desdedur == "si")
                     {
                         main.PasaraFragTodoListo(desdedur);
-
                     }
                     else {
                         main.PasaraFragTodoListo("no");
-
                     }
 
                     return true;
@@ -207,8 +219,16 @@ public class FragBases extends Fragment implements View.OnClickListener {
         }*/
         if(idbotonapretado == R.id.botonsiguientedebases)
          {
-             //PasarAFragmentdeEntrenar
-             main.PasaraFragTodoListo(desdedur);
+             if(adaptadorBases.aja > 0)
+             {
+                 if (desdedur == "si")
+                 { main.PasaraFragTodoListo(desdedur); }
+                 else { main.PasaraFragTodoListo("no"); }
+             }
+             else {
+                 Toast toast1 = Toast.makeText(getActivity(),"Ninguna Base fue seleccionada", Toast.LENGTH_SHORT);
+                 toast1.show();
+             }
          }
          else if(idbotonapretado == R.id.botonanteriordebases)
          {

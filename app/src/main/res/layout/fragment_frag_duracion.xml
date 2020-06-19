@@ -14,7 +14,7 @@
         android:background="@drawable/edttext_conmarcos"
 
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="70dp"
 
         />
 
@@ -29,7 +29,7 @@
         android:textSize="25dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         />
 
     <ImageView
@@ -40,7 +40,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
 
         />
 
@@ -56,6 +56,63 @@
         app:layout_constraintRight_toLeftOf="@id/textotitulodeduracion"
         app:layout_constraintTop_toTopOf="@id/textotitulodeduracion" />
 
+    <ImageButton
+        android:id="@+id/label1"
+        android:layout_width="110.3dp"
+        android:layout_height="40dp"
+
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/circulo_gris"
+        app:layout_constraintBottom_toTopOf="@id/recuadro"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/fondo2"
+        android:elevation="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textolabel1deduracion"
+
+        app:layout_constraintTop_toTopOf="@id/label1"
+        app:layout_constraintBottom_toBottomOf="@id/label1"
+        app:layout_constraintLeft_toLeftOf="@id/label1"
+        app:layout_constraintRight_toRightOf="@id/label1"
+        android:elevation="10dp"
+
+        android:text=""
+        android:textSize="20dp"
+        android:textColor="#000"
+        />
+    <ImageButton
+        android:id="@+id/label2"
+        android:layout_width="110.3dp"
+        android:layout_height="40dp"
+
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/circulo_gris"
+        app:layout_constraintBottom_toTopOf="@id/recuadro"
+        app:layout_constraintLeft_toRightOf="@id/label1"
+        app:layout_constraintTop_toTopOf="@id/fondo2"
+        android:elevation="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textolabel2deduracion"
+
+        app:layout_constraintTop_toTopOf="@id/label1"
+        app:layout_constraintBottom_toBottomOf="@id/label1"
+        app:layout_constraintLeft_toLeftOf="@id/label2"
+        app:layout_constraintRight_toRightOf="@id/label2"
+        android:elevation="10dp"
+
+        android:text=""
+        android:textSize="20dp"
+        android:textColor="#000"
+        />
+
     <ImageView
         android:layout_width="350dp"
         android:layout_height="270dp"
@@ -64,7 +121,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="140dp"
         android:background="@drawable/circulo_stroke_negro_grueso"
         />
     <ImageView
@@ -244,7 +301,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/recuadro"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="25dp"
         android:background="@drawable/rec_stroke_negro2"
         />
     <TextView

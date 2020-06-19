@@ -6,6 +6,92 @@
     android:background="#fff">
 
 
+    <ImageButton
+        android:id="@+id/label1deTodolisto"
+        android:layout_width="110.3dp"
+        android:layout_height="40dp"
+
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/circulo_gris"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/txtGrande"
+        android:elevation="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textolabel1deTodolisto"
+
+        app:layout_constraintTop_toTopOf="@id/label1deTodolisto"
+        app:layout_constraintBottom_toBottomOf="@id/label1deTodolisto"
+        app:layout_constraintLeft_toLeftOf="@id/label1deTodolisto"
+        app:layout_constraintRight_toRightOf="@id/label1deTodolisto"
+        android:elevation="10dp"
+
+        android:text=""
+        android:textSize="20dp"
+        android:textColor="#000"
+        />
+    <ImageButton
+        android:id="@+id/label2deTodolisto"
+        android:layout_width="110.3dp"
+        android:layout_height="40dp"
+
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/circulo_gris"
+        app:layout_constraintLeft_toRightOf="@id/label1deTodolisto"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/txtGrande"
+        android:elevation="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textolabel2deTodolisto"
+
+        app:layout_constraintTop_toTopOf="@id/label2deTodolisto"
+        app:layout_constraintBottom_toBottomOf="@id/label2deTodolisto"
+        app:layout_constraintLeft_toLeftOf="@id/label2deTodolisto"
+        app:layout_constraintRight_toRightOf="@id/label2deTodolisto"
+        android:elevation="10dp"
+
+        android:text=""
+        android:textSize="20dp"
+        android:textColor="#000"
+        />
+    <ImageButton
+        android:id="@+id/label3deTodolisto"
+        android:layout_width="110.3dp"
+        android:layout_height="40dp"
+
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/circulo_gris"
+        app:layout_constraintLeft_toRightOf="@id/label2deTodolisto"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/txtGrande"
+        android:elevation="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textolabel3deTodolisto"
+
+        app:layout_constraintTop_toTopOf="@id/label3deTodolisto"
+        app:layout_constraintBottom_toBottomOf="@id/label3deTodolisto"
+        app:layout_constraintLeft_toLeftOf="@id/label3deTodolisto"
+        app:layout_constraintRight_toRightOf="@id/label3deTodolisto"
+        android:elevation="10dp"
+
+        android:text=""
+        android:textSize="20dp"
+        android:textColor="#000"
+        />
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

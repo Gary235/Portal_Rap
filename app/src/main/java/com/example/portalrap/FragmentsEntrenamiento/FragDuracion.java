@@ -21,7 +21,7 @@ public class FragDuracion extends Fragment implements View.OnClickListener {
 
     ImageButton btnSiguiente,btnAnterior,btnInfo;
     Button btnSec1,btnSec2,btnSec3,btnSec4,btnSec5,btnMin1,btnMin2,btnMin3,btnMin4,btnMin5;
-    TextView txtDurMin,txtDurSec;
+    TextView txtDurMin,txtDurSec,lbl,lbl2;
     String desdedur;
 
     @Override
@@ -55,6 +55,8 @@ public class FragDuracion extends Fragment implements View.OnClickListener {
         btnMin5 = v.findViewById(R.id.btn4mindeduracion);
         txtDurSec = v.findViewById(R.id.duracionelegidosec);
         txtDurMin = v.findViewById(R.id.duracionelegidomin);
+        lbl = v.findViewById(R.id.textolabel1deduracion);
+        lbl2 = v.findViewById(R.id.textolabel2deduracion);
 
         btnSec1.setOnClickListener(this);
         btnSec2.setOnClickListener(this);
@@ -66,6 +68,24 @@ public class FragDuracion extends Fragment implements View.OnClickListener {
         btnMin3.setOnClickListener(this);
         btnMin4.setOnClickListener(this);
         btnMin5.setOnClickListener(this);
+
+        if(MainActivity.PosModo == 0)
+        { lbl.setText("Aleatorio"); }
+        else if(MainActivity.PosModo == 1)
+        { lbl.setText("Objetos");}
+        else
+        { lbl.setText("Palabras");}
+
+        if(MainActivity.Frecuencia == 0)
+        { lbl2.setText("2s"); }
+        else if(MainActivity.Frecuencia == 1)
+        { lbl2.setText("5s");}
+        else if(MainActivity.Frecuencia == 2)
+        { lbl2.setText("10s");}
+        else if(MainActivity.Frecuencia == 3)
+        { lbl2.setText("20s");}
+        else if(MainActivity.Frecuencia == 4)
+        { lbl2.setText("30s");}
 
     }
     public void Listeners(){

@@ -19,7 +19,7 @@ public class FragEstimulo extends Fragment implements View.OnClickListener {
 
     ImageButton btnSiguiente,btnAnterior,btnInfo;
     Button btnsec1,btnsec2,btnsec3,btnsec4,btnsec5;
-    TextView txtfrecelegida;
+    TextView txtfrecelegida,lbl;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -46,12 +46,20 @@ public class FragEstimulo extends Fragment implements View.OnClickListener {
         btnsec3 = v.findViewById(R.id.btn10seg);
         btnsec4 = v.findViewById(R.id.btn20seg);
         btnsec5 = v.findViewById(R.id.btn30seg);
+        lbl = v.findViewById(R.id.textolabel1deestimulo);
 
         btnsec1.setOnClickListener(this);
         btnsec2.setOnClickListener(this);
         btnsec3.setOnClickListener(this);
         btnsec4.setOnClickListener(this);
         btnsec5.setOnClickListener(this);
+
+        if(MainActivity.PosModo == 0)
+        { lbl.setText("Aleatorio"); }
+        else if(MainActivity.PosModo == 1)
+        { lbl.setText("Objetos");}
+        else
+        { lbl.setText("Palabras");}
     }
 
     public void ListenersAdicionales(){
