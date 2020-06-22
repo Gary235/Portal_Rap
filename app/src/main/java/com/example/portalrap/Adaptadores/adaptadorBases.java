@@ -52,99 +52,15 @@ public class adaptadorBases extends BaseAdapter {
     @Override
     public long getItemId(int position) { return position; }
 
-    /*@Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-
-        View vista;
-
-        LayoutInflater inflador;
-        inflador = (LayoutInflater) miContexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        vista = inflador.inflate(R.layout.lista_bases, parent, false);
-
-
-        btnFav = vista.findViewById(R.id.btnFavlista);
-        Nombre = vista.findViewById(R.id.nombreBase);
-        Artista = vista.findViewById(R.id.nombreArtista);
-        check = vista.findViewById(R.id.checkbox);
-        check.setTag(position);
-
-        btnFav.setFocusable(false);
-        check.setFocusable(false);
-        Nombre.setFocusable(false);
-        Artista.setFocusable(false);
-        miBase = getItem(position);
-        Nombre.setText(miBase.getNombre());
-        Artista.setText(miBase.getArtista());
-
-
-        if(FragBases.isActionMode || FragFavoritos.isActionMode)
-        {
-            check.setVisibility(View.VISIBLE);
-        }
-        else
-        {
-            check.setVisibility(View.GONE);
-        }
-
-        check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                int position = (int) buttonView.getTag();
-                ArrayList<Integer> checkedlist = new ArrayList<>();
-
-                Log.d("pos","" + position);
-                Log.d("pos","" + isChecked);
-
-                if (isChecked)
-                {
-                    arrBases.get(position).setCheckBox(true);
-                }
-                else
-                {
-                    arrBases.get(position).setCheckBox(false);
-                }
-
-                if(FragBases.UserSelection.contains(arrBases.get(position))) {
-                    FragBases.UserSelection.remove(arrBases.get(position));
-                    aja = aja - 1;
-
-                }
-                else {
-                    FragBases.UserSelection.add(arrBases.get(position));
-                    aja = aja + 1;
-                }
-
-                if(FragFavoritos.UserSelection.contains(arrBases.get(position))) {
-                    FragFavoritos.UserSelection.remove(arrBases.get(position));
-                    aja = aja - 1;
-                }
-                else {
-                    FragFavoritos.UserSelection.add(arrBases.get(position));
-                    aja = aja + 1;
-                }
-
-                if(FragFavoritos.isActionMode) {
-                    FragFavoritos.actionMode.setTitle(FragFavoritos.UserSelection.size() + " Bases seleccionadas");
-                }
-                else {
-                    FragBases.actionMode.setTitle(FragBases.UserSelection.size()+ " Bases seleccionadas");
-                }
-
-            }
-        });
-
-        return vista;
-    }*/
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
 
         if (convertView == null) {
-            holder = new ViewHolder(); LayoutInflater inflater = (LayoutInflater) miContexto
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.lista_bases, null, true);
+            holder = new ViewHolder();
+
+            LayoutInflater inflater = (LayoutInflater) miContexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.lista_bases, parent, false);
 
             holder.btnFav = convertView.findViewById(R.id.btnFavlista);
             holder.Nombre = convertView.findViewById(R.id.nombreBase);
@@ -184,7 +100,6 @@ public class adaptadorBases extends BaseAdapter {
                 View tempview = (View) holder.check.getTag(R.integer.btnplusview);
                 //               TextView tv = (TextView) tempview.findViewById(R.id.animal);
                 Integer pos = (Integer)  holder.check.getTag();
-                Toast.makeText(miContexto, "Checkbox "+pos+" clicked!", Toast.LENGTH_SHORT).show();
 
                 if(arrBases.get(pos).getDestacado()){
                     arrBases.get(pos).setDestacado(false);
