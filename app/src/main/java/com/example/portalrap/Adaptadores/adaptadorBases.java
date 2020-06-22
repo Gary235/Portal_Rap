@@ -29,15 +29,6 @@ public class adaptadorBases extends BaseAdapter {
         arrBases = arrayBases;
         miContexto = contexto;
     }
-    @Override
-    public int getViewTypeCount() {
-        return getCount();
-    }
-    @Override
-    public int getItemViewType(int position) {
-
-        return position;
-    }
 
     @Override
     public int getCount() { return arrBases.size(); }
