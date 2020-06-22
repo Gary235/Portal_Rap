@@ -25,11 +25,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.portalrap.Adaptadores.adaptadorBases;
-import com.example.portalrap.Adaptadores.adaptadorRecycler;
 import com.example.portalrap.Clases.Base;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -57,9 +55,6 @@ public class FragBases extends Fragment implements View.OnClickListener {
     FirebaseFirestore db;
     ArrayList<Base> Beats = new ArrayList<>();
     String desdedur;
-    private RecyclerView RecyclerBases;
-    private RecyclerView.Adapter adaterRecycle,adaterRecycle2 ;
-    private RecyclerView.LayoutManager Manager;
     ScrollView scrol;
 
     @Nullable
@@ -100,11 +95,6 @@ public class FragBases extends Fragment implements View.OnClickListener {
         lbl2 = v.findViewById(R.id.textolabel2debases);
         lbl3 = v.findViewById(R.id.textolabel3debases);
         scrol = v.findViewById(R.id.scrolviudebases);
-
-        RecyclerBases = v.findViewById(R.id.recyclerbases);
-        Manager = new LinearLayoutManager(getActivity());
-        ((LinearLayoutManager) Manager).setOrientation(LinearLayoutManager.VERTICAL);
-        RecyclerBases.setLayoutManager(Manager);
 
         btnAnterior.setOnClickListener(this);
         btnSiguiente.setOnClickListener(this);
@@ -186,12 +176,6 @@ public class FragBases extends Fragment implements View.OnClickListener {
                 UserSelection.clear();
             }
         });
-        RecyclerBases.setRecyclerListener(new RecyclerView.RecyclerListener() {
-            @Override
-            public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
-                Log.d("entro","siiiiiiiii");
-            }
-        });
 
 
         edtBuscar.addTextChangedListener(new TextWatcher() {
@@ -210,9 +194,6 @@ public class FragBases extends Fragment implements View.OnClickListener {
                 }
                 adaptador2 = new adaptadorBases(array_sort,getActivity());
                 listabases.setAdapter(adaptador2);
-
-                adaterRecycle2 = new adaptadorRecycler(array_sort,getActivity());
-                RecyclerBases.setAdapter(adaterRecycle2);
             }
             @Override
             public void afterTextChanged(Editable s) { }
@@ -268,9 +249,6 @@ public class FragBases extends Fragment implements View.OnClickListener {
                 }
                 adaptador = new adaptadorBases(Beats,getActivity());
                 listabases.setAdapter(adaptador);
-
-                adaterRecycle = new adaptadorRecycler(Beats,getActivity());
-                RecyclerBases.setAdapter(adaterRecycle);
             }
         });
     }

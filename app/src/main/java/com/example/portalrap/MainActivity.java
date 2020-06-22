@@ -83,15 +83,25 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()){
                 case R.id.item1:
                     fragseleccionado = new FragHome();
+                    FragBases.isActionMode = false;
+                    FragBases.actionMode = null;
+                    FragBases.UserSelection.clear();
                     break;
                 case R.id.item2:
                     fragseleccionado = new FragBases();
+                    FragBases.isActionMode = false;
+                    FragBases.actionMode = null;
+                    FragBases.UserSelection.clear();
+
                     Bundle args = new Bundle();
                     args.putString("desdedur","no");
                     fragseleccionado.setArguments(args);
                     break;
                 case R.id.item3:
                     fragseleccionado = new FragUsuario();
+                    FragBases.isActionMode = false;
+                    FragBases.actionMode = null;
+                    FragBases.UserSelection.clear();
                     break;
             }
             transaccionFragment=adminFragment.beginTransaction();

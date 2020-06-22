@@ -29,6 +29,22 @@ public class adaptadorBases extends BaseAdapter {
         arrBases = arrayBases;
         miContexto = contexto;
     }
+    @Override
+    public int getViewTypeCount() {
+        if(getCount() <= 1)
+        {
+            return 1;
+        }
+        else
+        {
+            return arrBases.size();
+        }
+    }
+    @Override
+    public int getItemViewType(int position) {
+
+        return position;
+    }
 
     @Override
     public int getCount() { return arrBases.size(); }
@@ -89,7 +105,7 @@ public class adaptadorBases extends BaseAdapter {
                 int position = (int) buttonView.getTag();
 
                 View tempview = (View) holder.check.getTag(R.integer.btnplusview);
-                //               TextView tv = (TextView) tempview.findViewById(R.id.animal);
+                //TextView tv = (TextView) tempview.findViewById(R.id.animal);
                 Integer pos = (Integer)  holder.check.getTag();
 
                 if(arrBases.get(pos).getDestacado()){
