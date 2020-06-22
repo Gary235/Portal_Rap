@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,12 +19,17 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.portalrap.Adaptadores.adaptadorBases;
+import com.example.portalrap.Adaptadores.adaptadorRecycler;
 import com.example.portalrap.Clases.Base;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -39,7 +45,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
 
     int textlength=0;
     ArrayList<Base> array_sort = new ArrayList<>();
-    ImageButton btnOrdenar, btnFiltrar,btnSiguiente,btnAnterior,btnInfo;
+    ImageButton btnSiguiente,btnAnterior,btnInfo;
     ImageView fondo1,paso4;
     TextView txtTitulo,lbl,lbl2,lbl3;
     EditText edtBuscar;
@@ -51,6 +57,10 @@ public class FragBases extends Fragment implements View.OnClickListener {
     FirebaseFirestore db;
     ArrayList<Base> Beats = new ArrayList<>();
     String desdedur;
+    private RecyclerView RecyclerBases;
+    private RecyclerView.Adapter adaterRecycle,adaterRecycle2 ;
+    private RecyclerView.LayoutManager Manager;
+    ScrollView scrol;
 
     @Nullable
     @Override
@@ -68,6 +78,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
             btnAnterior.setVisibility(View.GONE);
             paso4.setVisibility(View.GONE);
             btnInfo.setVisibility(View.GONE);
+            scrol.setVisibility(View.GONE);
             return v;
         }
         else {
@@ -88,11 +99,13 @@ public class FragBases extends Fragment implements View.OnClickListener {
         lbl = v.findViewById(R.id.textolabel1debases);
         lbl2 = v.findViewById(R.id.textolabel2debases);
         lbl3 = v.findViewById(R.id.textolabel3debases);
+        scrol = v.findViewById(R.id.scrolviudebases);
 
-        //btnOrdenar = v.findViewById(R.id.ordenar);
-        //btnFiltrar = v.findViewById(R.id.filtrar);
-        //btnFiltrar.setOnClickListener(this);
-        //btnOrdenar.setOnClickListener(this);
+        RecyclerBases = v.findViewById(R.id.recyclerbases);
+        Manager = new LinearLayoutManager(getActivity());
+        ((LinearLayoutManager) Manager).setOrientation(LinearLayoutManager.VERTICAL);
+        RecyclerBases.setLayoutManager(Manager);
+
         btnAnterior.setOnClickListener(this);
         btnSiguiente.setOnClickListener(this);
         btnInfo.setOnClickListener(this);
@@ -132,6 +145,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
             }
             @Override
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                Log.d("mensaje","hola");
                 MenuInflater inflater = mode.getMenuInflater();
                 inflater.inflate(R.menu.actionbar_menu,menu);
                 isActionMode = true;
@@ -172,6 +186,14 @@ public class FragBases extends Fragment implements View.OnClickListener {
                 UserSelection.clear();
             }
         });
+        RecyclerBases.setRecyclerListener(new RecyclerView.RecyclerListener() {
+            @Override
+            public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
+                Log.d("entro","siiiiiiiii");
+            }
+        });
+
+
         edtBuscar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -188,15 +210,13 @@ public class FragBases extends Fragment implements View.OnClickListener {
                 }
                 adaptador2 = new adaptadorBases(array_sort,getActivity());
                 listabases.setAdapter(adaptador2);
-            }
 
+                adaterRecycle2 = new adaptadorRecycler(array_sort,getActivity());
+                RecyclerBases.setAdapter(adaterRecycle2);
+            }
             @Override
-            public void afterTextChanged(Editable s) {
-
-            }
+            public void afterTextChanged(Editable s) { }
         });
-
-
     }
 
     @Override
@@ -206,17 +226,6 @@ public class FragBases extends Fragment implements View.OnClickListener {
         int idbotonapretado = botonapretado.getId();
         MainActivity main=(MainActivity) getActivity();
 
-
-        /* if(idbotonapretado == R.id.ordenar)
-        {
-
-
-        }
-        else if(idbotonapretado == R.id.filtrar)
-        {
-
-
-        }*/
         if(idbotonapretado == R.id.botonsiguientedebases)
          {
              if(adaptadorBases.aja > 0)
@@ -260,6 +269,8 @@ public class FragBases extends Fragment implements View.OnClickListener {
                 adaptador = new adaptadorBases(Beats,getActivity());
                 listabases.setAdapter(adaptador);
 
+                adaterRecycle = new adaptadorRecycler(Beats,getActivity());
+                RecyclerBases.setAdapter(adaterRecycle);
             }
         });
     }

@@ -74,7 +74,7 @@
         app:layout_constraintLeft_toRightOf="@id/edtBuscar"
         app:layout_constraintTop_toTopOf="@id/fondo2"
         android:layout_marginTop="10dp"
-
+        android:id="@+id/scrolviudebases"
 
         >
         <LinearLayout
@@ -157,33 +157,7 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-->
-        <ImageButton
-            android:id="@+id/ordenar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
 
-            android:background="@drawable/btn_transparente"
-            android:src="@drawable/ic_icono_ordenar"
-            app:layout_constraintLeft_toRightOf="@id/edtBuscar"
-            app:layout_constraintTop_toTopOf="@id/edtBuscar"
-            app:layout_constraintBottom_toBottomOf="@id/edtBuscar"
-            android:layout_marginLeft="25dp"
-     />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/filtrar"
-
-            android:background="@drawable/btn_transparente"
-            android:src="@drawable/ic_icono_filtrar"
-            app:layout_constraintLeft_toRightOf="@id/ordenar"
-            app:layout_constraintTop_toTopOf="@id/edtBuscar"
-            app:layout_constraintBottom_toBottomOf="@id/edtBuscar"
-            android:layout_marginLeft="15dp"
-            />
-    <-->
     <ImageView
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -209,7 +183,20 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recyclerbases"
+        android:visibility="gone"
 
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="160dp"
+        android:layout_marginBottom="100dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
     <ImageButton
         android:layout_width="100dp"

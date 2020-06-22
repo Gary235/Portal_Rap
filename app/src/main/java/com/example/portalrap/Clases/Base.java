@@ -6,16 +6,14 @@ public class Base {
     private String Artista,Nombre,Url;
     private Boolean Destacado;
     private String Id;
-    private Boolean checkBox;
 
     //Constructores
-    public Base(String artista, String nombre, String url, Boolean destacado, String id, Boolean checkBox) {
+    public Base(String artista, String nombre, String url, Boolean destacado, String id) {
         Artista = artista;
         Nombre = nombre;
         Url = url;
         Destacado = destacado;
         Id = id;
-        this.checkBox = checkBox;
     }
     public Base( ){
 
@@ -59,12 +57,6 @@ public class Base {
         Id = id;
     }
 
-    public Boolean getCheckBox() {
-        return checkBox;
-    }
-    public void setCheckBox(Boolean checkBox) {
-        this.checkBox = checkBox;
-    }
 
 
 }
