@@ -120,7 +120,7 @@ public class adaptadorBases extends BaseAdapter {
                     }
                 }
 
-                if(!FragBases.isActionMode)
+                if(!FragBases.isActionMode || !FragFavoritos.isActionMode)
                 {
                     arrBases.get(pos).setDestacado(false);
                 }
@@ -154,7 +154,6 @@ public class adaptadorBases extends BaseAdapter {
                             FragFavoritos.actionMode.setTitle(FragFavoritos.UserSelection.size() + " Bases seleccionadas");
                         }
                     }
-
                 }
                 else if(FragBases.isActionMode){
                     if(FragBases.UserSelection != null)
