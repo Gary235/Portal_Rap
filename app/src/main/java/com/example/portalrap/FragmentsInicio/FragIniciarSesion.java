@@ -25,8 +25,6 @@ public class FragIniciarSesion extends Fragment implements View.OnClickListener{
         View vista;
         vista = inflater.inflate(R.layout.iniciarsesion,container,false);
 
-
-
         editContrasenia = vista.findViewById(R.id.edtContrasenia);
         editUsuario = vista.findViewById(R.id.edtUsuario);
         btnIniciarSesion = vista.findViewById(R.id.btnIniciarSesion);
@@ -47,6 +45,8 @@ public class FragIniciarSesion extends Fragment implements View.OnClickListener{
 
         if(botonapretado.getId() == R.id.btnIniciarSesion)
         {
+
+
             main.PasaraFragmentHome();
         }
         else if (botonapretado.getId() == R.id.btnRegistrarse)
