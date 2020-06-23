@@ -43,7 +43,7 @@ public class FragHome extends Fragment implements View.OnClickListener{
 
         //obtenerListaPalabras();
 
-        Log.d("Array de Palabras","" + arrPalabras.get(3).getPalabra());
+        //Log.d("Array de Palabras","" + arrPalabras.get(3).getPalabra());
 
         if(arrPalabras.isEmpty())
         {

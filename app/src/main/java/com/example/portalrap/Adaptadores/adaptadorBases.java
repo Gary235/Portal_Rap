@@ -114,22 +114,15 @@ public class adaptadorBases extends BaseAdapter {
                     arrBases.get(pos).setDestacado(true);
                 }
 
-                Log.d("pos","" + position);
-                Log.d("pos","" + isChecked);
+                if(!FragBases.isActionMode)
+                {
+                    arrBases.get(pos).setDestacado(false);
 
-                if (isChecked)
-                {
-                    arrBases.get(position).setDestacado(true);
-                }
-                else
-                {
-                    arrBases.get(position).setDestacado(false);
                 }
 
                 if(FragBases.UserSelection.contains(arrBases.get(position))) {
                     FragBases.UserSelection.remove(arrBases.get(position));
                     aja = aja - 1;
-
                 }
                 else {
                     FragBases.UserSelection.add(arrBases.get(position));
