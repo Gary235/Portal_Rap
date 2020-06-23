@@ -187,6 +187,9 @@ public class MainActivity extends AppCompatActivity {
     }
     public void PasaraFragUsuario()
     {
+        FragBases.isActionMode = false;
+        FragBases.actionMode = null;
+        FragBases.UserSelection.clear();
         Fragment fragusu;
         fragusu = new FragUsuario();
         transaccionFragment=adminFragment.beginTransaction();

@@ -93,7 +93,6 @@ public class FragFavoritos extends Fragment implements View.OnClickListener{
 
         lista.setAdapter(adaptadorGrabacionesUsuarioFav);
 
-
         return v;
     }
 
@@ -142,6 +141,7 @@ public class FragFavoritos extends Fragment implements View.OnClickListener{
                 }
                 @Override
                 public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                    Log.d("mensaje","hola");
                     MenuInflater inflater = mode.getMenuInflater();
                     inflater.inflate(R.menu.actionbar_menu,menu);
                     isActionMode = true;
@@ -154,9 +154,12 @@ public class FragFavoritos extends Fragment implements View.OnClickListener{
                 }
                 @Override
                 public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                    if(item.getItemId() == R.id.usar && adaptadorBasesFav.aja > 0)
+                    if(item.getItemId() == R.id.usar && adaptadorBases.aja > 0)
                     {
-                            Log.d("Entrenamiento: ","Predeterminado");
+                        //mandarAFragmentEntrenar
+                        MainActivity main=(MainActivity) getActivity();
+                        main.PasaraFragTodoListo("no");
+
 
                         return true;
                     }
@@ -171,7 +174,7 @@ public class FragFavoritos extends Fragment implements View.OnClickListener{
                 public void onDestroyActionMode(ActionMode mode) {
                     isActionMode = false;
                     actionMode = null;
-                    UserSelection.clear();
+                    //UserSelection.clear();
                 }
             });
 

@@ -173,7 +173,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
             public void onDestroyActionMode(ActionMode mode) {
                 isActionMode = false;
                 actionMode = null;
-                UserSelection.clear();
+                //UserSelection.clear();
             }
         });
 

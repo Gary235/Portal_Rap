@@ -94,7 +94,10 @@ public class adaptadorBases extends BaseAdapter {
         {
             holder.check.setVisibility(View.GONE);
         }
-        holder.check.setChecked(arrBases.get(position).getDestacado());
+        if(arrBases.get(position).getDestacado() != null)
+        {
+            holder.check.setChecked(arrBases.get(position).getDestacado());
+        }
 
         holder.check.setTag(R.integer.btnplusview, convertView);
         holder.check.setTag(position);
@@ -108,16 +111,18 @@ public class adaptadorBases extends BaseAdapter {
                 //TextView tv = (TextView) tempview.findViewById(R.id.animal);
                 Integer pos = (Integer)  holder.check.getTag();
 
-                if(arrBases.get(pos).getDestacado()){
-                    arrBases.get(pos).setDestacado(false);
-                }else {
-                    arrBases.get(pos).setDestacado(true);
+                if(arrBases.get(pos).getDestacado()!= null)
+                {
+                    if(arrBases.get(pos).getDestacado() ){
+                        arrBases.get(pos).setDestacado(false);
+                    }else{
+                        arrBases.get(pos).setDestacado(true);
+                    }
                 }
 
                 if(!FragBases.isActionMode)
                 {
                     arrBases.get(pos).setDestacado(false);
-
                 }
 
                 if(FragBases.UserSelection.contains(arrBases.get(position))) {
@@ -139,10 +144,28 @@ public class adaptadorBases extends BaseAdapter {
                 }
 
                 if(FragFavoritos.isActionMode) {
-                    FragFavoritos.actionMode.setTitle(FragFavoritos.UserSelection.size() + " Bases seleccionadas");
+                    if(FragFavoritos.UserSelection != null)
+                    {
+                        if(FragFavoritos.UserSelection.size() == 0)
+                        {
+                            FragFavoritos.actionMode.setTitle(" 0 Bases seleccionadas");
+                        }
+                        else  {
+                            FragFavoritos.actionMode.setTitle(FragFavoritos.UserSelection.size() + " Bases seleccionadas");
+                        }
+                    }
+
                 }
-                else {
-                    FragBases.actionMode.setTitle(FragBases.UserSelection.size()+ " Bases seleccionadas");
+                else if(FragBases.isActionMode){
+                    if(FragBases.UserSelection != null)
+                    {
+                        if(FragBases.UserSelection.size() == 0 )
+                        {
+                            FragBases.actionMode.setTitle(" 0 Bases seleccionadas");
+                        }
+                        FragBases.actionMode.setTitle(FragBases.UserSelection.size()+ " Bases seleccionadas");
+                    }
+
                 }
             }
         });
