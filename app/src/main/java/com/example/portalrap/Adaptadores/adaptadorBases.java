@@ -92,7 +92,7 @@ public class adaptadorBases extends BaseAdapter {
         }
         else
         {
-            holder.check.setVisibility(View.GONE);
+            holder.check.setVisibility(View.INVISIBLE);
         }
         if(arrBases.get(position).getDestacado() != null)
         {
@@ -120,10 +120,7 @@ public class adaptadorBases extends BaseAdapter {
                     }
                 }
 
-                if(!FragBases.isActionMode || !FragFavoritos.isActionMode)
-                {
-                    arrBases.get(pos).setDestacado(false);
-                }
+
 
                 if(FragBases.UserSelection.contains(arrBases.get(position))) {
                     FragBases.UserSelection.remove(arrBases.get(position));

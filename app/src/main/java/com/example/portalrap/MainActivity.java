@@ -187,8 +187,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void PasaraFragUsuario()
     {
-        FragBases.isActionMode = false;
-        FragBases.actionMode = null;
+        FragFavoritos.UserSelection.clear();
         FragBases.UserSelection.clear();
         Fragment fragusu;
         fragusu = new FragUsuario();
@@ -200,6 +199,8 @@ public class MainActivity extends AppCompatActivity {
     {
         Fragment fragFav;
         fragFav = new FragFavoritos();
+        FragFavoritos.UserSelection.clear();
+        FragBases.UserSelection.clear();
         transaccionFragment=adminFragment.beginTransaction();
         transaccionFragment.replace(R.id.frameLayout, fragFav);
         transaccionFragment.commit();
