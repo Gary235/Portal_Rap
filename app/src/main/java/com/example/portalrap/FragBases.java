@@ -125,6 +125,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
         listabases.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
 
         obtenerListaBases();
+
     }
 
     public void  ListenersAdicionales(){

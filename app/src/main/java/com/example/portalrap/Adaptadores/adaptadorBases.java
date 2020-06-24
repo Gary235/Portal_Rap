@@ -163,6 +163,12 @@ public class adaptadorBases extends BaseAdapter {
                     }
 
                 }
+
+                for(int i=0;i<FragBases.UserSelection.size();i++)
+                {
+                    Log.d("BeatSeleccionado","" + FragBases.UserSelection.get(i).getNombre());
+                }
+
             }
         });
 

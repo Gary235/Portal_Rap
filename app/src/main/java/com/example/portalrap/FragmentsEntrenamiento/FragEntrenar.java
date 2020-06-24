@@ -55,13 +55,13 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         btnGrabar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Recorder();
+                Recorder();
             }
         });
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //reproducir();
+                reproducir();
             }
         });
         return v;
@@ -83,13 +83,11 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
         btnVolver.setOnClickListener(this);
         btnRepetir.setOnClickListener(this);
-        btnPlay.setOnClickListener(this);
         btnCola.setOnClickListener(this);
         btnFav.setOnClickListener(this);
-        btnGrabar.setOnClickListener(this);
-
 
     }
+
     DialogInterface.OnClickListener escuchador = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
@@ -136,7 +134,6 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             case R.id.favdeentrenar:
                 break;
 
-
         }
     }
 
@@ -168,8 +165,8 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         } else if(grabacion != null){
 
 
-            grabacion.stop();
 
+            grabacion.stop();
             grabacion.release();
 
 
