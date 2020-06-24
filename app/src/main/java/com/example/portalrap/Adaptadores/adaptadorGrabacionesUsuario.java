@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.portalrap.Clases.Grabacion;
 import com.example.portalrap.R;
@@ -18,8 +19,8 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
     private ArrayList<Grabacion> arrGrabacion;
     private Context miContexto;
     Grabacion miGrabacion = new Grabacion();
-    ImageButton btnFav,btnPlay;
-    TextView Nombre;
+     ImageButton btnFav,btnPlay;
+     TextView Nombre;
     adaptadorGrabacionesUsuario adaptadorGrabacionesUsuario = null;
 
     public adaptadorGrabacionesUsuario(ArrayList<Grabacion> arrayGrabacion, Context contexto) {
@@ -29,20 +30,15 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
-
-        Log.d("Tamnio","Size: " + arrGrabacion.size());
-
-
-        return arrGrabacion.size(); }
+    public int getCount() { return arrGrabacion.size(); }
 
     @Override
     public Grabacion getItem(int position) {
-
         Grabacion grab;
         grab = arrGrabacion.get(position);
         return grab;
     }
+
 
     @Override
     public long getItemId(int position) {
@@ -58,9 +54,9 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
         vista = inflador.inflate(R.layout.lista_grabaciones_usuario, parent, false);
 
 
-        btnFav = vista.findViewById(R.id.btnFavlista);
-        btnPlay = vista.findViewById(R.id.btnPlaylista);
-        Nombre = vista.findViewById(R.id.textolista);
+         btnFav = vista.findViewById(R.id.btnFavlista);
+         btnPlay = vista.findViewById(R.id.btnPlaylista);
+         Nombre = vista.findViewById(R.id.textolista);
 
         btnPlay.setFocusable(false);
         btnFav.setFocusable(false);
@@ -68,45 +64,30 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
 
         miGrabacion = getItem(position);
         Nombre.setText(miGrabacion.getNombre());
+        btnFav.setTag(position);
 
-        /*btnPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!miGrabacion.getPlay())
-                {
-                    miGrabacion.setPlay(true);
-                    btnPlay.setImageResource(R.drawable.ic_icono_pausa);
-                }
-                else {
-                    miGrabacion.setPlay(false);
-                    btnPlay.setImageResource(R.drawable.ic_icono_play);
-                }
-            }
-        });
         btnFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Favoritos","" + miGrabacion.getFav());
+                Toast.makeText(miContexto,"presionó elegir",Toast.LENGTH_LONG);
+                Integer pos = (Integer)  btnFav.getTag();
+                Log.d("Favoritos","" + arrGrabacion.get(pos).getFavorito());
 
 
-                if(!miGrabacion.getFav())
+                if(arrGrabacion.get(pos).getFavorito()!= null)
                 {
-                    miGrabacion.setFav(true);
-                    btnFav.setImageResource(R.drawable.ic_icono_corazon);
+                    if(arrGrabacion.get(pos).getFavorito() ){
+                        arrGrabacion.get(pos).setFavorito(false);
+                        btnFav.setImageResource(R.drawable.ic_icono_corazon);
+                    }else{
+                        arrGrabacion.get(pos).setFavorito(true);
+                        btnFav.setImageResource(R.drawable.ic_icono_nofav);
+
+                    }
                 }
-                else {
-                    miGrabacion.setFav(false);
-                    btnFav.setImageResource(R.drawable.ic_icono_nofav);
-                }
+
             }
         });
-        if(!miGrabacion.getFav())
-        {
-            btnFav.setImageResource(R.drawable.ic_icono_nofav);
-        }
-        else {
-            btnFav.setImageResource(R.drawable.ic_icono_corazon);
-        }*/
 
 
         return vista;

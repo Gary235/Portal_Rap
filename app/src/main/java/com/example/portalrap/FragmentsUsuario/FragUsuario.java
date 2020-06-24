@@ -13,9 +13,7 @@ import android.widget.ListView;
 
 import androidx.annotation.Nullable;
 
-import com.example.portalrap.Adaptadores.adaptadorBases;
 import com.example.portalrap.Adaptadores.adaptadorGrabacionesUsuario;
-import com.example.portalrap.Clases.Base;
 import com.example.portalrap.Clases.Grabacion;
 import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;

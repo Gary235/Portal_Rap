@@ -121,7 +121,6 @@ public class adaptadorBases extends BaseAdapter {
                 }
 
 
-
                 if(FragBases.UserSelection.contains(arrBases.get(position))) {
                     FragBases.UserSelection.remove(arrBases.get(position));
                     aja = aja - 1;
