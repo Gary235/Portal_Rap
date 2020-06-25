@@ -1,6 +1,9 @@
 package com.example.portalrap.Clases;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Grabacion {
 
     private String Nombre,Id,Url;
@@ -16,6 +19,15 @@ public class Grabacion {
     public Grabacion() {
     }
 
+
+    public Map<String, Object> toMap() {
+
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("Nombre", this.Nombre);
+        result.put("Favorito", this.Favorito);
+        result.put("Url", this.Url);
+        return result;
+    }
 
     public String getNombre() { return this.Nombre; }
     public void setNombre(String nombre) { Nombre = nombre; }

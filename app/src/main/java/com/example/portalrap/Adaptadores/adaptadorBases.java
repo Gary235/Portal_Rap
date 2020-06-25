@@ -115,6 +115,8 @@ public class adaptadorBases extends BaseAdapter {
                 {
                     if(arrBases.get(pos).getDestacado() ){
                         arrBases.get(pos).setDestacado(false);
+
+
                     }else{
                         arrBases.get(pos).setDestacado(true);
                     }

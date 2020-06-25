@@ -6,21 +6,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.portalrap.Clases.Base;
 import com.example.portalrap.Clases.Grabacion;
+import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class adaptadorGrabacionesUsuario extends BaseAdapter {
     private ArrayList<Grabacion> arrGrabacion;
     private Context miContexto;
-    Grabacion miGrabacion = new Grabacion();
-     ImageButton btnFav,btnPlay;
-     TextView Nombre;
+    private FirebaseFirestore db;
+
     adaptadorGrabacionesUsuario adaptadorGrabacionesUsuario = null;
 
     public adaptadorGrabacionesUsuario(ArrayList<Grabacion> arrayGrabacion, Context contexto) {
@@ -47,51 +57,100 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        final View vista;
 
-        LayoutInflater inflador;
-        inflador = (LayoutInflater) miContexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        vista = inflador.inflate(R.layout.lista_grabaciones_usuario, parent, false);
+        final ViewHolder holder;
+
+        if (convertView == null) {
+            holder = new ViewHolder();
+
+            LayoutInflater inflater = (LayoutInflater) miContexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.lista_grabaciones_usuario, parent, false);
+
+            holder.btnFav = convertView.findViewById(R.id.btnFavlista);
+            holder.Nombre = convertView.findViewById(R.id.textolista);
+            holder.btnFav.setFocusable(false);
+            holder.Nombre.setFocusable(false);
+            db = FirebaseFirestore.getInstance();
 
 
-         btnFav = vista.findViewById(R.id.btnFavlista);
-         btnPlay = vista.findViewById(R.id.btnPlaylista);
-         Nombre = vista.findViewById(R.id.textolista);
 
-        btnPlay.setFocusable(false);
-        btnFav.setFocusable(false);
-        Nombre.setFocusable(false);
+            convertView.setTag(holder);
+        }else {
+            // the getTag returns the viewHolder object set as a tag to the view
+            holder = (ViewHolder)convertView.getTag();
+        }
+        holder.Nombre.setText(arrGrabacion.get(position).getNombre());
 
-        miGrabacion = getItem(position);
-        Nombre.setText(miGrabacion.getNombre());
-        btnFav.setTag(position);
+        holder.btnFav.setTag(R.integer.btnplusview, convertView);
+        holder.btnFav.setTag(position);
 
-        btnFav.setOnClickListener(new View.OnClickListener() {
+        Log.d("corazon","Bool: " + arrGrabacion.get(position).getFavorito() + ", Pos" + position);
+
+        if(arrGrabacion.get(position).getFavorito())
+        {
+            //desfavear
+            holder.btnFav.setImageResource(R.drawable.ic_icono_fav_rojo);
+        }
+        else if(!arrGrabacion.get(position).getFavorito()) {
+            //fav
+            holder.btnFav.setImageResource(R.drawable.ic_icono_nofav);
+
+        }
+
+        holder.btnFav.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(miContexto,"presionó elegir",Toast.LENGTH_LONG);
-                Integer pos = (Integer)  btnFav.getTag();
-                Log.d("Favoritos","" + arrGrabacion.get(pos).getFavorito());
+            public void onClick(View view) {
 
+                View tempview = (View) holder.btnFav.getTag(R.integer.btnplusview);
+                //TextView tv = (TextView) tempview.findViewById(R.id.animal);
+                Integer pos = (Integer)  holder.btnFav.getTag();
 
                 if(arrGrabacion.get(pos).getFavorito()!= null)
                 {
-                    if(arrGrabacion.get(pos).getFavorito() ){
+                    if(arrGrabacion.get(pos).getFavorito()){
                         arrGrabacion.get(pos).setFavorito(false);
-                        btnFav.setImageResource(R.drawable.ic_icono_corazon);
+                        holder.btnFav.setImageResource(R.drawable.ic_icono_nofav);
+
                     }else{
                         arrGrabacion.get(pos).setFavorito(true);
-                        btnFav.setImageResource(R.drawable.ic_icono_nofav);
+                        holder.btnFav.setImageResource(R.drawable.ic_icono_fav_rojo);
 
                     }
                 }
-
+                actualizarFav(arrGrabacion.get(pos).getNombre(),arrGrabacion.get(pos).getId(),arrGrabacion.get(pos).getUrl(),arrGrabacion.get(pos).getFavorito());
+                Log.d("corazon","Bool: " + arrGrabacion.get(pos).getFavorito() + ", Pos" + pos);
             }
         });
 
 
-        return vista;
+        return convertView;
     }
+    private class ViewHolder {
+        protected ImageButton btnFav;
+        protected TextView Nombre;
 
+    }
+    private void actualizarFav(String nombre, String id, String url, Boolean fav) {
+        Map<String, Object> grabacion = (new Grabacion(nombre, id, fav, url)).toMap();
+
+        db.collection("Grabaciones")
+                .document(id)
+                .update(grabacion)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.e("CambiarFav", "Bien Ahi");
+
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("CambiarFav", "Error al actualizar: " + e);
+
+                    }
+                });
+    }
 
 }

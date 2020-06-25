@@ -34,7 +34,6 @@ public class FragHome extends Fragment implements View.OnClickListener {
     FirebaseFirestore db;
     ArrayList<Palabras> arrPalabras = new ArrayList<>();
     Random generador = new Random();
-    private DatabaseReference mDatabase;// ...
 
     @Nullable
     @Override
@@ -44,7 +43,6 @@ public class FragHome extends Fragment implements View.OnClickListener {
         btnEntrenar = v.findViewById(R.id.btnentrenar);
         btnEntrenar.setOnClickListener(this);
         db = FirebaseFirestore.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         obtenerListaPalabras();
 
