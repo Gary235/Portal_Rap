@@ -98,8 +98,6 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
                 }
                 adaptador = new adaptadorGrabacionesUsuario(Grabaciones,getActivity());
                 lista.setAdapter(adaptador);
-                Log.d("CorazonUsuarioo", "" + Grabaciones.get(0).getNombre());
-
             }
         });
 
