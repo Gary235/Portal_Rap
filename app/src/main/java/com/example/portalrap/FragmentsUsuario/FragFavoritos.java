@@ -21,22 +21,34 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.example.portalrap.Adaptadores.adaptadorBases;
 import com.example.portalrap.Adaptadores.adaptadorGrabacionesUsuario;
 import com.example.portalrap.Clases.Base;
 import com.example.portalrap.Clases.Grabacion;
+import com.example.portalrap.Clases.Palabras;
 import com.example.portalrap.FragMiniReproductor;
 import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class FragFavoritos extends Fragment implements View.OnClickListener{
+public class FragFavoritos extends Fragment implements View.OnClickListener {
 
-    ImageView delineado,delineado2;
-    ImageButton btnGrabado,btnBeats,btnVolver;
+    ImageView delineado, delineado2;
+    ImageButton btnGrabado, btnBeats, btnVolver;
     ListView lista;
     ArrayList<Grabacion> arrGrabacionesFav = new ArrayList<>();
     adaptadorGrabacionesUsuario adaptadorGrabacionesUsuarioFav;
@@ -48,6 +60,7 @@ public class FragFavoritos extends Fragment implements View.OnClickListener{
     FragmentManager adminFragment;
     FragmentTransaction transaccionFragment;
     FrameLayout holder;
+    FirebaseFirestore db;
 
 
     @Override
@@ -58,10 +71,11 @@ public class FragFavoritos extends Fragment implements View.OnClickListener{
         adminFragment = getFragmentManager();
         Fragment fragminireproductor;
         fragminireproductor = new FragMiniReproductor();
-        transaccionFragment=adminFragment.beginTransaction();
+        transaccionFragment = adminFragment.beginTransaction();
         transaccionFragment.replace(R.id.holder, fragminireproductor);
         transaccionFragment.commit();
 
+        db = FirebaseFirestore.getInstance();
         btnBeats = v.findViewById(R.id.grabadofavoritos);
         btnGrabado = v.findViewById(R.id.beatsfavoritos);
         btnVolver = v.findViewById(R.id.flechitabajodefavoritos);
@@ -74,22 +88,9 @@ public class FragFavoritos extends Fragment implements View.OnClickListener{
         btnBeats.setOnClickListener(this);
         btnVolver.setOnClickListener(this);
 
-        adaptadorGrabacionesUsuarioFav = new adaptadorGrabacionesUsuario(arrGrabacionesFav,getActivity());
-        adaptadorBasesFav = new adaptadorBases(arrBasesFav,getActivity());
+        adaptadorBasesFav = new adaptadorBases(arrBasesFav, getActivity());
 
-        for(int i = 0; i<10;i++){
-            Grabacion miGrabacion = new Grabacion();
-
-            miGrabacion.setNombre("Nombre Grab Favorito " + i);
-            arrGrabacionesFav.add(miGrabacion);
-        }
-        for(int i =0;i<10;i++) {
-            Base unaBase = new Base();
-            unaBase.setNombre("Beat Fav #" + i);;
-            unaBase.setArtista("Artista Fav #" + i);
-            arrBasesFav.add(unaBase);
-        }
-
+        obtenerListaGrabacionesfav();
 
         lista.setAdapter(adaptadorGrabacionesUsuarioFav);
 
@@ -100,11 +101,11 @@ public class FragFavoritos extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
 
         ImageButton botonapretado;
-        botonapretado = (ImageButton)v;
+        botonapretado = (ImageButton) v;
         int idbotonapretado = botonapretado.getId();
-        MainActivity main=(MainActivity) getActivity();
+        MainActivity main = (MainActivity) getActivity();
 
-        if(idbotonapretado == R.id.grabadofavoritos){
+        if (idbotonapretado == R.id.grabadofavoritos) {
 
             delineado2.setVisibility(View.GONE);
             delineado.setVisibility(View.VISIBLE);
@@ -117,8 +118,7 @@ public class FragFavoritos extends Fragment implements View.OnClickListener{
 
                 }
             });
-        }
-        else if(idbotonapretado == R.id.beatsfavoritos){
+        } else if (idbotonapretado == R.id.beatsfavoritos) {
 
             delineado.setVisibility(View.GONE);
             delineado2.setVisibility(View.VISIBLE);
@@ -130,7 +130,7 @@ public class FragFavoritos extends Fragment implements View.OnClickListener{
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     //reproducir
                     holder.setVisibility(View.VISIBLE);
-                    lista.setPadding(0,0,0,100);
+                    lista.setPadding(0, 0, 0, 100);
 
                 }
             });
@@ -138,32 +138,33 @@ public class FragFavoritos extends Fragment implements View.OnClickListener{
                 @Override
                 public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
                 }
+
                 @Override
                 public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                    Log.d("mensaje","hola");
+                    Log.d("mensaje", "hola");
                     MenuInflater inflater = mode.getMenuInflater();
-                    inflater.inflate(R.menu.actionbar_menu,menu);
+                    inflater.inflate(R.menu.actionbar_menu, menu);
                     isActionMode = true;
                     actionMode = mode;
                     return true;
                 }
+
                 @Override
                 public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
                     return false;
                 }
+
                 @Override
                 public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                    if(item.getItemId() == R.id.usar && adaptadorBases.aja > 0)
-                    {
+                    if (item.getItemId() == R.id.usar && adaptadorBases.aja > 0) {
                         //mandarAFragmentEntrenar
-                        MainActivity main=(MainActivity) getActivity();
+                        MainActivity main = (MainActivity) getActivity();
                         main.PasaraFragTodoListo("no");
 
 
                         return true;
-                    }
-                    else {
-                        Toast toast1 = Toast.makeText(getActivity(),"Ninguna Base fue seleccionada", Toast.LENGTH_SHORT);
+                    } else {
+                        Toast toast1 = Toast.makeText(getActivity(), "Ninguna Base fue seleccionada", Toast.LENGTH_SHORT);
                         toast1.show();
                         return false;
                     }
@@ -178,11 +179,28 @@ public class FragFavoritos extends Fragment implements View.OnClickListener{
             });
 
 
-        }
-        else if(idbotonapretado == R.id.flechitabajodefavoritos)
-        {
+        } else if (idbotonapretado == R.id.flechitabajodefavoritos) {
             main.PasaraFragUsuario();
         }
     }
 
+    private void obtenerListaGrabacionesfav() {
+        db.collection("Grabaciones")
+                .whereEqualTo("Favorito", true)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
+                        for (DocumentSnapshot document : snapshots) {
+                            Grabacion grab = document.toObject(Grabacion.class);
+                            assert grab != null;
+                            grab.setId(document.getId());
+                            arrGrabacionesFav.add(grab);
+                        }
+                        adaptadorGrabacionesUsuarioFav = new adaptadorGrabacionesUsuario(arrGrabacionesFav, getActivity());
+                        lista.setAdapter(adaptadorGrabacionesUsuarioFav);
+
+                    }
+                });
+
+    }
 }
