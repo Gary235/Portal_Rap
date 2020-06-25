@@ -54,13 +54,7 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 Log.d("Funciona","siiiiiiiiii");
 
-                /*String titulo;
-                titulo = arraydepeliculas.get(position)._titulo;
 
-                MainActivity main=(MainActivity) getActivity();
-                main.recibirTexto(titulo);
-
-                main.pasarADetalleFragment();*/
 
             }
         });
@@ -104,9 +98,11 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
                 }
                 adaptador = new adaptadorGrabacionesUsuario(Grabaciones,getActivity());
                 lista.setAdapter(adaptador);
+                Log.d("CorazonUsuarioo", "" + Grabaciones.get(0).getNombre());
 
             }
         });
+
     }
 
 }

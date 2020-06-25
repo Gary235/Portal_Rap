@@ -12,17 +12,25 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.example.portalrap.Clases.Base;
+import com.example.portalrap.Clases.Grabacion;
 import com.example.portalrap.FragBases;
 import com.example.portalrap.FragmentsUsuario.FragFavoritos;
 import com.example.portalrap.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class adaptadorBases extends BaseAdapter {
     private ArrayList<Base> arrBases;
     private Context miContexto;
     public static int aja = 0;
+    private FirebaseFirestore db;
 
     public adaptadorBases(ArrayList<Base> arrayBases,Context contexto)
     {
@@ -69,7 +77,7 @@ public class adaptadorBases extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) miContexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.lista_bases, parent, false);
 
-            holder.btnFav = convertView.findViewById(R.id.btnFavlista);
+            holder.btnFav = convertView.findViewById(R.id.btnFavlistabases);
             holder.Nombre = convertView.findViewById(R.id.nombreBase);
             holder.Artista = convertView.findViewById(R.id.nombreArtista);
             holder.check = convertView.findViewById(R.id.checkbox);
@@ -77,6 +85,8 @@ public class adaptadorBases extends BaseAdapter {
             holder.check.setFocusable(false);
             holder.Nombre.setFocusable(false);
             holder.Artista.setFocusable(false);
+            db = FirebaseFirestore.getInstance();
+
 
             convertView.setTag(holder);
         }else {
@@ -101,6 +111,8 @@ public class adaptadorBases extends BaseAdapter {
 
         holder.check.setTag(R.integer.btnplusview, convertView);
         holder.check.setTag(position);
+        holder.btnFav.setTag(R.integer.btnplusview, convertView);
+        holder.btnFav.setTag(position);
 
         holder.check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -173,6 +185,44 @@ public class adaptadorBases extends BaseAdapter {
             }
         });
 
+        Log.d("CorazonBase", "" + arrBases.get(position).getFavoritos());
+            if(arrBases.get(position).getFavoritos())
+            {
+                //desfavear
+                holder.btnFav.setImageResource(R.drawable.ic_icono_fav_rojo);
+            }
+            else if(!arrBases.get(position).getFavoritos()) {
+                //fav
+                holder.btnFav.setImageResource(R.drawable.ic_icono_nofav);
+
+            }
+
+
+        holder.btnFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                View tempview = (View) holder.btnFav.getTag(R.integer.btnplusview);
+                //TextView tv = (TextView) tempview.findViewById(R.id.animal);
+                Integer pos = (Integer)  holder.btnFav.getTag();
+
+                if(arrBases.get(pos).getFavoritos()!= null)
+                {
+                    if(arrBases.get(pos).getFavoritos()){
+                        arrBases.get(pos).setFavoritos(false);
+                        holder.btnFav.setImageResource(R.drawable.ic_icono_nofav);
+
+                    }else{
+                        arrBases.get(pos).setFavoritos(true);
+                        holder.btnFav.setImageResource(R.drawable.ic_icono_fav_rojo);
+
+                    }
+                }
+                actualizarFav(arrBases.get(pos).getNombre(),arrBases.get(pos).getArtista(),arrBases.get(pos).getDestacado(),arrBases.get(pos).getId(),arrBases.get(pos).getUrl(),arrBases.get(pos).getFavoritos());
+            }
+        });
+
+
 
 
 
@@ -185,6 +235,28 @@ public class adaptadorBases extends BaseAdapter {
         protected ImageButton btnFav;
         protected CheckBox check;
 
+    }
+    private void actualizarFav(String nombre,String artista,Boolean destacado, String id, String url, Boolean fav) {
+        Map<String, Object> beat = (new Base(artista,nombre, url,destacado, id,fav)).toMap();
+
+        db.collection("Beats")
+                .document(id)
+                .update(beat)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.e("CambiarFav", "Bien Ahi");
+
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("CambiarFav", "Error al actualizar: " + e);
+
+                    }
+                });
     }
 
 

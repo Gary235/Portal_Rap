@@ -250,6 +250,8 @@ public class FragBases extends Fragment implements View.OnClickListener {
                     beat.setId(document.getId());
                     Beats.add(beat);
                 }
+                Log.d("CorazonBase2", "" + Beats.get(0).getNombre());
+
                 adaptador = new adaptadorBases(Beats,getActivity());
                 listabases.setAdapter(adaptador);
             }

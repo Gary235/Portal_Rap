@@ -91,8 +91,7 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
         adaptadorBasesFav = new adaptadorBases(arrBasesFav, getActivity());
 
         obtenerListaGrabacionesfav();
-
-        lista.setAdapter(adaptadorGrabacionesUsuarioFav);
+        obtenerListaBeatsfav();
 
         return v;
     }
@@ -184,9 +183,9 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void obtenerListaGrabacionesfav() {
+    public void obtenerListaGrabacionesfav() {
         db.collection("Grabaciones")
-                .whereEqualTo("Favorito", true)
+                .whereEqualTo("Favoritos", true)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
@@ -203,4 +202,26 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
                 });
 
     }
+
+    public void obtenerListaBeatsfav() {
+        db.collection("Beats")
+                .whereEqualTo("Favoritos", true)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
+                        for (DocumentSnapshot document : snapshots) {
+                            Base base = document.toObject(Base.class);
+                            assert base != null;
+                            base.setId(document.getId());
+                            arrBasesFav.add(base);
+                        }
+                        adaptadorBasesFav = new adaptadorBases(arrBasesFav, getActivity());
+                        lista.setAdapter(adaptadorBasesFav);
+
+                    }
+                });
+
+    }
+
+
 }

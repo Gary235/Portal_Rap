@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.portalrap.Clases.Base;
 import com.example.portalrap.Clases.Grabacion;
+import com.example.portalrap.FragmentsUsuario.FragFavoritos;
 import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -49,7 +50,6 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
         return grab;
     }
 
-
     @Override
     public long getItemId(int position) {
         return position;
@@ -72,8 +72,6 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
             holder.Nombre.setFocusable(false);
             db = FirebaseFirestore.getInstance();
 
-
-
             convertView.setTag(holder);
         }else {
             // the getTag returns the viewHolder object set as a tag to the view
@@ -84,17 +82,15 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
         holder.btnFav.setTag(R.integer.btnplusview, convertView);
         holder.btnFav.setTag(position);
 
-        Log.d("corazon","Bool: " + arrGrabacion.get(position).getFavorito() + ", Pos" + position);
+        Log.d("corazon","Bool: " + arrGrabacion.get(position).getFavoritos() + ", Pos" + position);
 
-        if(arrGrabacion.get(position).getFavorito())
-        {
+        if(arrGrabacion.get(position).getFavoritos()) {
             //desfavear
             holder.btnFav.setImageResource(R.drawable.ic_icono_fav_rojo);
         }
-        else if(!arrGrabacion.get(position).getFavorito()) {
+        else if(!arrGrabacion.get(position).getFavoritos()) {
             //fav
             holder.btnFav.setImageResource(R.drawable.ic_icono_nofav);
-
         }
 
         holder.btnFav.setOnClickListener(new View.OnClickListener() {
@@ -105,20 +101,20 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
                 //TextView tv = (TextView) tempview.findViewById(R.id.animal);
                 Integer pos = (Integer)  holder.btnFav.getTag();
 
-                if(arrGrabacion.get(pos).getFavorito()!= null)
+                if(arrGrabacion.get(pos).getFavoritos()!= null)
                 {
-                    if(arrGrabacion.get(pos).getFavorito()){
-                        arrGrabacion.get(pos).setFavorito(false);
+                    if(arrGrabacion.get(pos).getFavoritos()){
+                        arrGrabacion.get(pos).setFavoritos(false);
                         holder.btnFav.setImageResource(R.drawable.ic_icono_nofav);
 
                     }else{
-                        arrGrabacion.get(pos).setFavorito(true);
+                        arrGrabacion.get(pos).setFavoritos(true);
                         holder.btnFav.setImageResource(R.drawable.ic_icono_fav_rojo);
 
                     }
                 }
-                actualizarFav(arrGrabacion.get(pos).getNombre(),arrGrabacion.get(pos).getId(),arrGrabacion.get(pos).getUrl(),arrGrabacion.get(pos).getFavorito());
-                Log.d("corazon","Bool: " + arrGrabacion.get(pos).getFavorito() + ", Pos" + pos);
+                actualizarFav(arrGrabacion.get(pos).getNombre(),arrGrabacion.get(pos).getId(),arrGrabacion.get(pos).getUrl(),arrGrabacion.get(pos).getFavoritos());
+                Log.d("corazon","Bool: " + arrGrabacion.get(pos).getFavoritos() + ", Pos" + pos);
             }
         });
 

@@ -7,12 +7,12 @@ import java.util.Map;
 public class Grabacion {
 
     private String Nombre,Id,Url;
-    private Boolean Favorito;
+    private Boolean Favoritos;
 
     public Grabacion(String nombre, String id, Boolean fav, String url) {
         this.Nombre = nombre;
         this.Id = id;
-        this.Favorito = fav;
+        this.Favoritos = fav;
         this.Url = url;
     }
 
@@ -24,7 +24,7 @@ public class Grabacion {
 
         HashMap<String, Object> result = new HashMap<>();
         result.put("Nombre", this.Nombre);
-        result.put("Favorito", this.Favorito);
+        result.put("Favoritos", this.Favoritos);
         result.put("Url", this.Url);
         return result;
     }
@@ -35,8 +35,8 @@ public class Grabacion {
     public String getId() { return this.Id; }
     public void setId(String id) { Id = id; }
 
-    public Boolean getFavorito() { return this.Favorito; }
-    public void setFavorito(Boolean fav) { Favorito = fav; }
+    public Boolean getFavoritos() { return this.Favoritos; }
+    public void setFavoritos(Boolean fav) { Favoritos = fav; }
 
     public String getUrl() { return this.Url; }
     public void setUrl(String url) { Url = url; }
