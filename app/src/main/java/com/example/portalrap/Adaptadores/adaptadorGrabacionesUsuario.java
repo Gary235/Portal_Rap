@@ -86,8 +86,6 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
 
         if(arrGrabacion.get(position).getFavoritos() != null)
         {
-
-
         if(arrGrabacion.get(position).getFavoritos()) {
             holder.btnFav.setImageResource(R.drawable.ic_icono_fav_rojo);
         }
@@ -95,6 +93,7 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
             holder.btnFav.setImageResource(R.drawable.ic_icono_nofav);
         }
         }
+
         holder.btnFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -138,7 +137,6 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.e("CambiarFav", "Bien Ahi");
-
 
                     }
                 })
