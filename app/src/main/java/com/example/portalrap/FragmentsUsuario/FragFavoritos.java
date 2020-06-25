@@ -88,10 +88,9 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
         btnBeats.setOnClickListener(this);
         btnVolver.setOnClickListener(this);
 
-        adaptadorBasesFav = new adaptadorBases(arrBasesFav, getActivity());
-
-        obtenerListaGrabacionesfav();
         obtenerListaBeatsfav();
+        obtenerListaGrabacionesfav();
+
 
         return v;
     }

@@ -70,6 +70,8 @@ public class FragHome extends Fragment implements View.OnClickListener {
 
     private void obtenerListaPalabras() {
 
+
+
         db.collection("Palabras")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
