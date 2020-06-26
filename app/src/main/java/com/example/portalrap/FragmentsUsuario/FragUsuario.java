@@ -53,9 +53,6 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 Log.d("Funciona","siiiiiiiiii");
-
-
-
             }
         });
 
@@ -80,8 +77,6 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
         {
             main.PasaraFragFavoritos();
         }
-
-
     }
 
 
