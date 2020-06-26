@@ -16,9 +16,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -61,18 +58,14 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
 
 
         if (idbotonapretado == R.id.btnPlaydeholder) {
-
             if(!mediaplayer.isPlaying())
             {
                 fetchAudioUrlFromFirebase();
-
             }
             else {
                 mediaplayer.pause();
                 mediaplayer.reset();
                 btnplay.setImageResource(R.drawable.ic_icono_play);
-
-
             }
         }
     }
