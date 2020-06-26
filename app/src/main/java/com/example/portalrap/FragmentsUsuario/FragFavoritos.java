@@ -69,11 +69,7 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
         View v = inflater.inflate(R.layout.fragment_frag_favoritos, container, false);
 
         adminFragment = getFragmentManager();
-        Fragment fragminireproductor;
-        fragminireproductor = new FragMiniReproductor();
-        transaccionFragment = adminFragment.beginTransaction();
-        transaccionFragment.replace(R.id.holder, fragminireproductor);
-        transaccionFragment.commit();
+
 
         db = FirebaseFirestore.getInstance();
         btnBeats = v.findViewById(R.id.grabadofavoritos);
@@ -127,8 +123,24 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     //reproducir
+                    Fragment fragminireproductor;
+                    fragminireproductor = new FragMiniReproductor();
+                    Bundle args = new Bundle();
+                    args.putString("Nombre", arrBasesFav.get(position).getNombre());
+                    args.putString("Url", arrBasesFav.get(position).getUrl());
+                    fragminireproductor.setArguments(args);
+                    transaccionFragment = adminFragment.beginTransaction();
+                    transaccionFragment.replace(R.id.holder, fragminireproductor);
+                    transaccionFragment.commit();
+                    if(FragMiniReproductor.mediaplayer != null)
+                    {
+                        FragMiniReproductor.mediaplayer.stop();
+                        FragMiniReproductor.mediaplayer.reset();
+
+                    }
                     holder.setVisibility(View.VISIBLE);
-                    lista.setPadding(0, 0, 0, 100);
+                    lista.setPadding(0,0, 0, 100);
+                    Log.d("BaseFav","" + arrBasesFav.get(position).getUrl());
 
                 }
             });
