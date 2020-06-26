@@ -46,6 +46,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     FragmentManager adminFragment;
     FragmentTransaction transaccionFragment;
+    Fragment FragGlobal;
     ViewPager pager;
     PagerAdapter pagerAdapter;
     BottomNavigationView bottom;
@@ -59,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO}, 1000);
         }
-
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         bottom = findViewById(R.id.bottomnavigation);
@@ -68,10 +68,9 @@ public class MainActivity extends AppCompatActivity {
         bottom.setOnNavigationItemSelectedListener(listenernav);
 
         adminFragment = getFragmentManager();
-        Fragment fraginisesion;
-        fraginisesion = new FragIniciarSesion();
+        FragGlobal = new FragIniciarSesion();
         transaccionFragment=adminFragment.beginTransaction();
-        transaccionFragment.replace(R.id.frameLayout, fraginisesion);
+        transaccionFragment.replace(R.id.frameLayout, FragGlobal);
         transaccionFragment.commit();
     }
 
@@ -106,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
             }
             transaccionFragment=adminFragment.beginTransaction();
             transaccionFragment.replace(R.id.frameLayout, fragseleccionado);
+            transaccionFragment.addToBackStack(null);
             transaccionFragment.commit();
 
             return true;
@@ -114,10 +114,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void PasaraFragmentRegistro()
     {
-        Fragment fragreg;
-        fragreg = new FragRegistro();
+        FragGlobal = new FragRegistro();
         transaccionFragment=adminFragment.beginTransaction();
-        transaccionFragment.replace(R.id.frameLayout, fragreg);
+        transaccionFragment.replace(R.id.frameLayout, FragGlobal);
+        transaccionFragment.addToBackStack(null);
         transaccionFragment.commit();
     }
     public void PasaraFragmentSlider()
@@ -136,102 +136,111 @@ public class MainActivity extends AppCompatActivity {
     {
         pager.setVisibility(View.GONE);
         bottom.setVisibility(View.VISIBLE);
-        Fragment fraghome;
-        fraghome = new FragHome();
+        FragGlobal = new FragHome();
         transaccionFragment=adminFragment.beginTransaction();
-        transaccionFragment.replace(R.id.frameLayout, fraghome);
+        transaccionFragment.replace(R.id.frameLayout, FragGlobal);
+        transaccionFragment.addToBackStack(null);
+
         transaccionFragment.commit();
     }
     public void PasaraFragmentModo()
     {
-        Fragment fragmodo;
-        fragmodo = new FragModo();
+        FragGlobal = new FragModo();
         transaccionFragment=adminFragment.beginTransaction();
-        transaccionFragment.replace(R.id.frameLayout, fragmodo);
+        transaccionFragment.replace(R.id.frameLayout, FragGlobal);
+        transaccionFragment.addToBackStack(null);
+
         transaccionFragment.commit();
     }
     public void PasaraFragmentEstimulo()
     {
-        Fragment fragestimulo;
-        fragestimulo = new FragEstimulo();
+        FragGlobal = new FragEstimulo();
         transaccionFragment=adminFragment.beginTransaction();
-        transaccionFragment.replace(R.id.frameLayout, fragestimulo);
+        transaccionFragment.replace(R.id.frameLayout, FragGlobal);
+        transaccionFragment.addToBackStack(null);
+
         transaccionFragment.commit();
     }
     public void PasaraFragmentDuracion()
     {
-        Fragment fragduracion;
-        fragduracion = new FragDuracion();
+        FragGlobal = new FragDuracion();
         transaccionFragment=adminFragment.beginTransaction();
-        transaccionFragment.replace(R.id.frameLayout, fragduracion);
+        transaccionFragment.replace(R.id.frameLayout, FragGlobal);
+        transaccionFragment.addToBackStack(null);
+
         transaccionFragment.commit();
     }
     public void PasaraFragBases(String desdedur)
     {
-        Fragment fragbases;
-        fragbases = new FragBases();
+        FragGlobal = new FragBases();
         Bundle args = new Bundle();
         args.putString("desdedur","si");
-        fragbases.setArguments(args);
+        FragGlobal.setArguments(args);
         transaccionFragment=adminFragment.beginTransaction();
-        transaccionFragment.replace(R.id.frameLayout, fragbases);
+        transaccionFragment.replace(R.id.frameLayout, FragGlobal);
+       transaccionFragment.addToBackStack(null);
+
         transaccionFragment.commit();
     }
     public void PasaraFragEditarPerfil()
     {
-        Fragment frageditar;
-        frageditar = new FragEditarPerfil();
+        FragGlobal = new FragEditarPerfil();
         transaccionFragment=adminFragment.beginTransaction();
-        transaccionFragment.replace(R.id.frameLayout, frageditar);
+        transaccionFragment.replace(R.id.frameLayout, FragGlobal);
+        transaccionFragment.addToBackStack(null);
+
         transaccionFragment.commit();
     }
     public void PasaraFragUsuario()
     {
         FragFavoritos.UserSelection.clear();
         FragBases.UserSelection.clear();
-        Fragment fragusu;
-        fragusu = new FragUsuario();
+        FragGlobal = new FragUsuario();
         transaccionFragment=adminFragment.beginTransaction();
-        transaccionFragment.replace(R.id.frameLayout, fragusu);
+        transaccionFragment.replace(R.id.frameLayout, FragGlobal);
+        transaccionFragment.addToBackStack(null);
+
         transaccionFragment.commit();
     }
     public void PasaraFragFavoritos()
     {
-        Fragment fragFav;
-        fragFav = new FragFavoritos();
+        FragGlobal = new FragFavoritos();
         FragFavoritos.UserSelection.clear();
         FragBases.UserSelection.clear();
         transaccionFragment=adminFragment.beginTransaction();
-        transaccionFragment.replace(R.id.frameLayout, fragFav);
+        transaccionFragment.replace(R.id.frameLayout, FragGlobal);
+        transaccionFragment.addToBackStack(null);
+
         transaccionFragment.commit();
     }
     public void PasaraFragEntrenar()
     {
-
         bottom.setVisibility(View.GONE);
-        Fragment fragentrenar;
-        fragentrenar = new FragEntrenar();
+        FragGlobal = new FragEntrenar();
         transaccionFragment=adminFragment.beginTransaction();
-        transaccionFragment.replace(R.id.frameLayout, fragentrenar);
+        transaccionFragment.replace(R.id.frameLayout, FragGlobal);
+        transaccionFragment.addToBackStack(null);
         transaccionFragment.commit();
     }
     public void PasaraFragCola()
     {
-        Fragment fragcola;
-        fragcola = new FragCola();
+        FragGlobal = new FragCola();
         transaccionFragment=adminFragment.beginTransaction();
-        transaccionFragment.replace(R.id.frameLayout, fragcola);
+        transaccionFragment.replace(R.id.frameLayout, FragGlobal);
+        transaccionFragment.addToBackStack(null);
+
         transaccionFragment.commit();
     }
     public void PasaraFragTodoListo(String desdedur)
     {
-        Fragment frglisto;
-        frglisto = new FragTodoListo();
+        FragGlobal = new FragTodoListo();
         Bundle args = new Bundle();
         args.putString("desdedur", desdedur);
-        frglisto.setArguments(args);
+        FragGlobal.setArguments(args);
         transaccionFragment=adminFragment.beginTransaction();
-        transaccionFragment.replace(R.id.frameLayout, frglisto);
+        transaccionFragment.replace(R.id.frameLayout, FragGlobal);
+        transaccionFragment.addToBackStack(null);
+
         transaccionFragment.commit();
     }
 
