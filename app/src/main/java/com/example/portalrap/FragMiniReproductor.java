@@ -69,6 +69,7 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
             }
             else {
                 mediaplayer.pause();
+                mediaplayer.reset();
                 btnplay.setImageResource(R.drawable.ic_icono_play);
 
 
