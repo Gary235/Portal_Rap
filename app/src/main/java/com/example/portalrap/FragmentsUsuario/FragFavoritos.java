@@ -183,18 +183,21 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
     }
 
     public void obtenerListaGrabacionesfav() {
+
         db.collection("Grabaciones")
                 .whereEqualTo("Favoritos", true)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
+                        arrGrabacionesFav.clear();
+                        lista.setAdapter(null);
                         for (DocumentSnapshot document : snapshots) {
                             Grabacion grab = document.toObject(Grabacion.class);
                             assert grab != null;
                             grab.setId(document.getId());
                             arrGrabacionesFav.add(grab);
                         }
-                        adaptadorGrabacionesUsuarioFav = new adaptadorGrabacionesUsuario(arrGrabacionesFav, getActivity());
+                        adaptadorGrabacionesUsuarioFav = new adaptadorGrabacionesUsuario(arrGrabacionesFav, getActivity(),adaptadorGrabacionesUsuarioFav,lista);
                         lista.setAdapter(adaptadorGrabacionesUsuarioFav);
 
                     }
@@ -203,11 +206,14 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
     }
 
     public void obtenerListaBeatsfav() {
+
         db.collection("Beats")
                 .whereEqualTo("Favoritos", true)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
+                        arrBasesFav.clear();
+                        lista.setAdapter(null);
                         for (DocumentSnapshot document : snapshots) {
                             Base base = document.toObject(Base.class);
                             assert base != null;
@@ -215,7 +221,7 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
                             arrBasesFav.add(base);
                         }
                         adaptadorBasesFav = new adaptadorBases(arrBasesFav, getActivity());
-                        //lista.setAdapter(adaptadorBasesFav);
+                        lista.setAdapter(adaptadorBasesFav);
 
                     }
                 });

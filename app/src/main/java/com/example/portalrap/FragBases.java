@@ -241,10 +241,12 @@ public class FragBases extends Fragment implements View.OnClickListener {
 
     private void obtenerListaBases() {
 
+
         db.collection("Beats").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
-                for (DocumentSnapshot document : snapshots) {
+                Beats.clear();
+                listabases.setAdapter(null);for (DocumentSnapshot document : snapshots) {
                     Base beat = document.toObject(Base.class);
                     assert beat != null;
                     beat.setId(document.getId());

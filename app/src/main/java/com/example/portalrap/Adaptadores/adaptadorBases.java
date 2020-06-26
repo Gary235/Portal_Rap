@@ -18,6 +18,7 @@ import com.example.portalrap.Clases.Base;
 import com.example.portalrap.Clases.Grabacion;
 import com.example.portalrap.FragBases;
 import com.example.portalrap.FragmentsUsuario.FragFavoritos;
+import com.example.portalrap.FragmentsUsuario.FragUsuario;
 import com.example.portalrap.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

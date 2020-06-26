@@ -29,10 +29,19 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
 
     ImageButton btneditar,btnfav;
     ListView lista;
-    ArrayList<Grabacion> arrGrabaciones = new ArrayList<>();
     adaptadorGrabacionesUsuario adaptador;
     FirebaseFirestore db;
     ArrayList<Grabacion> Grabaciones = new ArrayList<>();
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+
+        obtenerListaGrabaciones();
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -56,7 +65,6 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
             }
         });
 
-        obtenerListaGrabaciones();
 
         return v;
     }
@@ -81,20 +89,25 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
 
 
     private void obtenerListaGrabaciones() {
+
         db.collection("Grabaciones")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
+                Grabaciones.clear();
+                lista.setAdapter(null);
+
                 for (DocumentSnapshot document : snapshots) {
                     Grabacion grab = document.toObject(Grabacion.class);
                     assert grab != null;
                     grab.setId(document.getId());
                     Grabaciones.add(grab);
                 }
-                adaptador = new adaptadorGrabacionesUsuario(Grabaciones,getActivity());
+                adaptador = new adaptadorGrabacionesUsuario(Grabaciones,getActivity(),adaptador,lista);
                 lista.setAdapter(adaptador);
             }
         });
+
 
     }
 

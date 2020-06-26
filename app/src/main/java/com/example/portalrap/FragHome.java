@@ -70,8 +70,6 @@ public class FragHome extends Fragment implements View.OnClickListener {
 
     private void obtenerListaPalabras() {
 
-
-
         db.collection("Palabras")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -80,7 +78,7 @@ public class FragHome extends Fragment implements View.OnClickListener {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Palabras pal = document.toObject(Palabras.class);
-                                assert pal != null;
+                                //assert pal != null;
                                 pal.setId(document.getId());
                                 arrPalabras.add(pal);
                             }

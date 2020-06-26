@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.portalrap.Clases.Base;
 import com.example.portalrap.Clases.Grabacion;
 import com.example.portalrap.FragmentsUsuario.FragFavoritos;
+import com.example.portalrap.FragmentsUsuario.FragUsuario;
 import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -31,14 +33,15 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
     private ArrayList<Grabacion> arrGrabacion;
     private Context miContexto;
     private FirebaseFirestore db;
-
-    adaptadorGrabacionesUsuario adaptadorGrabacionesUsuario = null;
-
-    public adaptadorGrabacionesUsuario(ArrayList<Grabacion> arrayGrabacion, Context contexto) {
+    private adaptadorGrabacionesUsuario adaptadorGrabacionesUsuario;
+    private ListView listaa;
+    public adaptadorGrabacionesUsuario(ArrayList<Grabacion> arrayGrabacion, Context contexto,adaptadorGrabacionesUsuario adaptador,ListView listaaa) {
         arrGrabacion = arrayGrabacion;
         miContexto = contexto;
-        this.adaptadorGrabacionesUsuario = this;
+        adaptadorGrabacionesUsuario = adaptador;
+        listaa = listaaa;
     }
+
 
     @Override
     public int getCount() { return arrGrabacion.size(); }
@@ -114,6 +117,7 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
 
                     }
                 }
+
                 actualizarFav(arrGrabacion.get(pos).getNombre(),arrGrabacion.get(pos).getId(),arrGrabacion.get(pos).getUrl(),arrGrabacion.get(pos).getFavoritos());
                 Log.d("corazon","Bool: " + arrGrabacion.get(pos).getFavoritos() + ", Pos" + pos);
             }
