@@ -152,7 +152,6 @@ public class FragBases extends Fragment implements View.OnClickListener {
             public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                 if(item.getItemId() == R.id.usar && adaptadorBases.aja > 0)
                 {
-                    //mandarAFragmentEntrenar
                     MainActivity main=(MainActivity) getActivity();
                     if (desdedur == "si")
                     {
@@ -161,7 +160,6 @@ public class FragBases extends Fragment implements View.OnClickListener {
                     else {
                         main.PasaraFragTodoListo("no");
                     }
-
                     return true;
                 }
                 else {

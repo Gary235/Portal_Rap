@@ -10,6 +10,7 @@ import android.content.res.AssetManager;
 import android.media.MediaRecorder;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.view.ActionMode;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -139,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
         FragGlobal = new FragHome();
         transaccionFragment=adminFragment.beginTransaction();
         transaccionFragment.replace(R.id.frameLayout, FragGlobal);
-        transaccionFragment.addToBackStack(null);
 
         transaccionFragment.commit();
     }
