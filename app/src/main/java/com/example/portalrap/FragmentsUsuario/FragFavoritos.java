@@ -233,7 +233,10 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
                             arrBasesFav.add(base);
                         }
                         adaptadorBasesFav = new adaptadorBases(arrBasesFav, getActivity());
-
+                        if(lista.getAdapter() != adaptadorGrabacionesUsuarioFav)
+                        {
+                            lista.setAdapter(adaptadorBasesFav);
+                        }
                     }
                 });
 
