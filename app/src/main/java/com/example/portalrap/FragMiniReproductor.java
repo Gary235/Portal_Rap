@@ -85,7 +85,6 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
                     progressBar.setVisibility(View.VISIBLE);
                     final String url = uri.toString();
                     mediaplayer.setDataSource(url);
-                    //new MyAsyncTask().execute(10);
                     mediaplayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                         @Override
                         public void onPrepared(MediaPlayer mp) {
@@ -104,35 +103,4 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
         });
     }
 
-    class MyAsyncTask extends AsyncTask<Integer, Integer, String> {
-        @Override
-        protected String doInBackground(Integer... params) {
-            for (int counter = 0; counter <= params[0]; counter++) {
-                try {
-                    Thread.sleep(1000);
-                    publishProgress(counter);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            return "Tarea completa!. =)";
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            progressBar.setVisibility(View.GONE);
-
-        }
-
-        @Override
-        protected void onPreExecute() {
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            progressBar.setProgress(values[0]);
-        }
-    }
 }
-
-
