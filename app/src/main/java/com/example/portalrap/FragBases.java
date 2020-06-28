@@ -2,6 +2,8 @@ package com.example.portalrap;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 
 import android.text.Editable;
@@ -15,7 +17,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -54,6 +58,10 @@ public class FragBases extends Fragment implements View.OnClickListener {
     ArrayList<Base> Beats = new ArrayList<>();
     String desdedur;
     ScrollView scrol;
+    FragmentManager adminFragment;
+    FragmentTransaction transaccionFragment;
+    FrameLayout holder;
+
 
     @Nullable
     @Override
@@ -61,6 +69,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
 
         db = FirebaseFirestore.getInstance();
         desdedur = getArguments().getString("desdedur");
+        adminFragment = getFragmentManager();
 
         View v = inflater.inflate(R.layout.fragment_frag_bases, container, false);
         Setear(v);
@@ -93,6 +102,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
         lbl2 = v.findViewById(R.id.textolabel2debases);
         lbl3 = v.findViewById(R.id.textolabel3debases);
         scrol = v.findViewById(R.id.scrolviudebases);
+        holder = v.findViewById(R.id.holderdebases);
 
         btnAnterior.setOnClickListener(this);
         btnSiguiente.setOnClickListener(this);
@@ -174,6 +184,30 @@ public class FragBases extends Fragment implements View.OnClickListener {
             }
         });
 
+
+        listabases.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //reproducir
+                Fragment fragminireproductor;
+                fragminireproductor = new FragMiniReproductor();
+                Bundle args = new Bundle();
+                args.putString("Nombre", Beats.get(position).getNombre());
+                args.putString("Url", Beats.get(position).getUrl());
+                fragminireproductor.setArguments(args);
+                transaccionFragment = adminFragment.beginTransaction();
+                transaccionFragment.replace(R.id.holderdebases, fragminireproductor);
+                transaccionFragment.commit();
+                if(FragMiniReproductor.mediaplayer != null)
+                {
+                    FragMiniReproductor.mediaplayer.stop();
+                    FragMiniReproductor.mediaplayer.reset();
+
+                }
+                holder.setVisibility(View.VISIBLE);
+                listabases.setPadding(0,0, 0, 160);
+            }
+        });
 
         edtBuscar.addTextChangedListener(new TextWatcher() {
             @Override

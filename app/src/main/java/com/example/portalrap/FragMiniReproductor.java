@@ -16,6 +16,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -59,8 +62,12 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
 
 
         if (idbotonapretado == R.id.btnPlaydeholder) {
+            Log.d("TAGERROR", "error: " );
+
             if(!mediaplayer.isPlaying())
             {
+                Log.d("TAGERROR", "error: " );
+
                 fetchAudioUrlFromFirebase();
             }
             else {
@@ -75,11 +82,15 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
         final FirebaseStorage storage = FirebaseStorage.getInstance();
         // Create a storage reference from our app
         StorageReference storageRef = storage.getReferenceFromUrl("gs://portal-rap-4b1fe.appspot.com/Beats/" + Url);
+        Log.d("TAGERROR", "error:3 " );
+
         storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 try {
                     // Download url of file
+                    Log.d("TAGERROR", "error: " );
+
                     @SuppressLint("WrongConstant") Toast toast1 = Toast.makeText(getActivity(), "Cargando...", 1);
                     toast1.show();
                     progressBar.setVisibility(View.VISIBLE);
@@ -99,8 +110,18 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
                 } catch (IOException e) {
                     Log.d("TAGERROR", "error: " + e.getMessage());
                 }
+
+            }
+
+        });
+        storageRef.getDownloadUrl().addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("TAGERROR", "error: " + e.getMessage());
+
             }
         });
+
     }
 
 }

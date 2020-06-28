@@ -227,4 +227,16 @@
         android:layout_marginRight="150dp"
         android:background="@drawable/circulo_stroke_negro_grueso"
         />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:id="@+id/holderdebases"
+        android:visibility="gone"
+        android:layout_marginBottom="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        android:elevation="20dp"
+        android:translationZ="20dp"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
