@@ -29,7 +29,7 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
     public static MediaPlayer mediaplayer;
     String Nombre, Url;
     ProgressBar progressBar;
-    int Cont=0;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,6 +42,7 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
         txtnombre = v.findViewById(R.id.txtdeholder);
         progressBar = v.findViewById(R.id.progressBar);
         progressBar.setMax(10);
+        progressBar.setVisibility(View.GONE);
         txtnombre.setText(Nombre);
 
         btnplay.setOnClickListener(this);
@@ -79,19 +80,18 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
             public void onSuccess(Uri uri) {
                 try {
                     // Download url of file
-                    //new MyAsyncTask().execute(15);
                     @SuppressLint("WrongConstant") Toast toast1 = Toast.makeText(getActivity(), "Cargando...", 1);
                     toast1.show();
-
+                    progressBar.setVisibility(View.VISIBLE);
                     final String url = uri.toString();
                     mediaplayer.setDataSource(url);
+                    //new MyAsyncTask().execute(10);
                     mediaplayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                         @Override
                         public void onPrepared(MediaPlayer mp) {
-
+                            progressBar.setVisibility(View.GONE);
                             btnplay.setImageResource(R.drawable.ic_icono_pausa);
                             mp.start();
-
                         }
                     });
                     // wait for media player to get prepare

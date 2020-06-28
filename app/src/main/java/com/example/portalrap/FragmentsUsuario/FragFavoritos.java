@@ -139,7 +139,7 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
 
                     }
                     holder.setVisibility(View.VISIBLE);
-                    lista.setPadding(0,0, 0, 100);
+                    lista.setPadding(0,0, 0, 130);
                     Log.d("BaseFav","" + arrBasesFav.get(position).getUrl());
 
                 }
