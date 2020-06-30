@@ -240,7 +240,6 @@ public class MainActivity extends AppCompatActivity {
         transaccionFragment=adminFragment.beginTransaction();
         transaccionFragment.replace(R.id.frameLayout, FragGlobal);
         transaccionFragment.addToBackStack(null);
-
         transaccionFragment.commit();
     }
 

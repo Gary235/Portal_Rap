@@ -160,12 +160,12 @@ public class FragBases extends Fragment implements View.OnClickListener {
                 if(item.getItemId() == R.id.usar && adaptadorBases.aja > 0)
                 {
                     MainActivity main=(MainActivity) getActivity();
-                    if (desdedur == "si")
-                    {
-                        main.PasaraFragTodoListo(desdedur);
-                    }
-                    else {
-                        main.PasaraFragTodoListo("no");
+                    if (desdedur.equals("si"))
+                        {
+                            main.PasaraFragTodoListo(desdedur);
+                        }
+                        else {
+                            main.PasaraFragTodoListo("no");
                     }
                     return true;
                 }

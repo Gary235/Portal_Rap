@@ -32,9 +32,9 @@ public class FragHome extends Fragment implements View.OnClickListener {
 
     Button btnEntrenar;
     FirebaseFirestore db;
-    ArrayList<Palabras> arrPalabras = new ArrayList<>();
     Random generador = new Random();
-
+    ArrayList<Palabras> arrPalabras;
+    String palabrarandom;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -44,32 +44,8 @@ public class FragHome extends Fragment implements View.OnClickListener {
         btnEntrenar.setOnClickListener(this);
         db = FirebaseFirestore.getInstance();
 
-        obtenerListaPalabras();
 
-
-        if (arrPalabras.isEmpty()) {
-            Log.d("PalabraRandom", "no");
-
-        } else {
-            String palabrarandom = arrPalabras.get(generador.nextInt(arrPalabras.size())).getPalabra();
-            Log.d("PalabraRandom", palabrarandom + "");
-
-        }
-
-
-        return v;
-    }
-
-    @Override
-    public void onClick(View v) {
-
-        MainActivity main = (MainActivity) getActivity();
-        main.PasaraFragmentModo();
-    }
-
-
-    private void obtenerListaPalabras() {
-
+        arrPalabras = new ArrayList<>();
         db.collection("Palabras")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -82,11 +58,34 @@ public class FragHome extends Fragment implements View.OnClickListener {
                                 pal.setId(document.getId());
                                 arrPalabras.add(pal);
                             }
+                            if(arrPalabras != null)
+                            {
+                                if (arrPalabras.isEmpty()) {
+                                    Log.d("PalabraRandom", "vacio");
+                                } else {
+                                     palabrarandom = arrPalabras.get(generador.nextInt(arrPalabras.size())).getPalabra();
+                                    Log.d("PalabraRandom", palabrarandom + "");
+                                }
+                            }
+                            else {
+                                Log.d("PalabraRandom", "null");
+                            }
 
                         } else {
                         }
                     }
                 });
+
+        Log.d("PalabraRandom", palabrarandom + "");
+
+        return v;
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        MainActivity main = (MainActivity) getActivity();
+        main.PasaraFragmentModo();
     }
 
 
