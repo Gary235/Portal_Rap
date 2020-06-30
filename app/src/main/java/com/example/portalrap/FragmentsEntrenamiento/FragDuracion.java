@@ -153,8 +153,7 @@ public class FragDuracion extends Fragment implements View.OnClickListener {
                 MainActivity.Segundos = 50;break;
             case  R.id.btn0mindeduracion:
                 txtDurMin.setText(btnMin1.getText().toString());
-                MainActivity.Minutos = 0;
-                break;
+                MainActivity.Minutos = 0;break;
             case  R.id.btn1mindeduracion:
                 txtDurMin.setText(btnMin2.getText().toString());
                 MainActivity.Minutos = 1; break;

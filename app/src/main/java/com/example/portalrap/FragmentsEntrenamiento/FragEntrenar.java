@@ -7,7 +7,9 @@ import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 
+import android.os.CountDownTimer;
 import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,40 +32,30 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
     MediaRecorder grabacion = null;
     String archivoSalida = null;
     MediaPlayer mediaPlayer;
-    Boolean f = false,f1 = false;
+    CountDownTimer timer;
+    long tiemporestante = 300000;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.entrenar, container, false);
         Setear(v);
-
-        mediaPlayer = new MediaPlayer();
+        ListenersAdicionales();
 
         if (MainActivity.PosModo >= 0 && MainActivity.Segundos > 0 && MainActivity.Minutos >= 0 && MainActivity.Frecuencia > 0) {
             //personalizado
             btnRepetir.setImageResource(R.drawable.ic_icono_repetir);
             btnCola.setImageResource(R.drawable.ic_icono_cola_verde);
-            txtDuracion.setText(MainActivity.Minutos + ":" + MainActivity.Segundos);
+            tiemporestante = (MainActivity.Minutos * 60000) + (MainActivity.Segundos * 1000);
         } else {
             //predeterminado
             btnRepetir.setImageResource(R.drawable.ic_repetir_verde);
             btnCola.setImageResource(R.drawable.ic_icono_cola_blanco);
-            txtDuracion.setText("5:0");
         }
 
-        btnGrabar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Recorder();
-            }
-        });
-        btnPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                reproducir();
-            }
-        });
+        actualizarTimer();
+        empezarTimer();
+
         return v;
     }
 
@@ -81,6 +73,8 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
         barradebeat = v.findViewById(R.id.Barradeentrenar);
 
+        mediaPlayer = new MediaPlayer();
+
         btnVolver.setOnClickListener(this);
         btnRepetir.setOnClickListener(this);
         btnCola.setOnClickListener(this);
@@ -88,17 +82,32 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
     }
 
+    public void ListenersAdicionales() {
+        btnGrabar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Recorder();
+            }
+        });
+        btnPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reproducir();
+            }
+        });
+
+    }
+
     DialogInterface.OnClickListener escuchador = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
-
             if (which == -1) {
                 MainActivity main = (MainActivity) getActivity();
                 main.PasaraFragmentHome();
-            } else if (which == -2) {
+            }
+            else if (which == -2) {
                 dialog.cancel();
             }
-
         }
     };
 
@@ -187,4 +196,35 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         Toast.makeText(getActivity(), "Reproduciendo audio", Toast.LENGTH_SHORT).show();
 
     }
+
+    public void empezarTimer(){
+        timer = new CountDownTimer(tiemporestante,1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                tiemporestante = millisUntilFinished;
+                actualizarTimer();
+            }
+
+            @Override
+            public void onFinish() {
+                txtDuracion.setText("yey");
+            }
+        }.start();
+    }
+    public void actualizarTimer()
+    {
+        int minutos =(int) (tiemporestante / 1000) / 60;
+        int segundos =(int) (tiemporestante / 1000) % 60;
+        String txttiempores;
+        Log.d("timer", "" + MainActivity.Segundos);
+        Log.d("timer", "" + segundos);
+
+        txttiempores = "" + minutos;
+        txttiempores += ":";
+        if(segundos < 10) {txttiempores += "0";}
+        txttiempores += "" + segundos;
+
+        txtDuracion.setText(txttiempores);
+    }
+
 }
