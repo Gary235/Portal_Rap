@@ -7,6 +7,30 @@
 
 
     <ImageView
+        android:id="@+id/recdifuminado"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#AB000000"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="50dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtConfirmar"
+        android:fontFamily="sans-serif-black"
+        android:textColor="#fff"
+        android:textSize="80dp"
+        android:text="EMPEZAR"
+        android:elevation="60dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/recfondo"
+        app:layout_constraintBottom_toBottomOf="@id/recfondo"
+        />
+
+    <ImageView
         android:id="@+id/recfondo"
         android:layout_width="match_parent"
         android:layout_height="350dp"

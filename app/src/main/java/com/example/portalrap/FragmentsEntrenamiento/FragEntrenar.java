@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,13 +28,14 @@ import java.io.IOException;
 public class FragEntrenar extends Fragment implements View.OnClickListener {
 
     ImageButton btnFav, btnPlay, btnRepetir, btnCola, btnVolver, btnGrabar;
-    TextView txtArtista, txtBase, txtDuracion;
+    TextView txtArtista, txtBase, txtDuracion,txtConfirmar;
+    ImageView fondoDifuminado;
     SeekBar barradebeat;
     MediaRecorder grabacion = null;
     String archivoSalida = null;
     MediaPlayer mediaPlayer;
-    CountDownTimer timer;
-    long tiemporestante = 300000;
+    CountDownTimer timer,timerinicial;
+    long tiemporestanteDuracion = 300000,tiemporestanteInicial = 3500;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,15 +48,13 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             //personalizado
             btnRepetir.setImageResource(R.drawable.ic_icono_repetir);
             btnCola.setImageResource(R.drawable.ic_icono_cola_verde);
-            tiemporestante = (MainActivity.Minutos * 60000) + (MainActivity.Segundos * 1000);
+            tiemporestanteDuracion = (MainActivity.Minutos * 60000) + (MainActivity.Segundos * 1000);
         } else {
             //predeterminado
             btnRepetir.setImageResource(R.drawable.ic_repetir_verde);
             btnCola.setImageResource(R.drawable.ic_icono_cola_blanco);
         }
 
-        actualizarTimer();
-        empezarTimer();
 
         return v;
     }
@@ -70,10 +70,20 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         txtArtista = v.findViewById(R.id.nombreArtistaSeleccionadodeentrenar);
         txtBase = v.findViewById(R.id.nombreBaseSeleccionadadeentrenar);
         txtDuracion = v.findViewById(R.id.TiempoFreedeentrenar);
+        txtConfirmar = v.findViewById(R.id.txtConfirmar);
+        fondoDifuminado = v.findViewById(R.id.recdifuminado);
 
         barradebeat = v.findViewById(R.id.Barradeentrenar);
 
         mediaPlayer = new MediaPlayer();
+
+
+        btnVolver.setEnabled(false);
+        btnRepetir.setEnabled(false);
+        btnCola.setEnabled(false);
+        btnFav.setEnabled(false);
+        btnGrabar.setEnabled(false);
+        btnPlay.setEnabled(false);
 
         btnVolver.setOnClickListener(this);
         btnRepetir.setOnClickListener(this);
@@ -93,6 +103,13 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 reproducir();
+            }
+        });
+
+        txtConfirmar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                empezarTimerInicial();
             }
         });
 
@@ -134,14 +151,14 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
                 break;
             case R.id.btnColadeentrenar:
-
                 main.PasaraFragCola();
                 break;
             case R.id.btnrepetirbasedeentrenar:
-
                 break;
             case R.id.favdeentrenar:
                 break;
+
+
 
         }
     }
@@ -197,12 +214,12 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
     }
 
-    public void empezarTimer(){
-        timer = new CountDownTimer(tiemporestante,1000) {
+    public void empezarTimerDuracion(){
+        timer = new CountDownTimer(tiemporestanteDuracion,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                tiemporestante = millisUntilFinished;
-                actualizarTimer();
+                tiemporestanteDuracion = millisUntilFinished;
+                actualizarTimerDuracion();
             }
 
             @Override
@@ -211,10 +228,9 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             }
         }.start();
     }
-    public void actualizarTimer()
-    {
-        int minutos =(int) (tiemporestante / 1000) / 60;
-        int segundos =(int) (tiemporestante / 1000) % 60;
+    public void actualizarTimerDuracion() {
+        int minutos =(int) (tiemporestanteDuracion / 1000) / 60;
+        int segundos =(int) (tiemporestanteDuracion / 1000) % 60;
         String txttiempores;
         Log.d("timer", "" + MainActivity.Segundos);
         Log.d("timer", "" + segundos);
@@ -225,6 +241,41 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         txttiempores += "" + segundos;
 
         txtDuracion.setText(txttiempores);
+    }
+
+
+    public void empezarTimerInicial() {
+        timerinicial = new CountDownTimer(tiemporestanteInicial,1000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            tiemporestanteInicial = millisUntilFinished;
+            actualizarTimerInicial();
+        }
+
+        @Override
+        public void onFinish() {
+            actualizarTimerDuracion();
+            empezarTimerDuracion();
+
+            btnVolver.setEnabled(true);
+            btnRepetir.setEnabled(true);
+            btnCola.setEnabled(true);
+            btnFav.setEnabled(true);
+            btnGrabar.setEnabled(true);
+            btnPlay.setEnabled(true);
+            fondoDifuminado.setVisibility(View.GONE);
+            txtConfirmar.setVisibility(View.GONE);
+        }
+    }.start();
+
+    }
+    public void actualizarTimerInicial(){
+        int segundos =(int) (tiemporestanteInicial / 1000) % 60;
+        String txttiempores = "";
+
+        txttiempores += "" + segundos;
+        if(segundos < 1){txttiempores = "TIEMPO!!";}
+        txtConfirmar.setText(txttiempores);
     }
 
 }
