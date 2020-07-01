@@ -84,6 +84,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         btnFav.setEnabled(false);
         btnGrabar.setEnabled(false);
         btnPlay.setEnabled(false);
+        barradebeat.setEnabled(false);
 
         btnVolver.setOnClickListener(this);
         btnRepetir.setOnClickListener(this);
@@ -263,6 +264,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             btnFav.setEnabled(true);
             btnGrabar.setEnabled(true);
             btnPlay.setEnabled(true);
+            barradebeat.setEnabled(true);
             fondoDifuminado.setVisibility(View.GONE);
             txtConfirmar.setVisibility(View.GONE);
         }
