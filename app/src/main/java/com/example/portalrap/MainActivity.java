@@ -137,6 +137,8 @@ public class MainActivity extends AppCompatActivity {
     {
         pager.setVisibility(View.GONE);
         bottom.setVisibility(View.VISIBLE);
+        FragFavoritos.UserSelection.clear();
+        FragBases.UserSelection.clear();
         FragGlobal = new FragHome();
         transaccionFragment=adminFragment.beginTransaction();
         transaccionFragment.replace(R.id.frameLayout, FragGlobal);
