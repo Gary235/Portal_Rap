@@ -159,13 +159,12 @@ public class FragBases extends Fragment implements View.OnClickListener {
                 {
                     MainActivity main=(MainActivity) getActivity();
                     if (desdedur.equals("si")){
-                            mode.finish();
                             main.PasaraFragTodoListo(desdedur);
                     }
                     else{
-                            mode.finish();
                             main.PasaraFragTodoListo("no");
                     }
+                    mode.finish();
                     return true;
                 }
                 else {

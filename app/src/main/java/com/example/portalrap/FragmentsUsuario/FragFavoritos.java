@@ -168,6 +168,7 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
                         //mandarAFragmentEntrenar
                         MainActivity main = (MainActivity) getActivity();
                         main.PasaraFragTodoListo("no");
+                        mode.finish();
 
 
                         return true;
