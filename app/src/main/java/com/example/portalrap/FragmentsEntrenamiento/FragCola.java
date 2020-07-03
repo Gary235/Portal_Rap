@@ -27,8 +27,7 @@ public class FragCola extends Fragment {
         btnVolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity main=(MainActivity) getActivity();
-                main.PasaraFragEntrenar();
+                FragEntrenar.holderparacola.setVisibility(View.GONE);
             }
         });
         return v;

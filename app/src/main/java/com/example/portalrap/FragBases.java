@@ -144,7 +144,6 @@ public class FragBases extends Fragment implements View.OnClickListener {
             }
             @Override
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                Log.d("mensaje","hola");
                 MenuInflater inflater = mode.getMenuInflater();
                 inflater.inflate(R.menu.actionbar_menu,menu);
                 isActionMode = true;

@@ -10,6 +10,7 @@ import android.content.res.AssetManager;
 import android.media.MediaRecorder;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.MenuItem;
 import android.view.View;
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         adminFragment = getFragmentManager();
         FragGlobal = new FragIniciarSesion();
         transaccionFragment=adminFragment.beginTransaction();
-        transaccionFragment.replace(R.id.frameLayout, FragGlobal);
+        transaccionFragment.replace(R.id.frameLayout, FragGlobal,null);
         transaccionFragment.commit();
     }
 
@@ -105,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
             transaccionFragment=adminFragment.beginTransaction();
-            transaccionFragment.replace(R.id.frameLayout, fragseleccionado);
+            transaccionFragment.replace(R.id.frameLayout, fragseleccionado,null);
             transaccionFragment.addToBackStack(null);
             transaccionFragment.commit();
 
@@ -141,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         FragBases.UserSelection.clear();
         FragGlobal = new FragHome();
         transaccionFragment=adminFragment.beginTransaction();
-        transaccionFragment.replace(R.id.frameLayout, FragGlobal);
+        transaccionFragment.replace(R.id.frameLayout, FragGlobal,null);
 
         transaccionFragment.commit();
     }
@@ -215,14 +216,29 @@ public class MainActivity extends AppCompatActivity {
 
         transaccionFragment.commit();
     }
-    public void PasaraFragEntrenar()
+    public void PasaraFragEntrenar(String desdecola)
     {
         bottom.setVisibility(View.GONE);
+        Log.d("desdecola", desdecola);
         FragGlobal = new FragEntrenar();
-        transaccionFragment=adminFragment.beginTransaction();
-        transaccionFragment.replace(R.id.frameLayout, FragGlobal);
-        transaccionFragment.addToBackStack(null);
-        transaccionFragment.commit();
+        Bundle args = new Bundle();
+        args.putString("desdecola", desdecola);
+        FragGlobal.setArguments(args);
+        if (desdecola.equals("no"))
+        {
+            transaccionFragment=adminFragment.beginTransaction();
+            transaccionFragment.replace(R.id.frameLayout, FragGlobal);
+            transaccionFragment.addToBackStack(null);
+            transaccionFragment.commit();
+        }
+        else
+        {
+            transaccionFragment=adminFragment.beginTransaction();
+            transaccionFragment.replace(R.id.frameLayout, FragGlobal);
+            transaccionFragment.addToBackStack(null);
+            transaccionFragment.commit();
+
+        }
     }
     public void PasaraFragCola()
     {
@@ -230,7 +246,6 @@ public class MainActivity extends AppCompatActivity {
         transaccionFragment=adminFragment.beginTransaction();
         transaccionFragment.replace(R.id.frameLayout, FragGlobal);
         transaccionFragment.addToBackStack(null);
-
         transaccionFragment.commit();
     }
     public void PasaraFragTodoListo(String desdedur)
@@ -245,6 +260,17 @@ public class MainActivity extends AppCompatActivity {
         transaccionFragment.commit();
     }
 
+    @Override
+    public void onBackPressed() {
+
+        //si no queda ningún fragment sale de este activity
+        if (getFragmentManager().getBackStackEntryCount() == 0) {
+            // super.onBackPressed();
+            finish();
+        } else { //si no manda al fragment anterior.
+            getFragmentManager().popBackStack();
+        }
+    }
 
 
 }

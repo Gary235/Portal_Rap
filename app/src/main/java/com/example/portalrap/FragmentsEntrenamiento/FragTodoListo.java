@@ -37,7 +37,7 @@ public class FragTodoListo extends Fragment {
                 @Override
                 public void onClick(View v) {
                     MainActivity main=(MainActivity) getActivity();
-                    main.PasaraFragEntrenar();
+                    main.PasaraFragEntrenar("no");
                 }
             });
             btnANterior.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +72,7 @@ public class FragTodoListo extends Fragment {
         }
         else {
             MainActivity main=(MainActivity) getActivity();
-            main.PasaraFragEntrenar();
+            main.PasaraFragEntrenar("no");
             return null;
         }
 

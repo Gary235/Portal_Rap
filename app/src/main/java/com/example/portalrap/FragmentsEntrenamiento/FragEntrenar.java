@@ -2,6 +2,8 @@ package com.example.portalrap.FragmentsEntrenamiento;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -13,12 +15,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.portalrap.FragmentsInicio.FragIniciarSesion;
 import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
 
@@ -36,7 +40,10 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
     MediaPlayer mediaPlayer;
     CountDownTimer timer,timerinicial;
     long tiemporestanteDuracion = 300000,tiemporestanteInicial = 3500;
-
+    public static FrameLayout holderparacola;
+    FragmentManager adminFragment;
+    FragmentTransaction transaccionFragment;
+    Fragment fragdeCola;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,6 +67,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
     }
 
     public void Setear(View v) {
+
         btnGrabar = v.findViewById(R.id.btnGrabardeentrenar);
         btnVolver = v.findViewById(R.id.btnVOlverdeentrenar);
         btnCola = v.findViewById(R.id.btnColadeentrenar);
@@ -72,11 +80,8 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         txtDuracion = v.findViewById(R.id.TiempoFreedeentrenar);
         txtConfirmar = v.findViewById(R.id.txtConfirmar);
         fondoDifuminado = v.findViewById(R.id.recdifuminado);
-
         barradebeat = v.findViewById(R.id.Barradeentrenar);
-
         mediaPlayer = new MediaPlayer();
-
 
         btnVolver.setEnabled(false);
         btnRepetir.setEnabled(false);
@@ -85,6 +90,15 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         btnGrabar.setEnabled(false);
         btnPlay.setEnabled(false);
         barradebeat.setEnabled(false);
+
+        holderparacola = v.findViewById(R.id.holderdecola);
+        adminFragment = getFragmentManager();
+        fragdeCola = new FragCola();
+        transaccionFragment=adminFragment.beginTransaction();
+        transaccionFragment.replace(R.id.holderdecola, fragdeCola);
+        transaccionFragment.commit();
+
+        holderparacola.setVisibility(View.GONE);
 
         btnVolver.setOnClickListener(this);
         btnRepetir.setOnClickListener(this);
@@ -152,7 +166,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
                 break;
             case R.id.btnColadeentrenar:
-                main.PasaraFragCola();
+                holderparacola.setVisibility(View.VISIBLE);
                 break;
             case R.id.btnrepetirbasedeentrenar:
                 break;
