@@ -73,8 +73,6 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
             {
                 Log.d("TAGERROR", "error: " );
                 btnplay.setImageResource(R.drawable.ic_icono_pausa);
-                //@SuppressLint("WrongConstant") Toast toast1 = Toast.makeText(getActivity(), "Cargando...", 1);
-                //toast1.show();
                     while (!mediaplayer.isPlaying()) {
                     mediaplayer.start();
                 }
