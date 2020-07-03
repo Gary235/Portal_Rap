@@ -40,16 +40,21 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
 
         Nombre = getArguments().getString("Nombre");
         Url = getArguments().getString("Url");
+        mediaplayer = new MediaPlayer();
 
         btnplay = v.findViewById(R.id.btnPlaydeholder);
         txtnombre = v.findViewById(R.id.txtdeholder);
         progressBar = v.findViewById(R.id.progressBar);
-        progressBar.setMax(10);
         progressBar.setVisibility(View.GONE);
         txtnombre.setText(Nombre);
 
+
+        fetchAudioUrlFromFirebase();
+
+
+
+
         btnplay.setOnClickListener(this);
-        mediaplayer = new MediaPlayer();
         return v;
     }
 
@@ -67,12 +72,16 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
             if(!mediaplayer.isPlaying())
             {
                 Log.d("TAGERROR", "error: " );
-
-                fetchAudioUrlFromFirebase();
+                btnplay.setImageResource(R.drawable.ic_icono_pausa);
+                //@SuppressLint("WrongConstant") Toast toast1 = Toast.makeText(getActivity(), "Cargando...", 1);
+                //toast1.show();
+                    while (!mediaplayer.isPlaying()) {
+                    mediaplayer.start();
+                }
             }
             else {
                 mediaplayer.pause();
-                mediaplayer.reset();
+                //mediaplayer.reset();
                 btnplay.setImageResource(R.drawable.ic_icono_play);
             }
         }
@@ -91,17 +100,11 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
                     // Download url of file
                     Log.d("TAGERROR", "error: " );
 
-                    @SuppressLint("WrongConstant") Toast toast1 = Toast.makeText(getActivity(), "Cargando...", 1);
-                    toast1.show();
-                    progressBar.setVisibility(View.VISIBLE);
                     final String url = uri.toString();
                     mediaplayer.setDataSource(url);
                     mediaplayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                         @Override
                         public void onPrepared(MediaPlayer mp) {
-                            progressBar.setVisibility(View.GONE);
-                            btnplay.setImageResource(R.drawable.ic_icono_pausa);
-                            mp.start();
                         }
                     });
                     // wait for media player to get prepare

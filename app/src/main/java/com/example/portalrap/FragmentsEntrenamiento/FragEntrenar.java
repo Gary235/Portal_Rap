@@ -22,11 +22,21 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.example.portalrap.Clases.Palabras;
 import com.example.portalrap.FragmentsInicio.FragIniciarSesion;
 import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Random;
 
 
 public class FragEntrenar extends Fragment implements View.OnClickListener {
@@ -38,20 +48,28 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
     MediaRecorder grabacion = null;
     String archivoSalida = null;
     MediaPlayer mediaPlayer;
-    CountDownTimer timer,timerinicial;
+    CountDownTimer timer,timerinicial, timerdefrecuencia;
     long tiemporestanteDuracion = 300000,tiemporestanteInicial = 3500;
     public static FrameLayout holderparacola;
     FragmentManager adminFragment;
     FragmentTransaction transaccionFragment;
     Fragment fragdeCola;
+    int ModoElegido = MainActivity.PosModo,FrecuenciaElegida = MainActivity.Frecuencia;
+    FirebaseFirestore db;
+    Random generador = new Random();
+    ArrayList<Palabras> arrPalabras;
+    String palabrarandom;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.entrenar, container, false);
         Setear(v);
         ListenersAdicionales();
+        db = FirebaseFirestore.getInstance();
 
-        if (MainActivity.PosModo >= 0 && MainActivity.Segundos > 0 && MainActivity.Minutos >= 0 && MainActivity.Frecuencia > 0) {
+        if (MainActivity.PosModo != -1 && MainActivity.Segundos != -1 && MainActivity.Minutos != -1 && MainActivity.Frecuencia != -1) {
             //personalizado
             btnRepetir.setImageResource(R.drawable.ic_icono_repetir);
             btnCola.setImageResource(R.drawable.ic_icono_cola_verde);
@@ -60,8 +78,24 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             //predeterminado
             btnRepetir.setImageResource(R.drawable.ic_repetir_verde);
             btnCola.setImageResource(R.drawable.ic_icono_cola_blanco);
+            ModoElegido = 2;
+            FrecuenciaElegida = 1;
         }
-
+        obtenerPalabraRandom();
+        Log.d("Entrenamiento","Frecuencia Elegida: " + FrecuenciaElegida + "Frecuencia Seleccionada: " + MainActivity.Frecuencia);
+        Log.d("Entrenamiento","Modo Elegido: " + ModoElegido + "Modo Seleccionado: " + MainActivity.PosModo);
+        switch (FrecuenciaElegida) {
+            case 0: FrecuenciaElegida = 2 * 1000;
+                break;
+            case 1: FrecuenciaElegida = 5 * 1000;
+                break;
+            case 2: FrecuenciaElegida = 10 * 1000;
+                break;
+            case 3: FrecuenciaElegida = 20 * 1000;
+                break;
+            case 4: FrecuenciaElegida = 30 * 1000;
+                break;
+        }
 
         return v;
     }
@@ -271,6 +305,8 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         public void onFinish() {
             actualizarTimerDuracion();
             empezarTimerDuracion();
+            actualizarTimerFrecuencia();
+            empezarTimerFrecuencia();
 
             btnVolver.setEnabled(true);
             btnRepetir.setEnabled(true);
@@ -280,7 +316,6 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             btnPlay.setEnabled(true);
             barradebeat.setEnabled(true);
             fondoDifuminado.setVisibility(View.GONE);
-            txtConfirmar.setVisibility(View.GONE);
         }
     }.start();
 
@@ -294,4 +329,62 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         txtConfirmar.setText(txttiempores);
     }
 
+    public void empezarTimerFrecuencia() {
+        timerinicial = new CountDownTimer(tiemporestanteDuracion,FrecuenciaElegida) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                tiemporestanteDuracion = millisUntilFinished;
+                actualizarTimerFrecuencia();
+            }
+
+            @Override
+            public void onFinish() {
+            }
+        }.start();
+
+    }
+    public void actualizarTimerFrecuencia(){
+
+        switch (ModoElegido){
+            case 0:
+                break;
+            case 1:
+                txtConfirmar.setVisibility(View.GONE);
+                break;
+            case 2:
+                obtenerPalabraRandom();
+                txtConfirmar.setTextSize(50);
+                txtConfirmar.setText(palabrarandom);
+                break;
+        }
+
+
+    }
+
+    public void obtenerPalabraRandom(){
+     arrPalabras = new ArrayList<>();
+     db.collection("Palabras")
+             .get()
+             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                 @Override
+                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                     if (task.isSuccessful()) {
+                         for (QueryDocumentSnapshot document : task.getResult()) {
+                             Palabras pal = document.toObject(Palabras.class);
+                             pal.setId(document.getId());
+                             arrPalabras.add(pal);
+                         }
+                         if(arrPalabras != null) {
+                             if (arrPalabras.isEmpty()) {
+                                 Log.d("PalabraRandom", "vacio");
+                             } else{
+                                 palabrarandom = arrPalabras.get(generador.nextInt(arrPalabras.size())).getPalabra();
+                                 Log.d("PalabraRandom", palabrarandom + "");
+                             }
+                         }
+                     }
+                 }
+             });
+
+    }
 }

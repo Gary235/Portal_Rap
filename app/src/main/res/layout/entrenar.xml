@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/txtConfirmar"
         android:fontFamily="sans-serif-black"
-        android:textColor="#fff"
+        android:textColor="#E1A9F4"
         android:textSize="80dp"
         android:text="EMPEZAR"
         android:elevation="60dp"

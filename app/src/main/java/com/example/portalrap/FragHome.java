@@ -31,10 +31,6 @@ import java.util.Random;
 public class FragHome extends Fragment implements View.OnClickListener {
 
     Button btnEntrenar;
-    FirebaseFirestore db;
-    Random generador = new Random();
-    ArrayList<Palabras> arrPalabras;
-    String palabrarandom;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -42,41 +38,8 @@ public class FragHome extends Fragment implements View.OnClickListener {
 
         btnEntrenar = v.findViewById(R.id.btnentrenar);
         btnEntrenar.setOnClickListener(this);
-        db = FirebaseFirestore.getInstance();
 
 
-        arrPalabras = new ArrayList<>();
-        db.collection("Palabras")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Palabras pal = document.toObject(Palabras.class);
-                                //assert pal != null;
-                                pal.setId(document.getId());
-                                arrPalabras.add(pal);
-                            }
-                            if(arrPalabras != null)
-                            {
-                                if (arrPalabras.isEmpty()) {
-                                    Log.d("PalabraRandom", "vacio");
-                                } else {
-                                     palabrarandom = arrPalabras.get(generador.nextInt(arrPalabras.size())).getPalabra();
-                                    Log.d("PalabraRandom", palabrarandom + "");
-                                }
-                            }
-                            else {
-                                Log.d("PalabraRandom", "null");
-                            }
-
-                        } else {
-                        }
-                    }
-                });
-
-        Log.d("PalabraRandom", palabrarandom + "");
 
         return v;
     }

@@ -5,17 +5,11 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.pm.PackageManager;
-import android.content.res.AssetFileDescriptor;
-import android.content.res.AssetManager;
-import android.media.MediaRecorder;
-import android.media.SoundPool;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ActionMode;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,7 +35,6 @@ import com.example.portalrap.FragmentsUsuario.FragFavoritos;
 import com.example.portalrap.FragmentsUsuario.FragUsuario;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

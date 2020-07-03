@@ -22,36 +22,25 @@
         />
 
     <TextView
+        android:id="@+id/sonando"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/sonando"
 
-        android:layout_marginTop="100dp"
-        android:layout_marginLeft="30dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="112dp"
         android:fontFamily="sans-serif-black"
+        android:text="Sonando"
         android:textColor="#fff"
         android:textSize="40dp"
-        android:text="Sonando"
-        />
-
-    <ImageView
-        android:id="@+id/fondo2"
-        android:layout_width="match_parent"
-        android:layout_height="1.5dp"
-        android:background="@drawable/edttext_conmarcos"
-
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="160dp"
-        />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="212dp"
-        android:layout_marginTop="168dp"
+        android:layout_marginLeft="220dp"
+        android:layout_marginTop="180dp"
         android:fontFamily="sans-serif-black"
         android:text="ARTISTA"
         android:textColor="#808080"
@@ -63,8 +52,8 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="168dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="180dp"
         android:fontFamily="sans-serif-black"
         android:text="TITULO"
         android:textColor="#808080"
@@ -73,11 +62,61 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="204dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Beat #001"
+        android:textColor="#04B404"
+        android:textSize="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="220dp"
+        android:layout_marginTop="204dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Artista #001"
+        android:textColor="#04B404"
+        android:textSize="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="188dp"
+        android:background="@drawable/btn_transparente"
+        android:src="@drawable/ic_icono_nofav_blanco"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.027" />
+
+    <ImageView
+        android:id="@+id/fondo2"
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:layout_marginTop="172dp"
+
+        android:background="@drawable/edttext_conmarcos"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="10dp" />
+
+
+    <TextView
         android:id="@+id/siguiente"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="256dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="276dp"
         android:fontFamily="sans-serif-black"
         android:text="Siguiente"
         android:textColor="#fff"
@@ -85,52 +124,12 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <TextView
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="184dp"
-        android:layout_marginTop="332dp"
-        android:fontFamily="sans-serif-black"
-        android:text="ARTISTA"
-        android:textColor="#808080"
-        android:textSize="15dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="332dp"
-        android:fontFamily="sans-serif-black"
-        android:text="TITULO"
-        android:textColor="#808080"
-        android:textSize="15dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/BasesDisponibles"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="396dp"
-        android:fontFamily="sans-serif-black"
-        android:text="Bases Disponibles"
-        android:textColor="#fff"
-        android:textSize="40dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="464dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="352dp"
         android:fontFamily="sans-serif-black"
         android:text="TITULO"
         android:textColor="#808080"
@@ -142,165 +141,53 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="184dp"
+        android:layout_marginTop="380dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Artista #002"
+        android:textColor="#808080"
+        android:textSize="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="380dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Beat #002"
+        android:textColor="#808080"
+        android:textSize="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="360dp"
+        android:background="@drawable/btn_transparente"
+        android:src="@drawable/ic_icono_nofav_blanco"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.063" />
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="188dp"
-        android:layout_marginTop="464dp"
+        android:layout_marginTop="352dp"
         android:fontFamily="sans-serif-black"
         android:text="ARTISTA"
         android:textColor="#808080"
         android:textSize="15dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="192dp"
-        android:fontFamily="sans-serif-black"
-        android:text="Beat #001"
-        android:textColor="#04B404"
-        android:textSize="20dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="212dp"
-        android:layout_marginTop="192dp"
-        android:fontFamily="sans-serif-black"
-        android:text="Artista #001"
-        android:textColor="#04B404"
-        android:textSize="20dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="186dp"
-        android:layout_marginTop="360dp"
-        android:fontFamily="sans-serif-black"
-        android:text="Artista #002"
-        android:textColor="#808080"
-        android:textSize="20dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="360dp"
-        android:fontFamily="sans-serif-black"
-        android:text="Beat #002"
-        android:textColor="#808080"
-        android:textSize="20dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="184dp"
-        android:layout_marginTop="484dp"
-        android:fontFamily="sans-serif-black"
-        android:text="Artista #001"
-        android:textColor="#808080"
-        android:textSize="20dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="484dp"
-        android:fontFamily="sans-serif-black"
-        android:text="Beat #001"
-        android:textColor="#808080"
-        android:textSize="20dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="188dp"
-        android:layout_marginTop="532dp"
-        android:fontFamily="sans-serif-black"
-        android:text="Artista #002"
-        android:textColor="#808080"
-        android:textSize="20dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="532dp"
-        android:fontFamily="sans-serif-black"
-        android:text="Beat #002"
-        android:textColor="#808080"
-        android:textSize="20dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="532dp"
-        android:background="@drawable/btn_transparente"
-        android:src="@drawable/ic_icono_nofav_blanco"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-    <ImageButton
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="484dp"
-        android:background="@drawable/btn_transparente"
-        android:src="@drawable/ic_icono_nofav_blanco"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-    <ImageButton
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="188dp"
-        android:background="@drawable/btn_transparente"
-        android:src="@drawable/ic_icono_nofav_blanco"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageButton
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="1dp"
-        android:layout_marginTop="360dp"
-        android:background="@drawable/btn_transparente"
-        android:src="@drawable/ic_icono_nofav_blanco"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
