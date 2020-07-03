@@ -73,19 +73,24 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
             {
                 Log.d("TAGERROR", "error: " );
                 btnplay.setImageResource(R.drawable.ic_icono_pausa);
+                Toast toast1 = Toast.makeText(getActivity(), "Reproduciendo", Toast.LENGTH_SHORT);
+                toast1.show();
                     while (!mediaplayer.isPlaying()) {
                     mediaplayer.start();
                 }
             }
             else {
+                btnplay.setImageResource(R.drawable.ic_icono_pausa);
+                Toast toast1 = Toast.makeText(getActivity(), "Pausa", Toast.LENGTH_SHORT);
+                toast1.show();
                 mediaplayer.pause();
-                //mediaplayer.reset();
                 btnplay.setImageResource(R.drawable.ic_icono_play);
             }
         }
     }
 
     private void fetchAudioUrlFromFirebase() {
+
         final FirebaseStorage storage = FirebaseStorage.getInstance();
         // Create a storage reference from our app
         StorageReference storageRef = storage.getReferenceFromUrl("gs://portal-rap-4b1fe.appspot.com/Beats/" + Url);
@@ -97,6 +102,8 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
                 try {
                     // Download url of file
                     Log.d("TAGERROR", "error: " );
+                    Toast toast1 = Toast.makeText(getActivity(), "Cargando Base", Toast.LENGTH_SHORT);
+                    toast1.show();
 
                     final String url = uri.toString();
                     mediaplayer.setDataSource(url);

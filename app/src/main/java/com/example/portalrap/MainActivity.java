@@ -214,28 +214,6 @@ public class MainActivity extends AppCompatActivity {
         bottom.setVisibility(View.GONE);
         Log.d("desdecola", desdecola);
         FragGlobal = new FragEntrenar();
-        Bundle args = new Bundle();
-        args.putString("desdecola", desdecola);
-        FragGlobal.setArguments(args);
-        if (desdecola.equals("no"))
-        {
-            transaccionFragment=adminFragment.beginTransaction();
-            transaccionFragment.replace(R.id.frameLayout, FragGlobal);
-            transaccionFragment.addToBackStack(null);
-            transaccionFragment.commit();
-        }
-        else
-        {
-            transaccionFragment=adminFragment.beginTransaction();
-            transaccionFragment.replace(R.id.frameLayout, FragGlobal);
-            transaccionFragment.addToBackStack(null);
-            transaccionFragment.commit();
-
-        }
-    }
-    public void PasaraFragCola()
-    {
-        FragGlobal = new FragCola();
         transaccionFragment=adminFragment.beginTransaction();
         transaccionFragment.replace(R.id.frameLayout, FragGlobal);
         transaccionFragment.addToBackStack(null);
