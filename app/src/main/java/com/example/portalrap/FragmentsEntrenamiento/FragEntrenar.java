@@ -69,6 +69,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         ListenersAdicionales();
         db = FirebaseFirestore.getInstance();
 
+
         if (MainActivity.PosModo != -1 && MainActivity.Segundos != -1 && MainActivity.Minutos != -1 && MainActivity.Frecuencia != -1) {
             //personalizado
             btnRepetir.setImageResource(R.drawable.ic_icono_repetir);
