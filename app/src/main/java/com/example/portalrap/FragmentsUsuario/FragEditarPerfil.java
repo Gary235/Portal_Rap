@@ -137,21 +137,18 @@ public class FragEditarPerfil extends Fragment {
                 if (resultCode == Activity.RESULT_OK) {
                     selectedImage = imageReturnedIntent.getData();
                     String selectedPath=selectedImage.getPath();
-                    if (requestCode == 1) {
-
-                        if (selectedPath != null) {
-                            InputStream imageStream = null;
-                            try {
-                                imageStream = getActivity().getContentResolver().openInputStream(
-                                        selectedImage);
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            }
-                            // Transformamos la URI de la imagen a inputStream y este a un Bitmap
-                            Bitmap bmp = BitmapFactory.decodeStream(imageStream);
-                            // Ponemos nuestro bitmap en un ImageView que tengamos en la vista
-                            fotoperfil.setImageBitmap(bmp);
+                    if (selectedPath != null) {
+                        InputStream imageStream = null;
+                        try {
+                            imageStream = getActivity().getContentResolver().openInputStream(
+                                    selectedImage);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
                         }
+                        // Transformamos la URI de la imagen a inputStream y este a un Bitmap
+                        Bitmap bmp = BitmapFactory.decodeStream(imageStream);
+                        // Ponemos nuestro bitmap en un ImageView que tengamos en la vista
+                        fotoperfil.setImageBitmap(bmp);
                     }
                 }
                 break;
