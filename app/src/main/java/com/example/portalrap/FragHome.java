@@ -39,7 +39,7 @@ public class FragHome extends Fragment implements View.OnClickListener {
         btnEntrenar = v.findViewById(R.id.btnentrenar);
         btnEntrenar.setOnClickListener(this);
 
-
+        //if (!MainActivity.TodosPermisos) btnEntrenar.setEnabled(false);
 
         return v;
     }

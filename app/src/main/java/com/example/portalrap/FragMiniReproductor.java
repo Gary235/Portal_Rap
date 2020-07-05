@@ -120,6 +120,8 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
 
                 } catch (IOException e) {
                     Log.d("TAGERROR", "error: " + e.getMessage());
+                    Toast toast1 = Toast.makeText(getActivity(), "Error de Red", Toast.LENGTH_SHORT);
+                    toast1.show();
                 }
                 progressBar.setVisibility(View.GONE);
                 btnplay.setEnabled(true);
@@ -130,6 +132,9 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d("TAGERROR", "error: " + e.getMessage());
+                Toast toast1 = Toast.makeText(getActivity(), "Error de Red", Toast.LENGTH_SHORT);
+                toast1.show();
+
 
             }
         });
