@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 public class FragUsuario extends Fragment implements View.OnClickListener{
 
     ImageButton btneditar,btnfav;
+    public static ImageView fotoperfil;
     ListView lista;
     adaptadorGrabacionesUsuario adaptador;
     FirebaseFirestore db;
@@ -52,6 +54,7 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
 
         btneditar =  v.findViewById(R.id.btneditar);
         btnfav = v.findViewById(R.id.btnfav);
+        fotoperfil = v.findViewById(R.id.imgperfil);
 
         btneditar.setOnClickListener(this);
         btnfav.setOnClickListener(this);

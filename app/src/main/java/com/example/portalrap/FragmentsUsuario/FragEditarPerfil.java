@@ -1,8 +1,13 @@
 package com.example.portalrap.FragmentsUsuario;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import android.text.InputType;
@@ -13,10 +18,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
+
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 
 public class FragEditarPerfil extends Fragment {
@@ -25,7 +34,7 @@ public class FragEditarPerfil extends Fragment {
     TextView cambiarFoto;
     EditText edtNombre,edtContra;
     Boolean Ver = false;
-
+    ImageView fotoperfil;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,8 +43,6 @@ public class FragEditarPerfil extends Fragment {
 
         Setear(v);
         ListenersAdicionales();
-
-
 
         return v;
     }
@@ -47,6 +54,7 @@ public class FragEditarPerfil extends Fragment {
         cambiarFoto = v.findViewById(R.id.txtCambiarFoto);
         edtNombre = v.findViewById(R.id.edtNombreUsuariodeEditar);
         edtContra = v.findViewById(R.id.edtContradeEditar);
+        fotoperfil = v.findViewById(R.id.foto);
 
         btnCambiar.setElevation(10000);
         btnCambiar.setTranslationZ(100);
@@ -106,10 +114,51 @@ public class FragEditarPerfil extends Fragment {
             @Override
             public void onClick(View v) {
                 //cambiarFoto
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(
+                        Intent.createChooser(intent, "Seleccione una imagen"), 1);
             }
         });
 
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode,
+                                 Intent imageReturnedIntent) {
+        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+        Uri selectedImageUri = null;
+        Uri selectedImage;
+
+        String filePath = null;
+        switch (requestCode) {
+            case 1:
+                if (resultCode == Activity.RESULT_OK) {
+                    selectedImage = imageReturnedIntent.getData();
+                    String selectedPath=selectedImage.getPath();
+                    if (requestCode == 1) {
+
+                        if (selectedPath != null) {
+                            InputStream imageStream = null;
+                            try {
+                                imageStream = getActivity().getContentResolver().openInputStream(
+                                        selectedImage);
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                            // Transformamos la URI de la imagen a inputStream y este a un Bitmap
+                            Bitmap bmp = BitmapFactory.decodeStream(imageStream);
+                            // Ponemos nuestro bitmap en un ImageView que tengamos en la vista
+                            fotoperfil.setImageBitmap(bmp);
+                        }
+                    }
+                }
+                break;
+        }
+    }
+
+
 
     DialogInterface.OnClickListener escuchador2 = new DialogInterface.OnClickListener() {
         @Override
