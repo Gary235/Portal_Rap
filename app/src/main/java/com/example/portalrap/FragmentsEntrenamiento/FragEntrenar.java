@@ -212,58 +212,6 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
         }
     }
-
-    public void Recorder(){
-        if(grabacion == null){
-            archivoSalida = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Grabacion.mp3";
-            grabacion = new MediaRecorder();
-            grabacion.setAudioSource(MediaRecorder.AudioSource.MIC);
-            grabacion.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-            grabacion.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-            grabacion.setOutputFile(archivoSalida);
-
-            try{
-                grabacion.prepare();
-                grabacion.start();
-            } catch (IOException e){
-            }
-
-            grabacion.setOnErrorListener(new MediaRecorder.OnErrorListener() {
-                @Override
-                public void onError(MediaRecorder mr, int what, int extra) {
-                    Toast.makeText(getActivity(), "error...", Toast.LENGTH_SHORT).show();
-
-                }
-            });
-
-            btnGrabar.setImageResource(R.drawable.ic_icono_grabar_rojo);
-            Toast.makeText(getActivity(), "Grabando...", Toast.LENGTH_SHORT).show();
-        } else if(grabacion != null){
-
-
-
-            grabacion.stop();
-            grabacion.release();
-
-
-            grabacion = null;
-            btnGrabar.setImageResource(R.drawable.ic_icono_grabar_blanco);
-            Toast.makeText(getActivity(), "Grabación finalizada", Toast.LENGTH_SHORT).show();
-        }
-    }
-    public void reproducir() {
-
-        try {
-            mediaPlayer.setDataSource(archivoSalida);
-            mediaPlayer.prepare();
-        } catch (IOException e){
-        }
-
-        mediaPlayer.start();
-        Toast.makeText(getActivity(), "Reproduciendo audio", Toast.LENGTH_SHORT).show();
-
-    }
-
     public void empezarTimerDuracion(){
         timer = new CountDownTimer(tiemporestanteDuracion,1000) {
             @Override
@@ -388,4 +336,56 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
              });
 
     }
+
+    public void Recorder(){
+        if(grabacion == null){
+            archivoSalida = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Grabacion.mp3";
+            grabacion = new MediaRecorder();
+            grabacion.setAudioSource(MediaRecorder.AudioSource.MIC);
+            grabacion.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            grabacion.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+            grabacion.setOutputFile(archivoSalida);
+
+            try{
+                grabacion.prepare();
+                grabacion.start();
+            } catch (IOException e){
+            }
+
+            grabacion.setOnErrorListener(new MediaRecorder.OnErrorListener() {
+                @Override
+                public void onError(MediaRecorder mr, int what, int extra) {
+                    Toast.makeText(getActivity(), "error...", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+
+            btnGrabar.setImageResource(R.drawable.ic_icono_grabar_rojo);
+            Toast.makeText(getActivity(), "Grabando...", Toast.LENGTH_SHORT).show();
+        } else if(grabacion != null){
+
+
+
+            grabacion.stop();
+            grabacion.release();
+
+
+            grabacion = null;
+            btnGrabar.setImageResource(R.drawable.ic_icono_grabar_blanco);
+            Toast.makeText(getActivity(), "Grabación finalizada", Toast.LENGTH_SHORT).show();
+        }
+    }
+    public void reproducir() {
+
+        try {
+            mediaPlayer.setDataSource(archivoSalida);
+            mediaPlayer.prepare();
+        } catch (IOException e){
+        }
+
+        mediaPlayer.start();
+        Toast.makeText(getActivity(), "Reproduciendo audio", Toast.LENGTH_SHORT).show();
+
+    }
+
 }

@@ -43,9 +43,11 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
         mediaplayer = new MediaPlayer();
 
         btnplay = v.findViewById(R.id.btnPlaydeholder);
+        btnplay.setEnabled(false);
         txtnombre = v.findViewById(R.id.txtdeholder);
         progressBar = v.findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.GONE);
+        progressBar.setMax(10);
+        //progressBar.setVisibility(View.GONE);
         txtnombre.setText(Nombre);
 
 
@@ -102,8 +104,9 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
                 try {
                     // Download url of file
                     Log.d("TAGERROR", "error: " );
-                    Toast toast1 = Toast.makeText(getActivity(), "Cargando Base", Toast.LENGTH_SHORT);
-                    toast1.show();
+                    progressBar.setVisibility(View.VISIBLE);
+                    //Toast toast1 = Toast.makeText(getActivity(), "Cargando Base", Toast.LENGTH_SHORT);
+                    //toast1.show();
 
                     final String url = uri.toString();
                     mediaplayer.setDataSource(url);
@@ -118,7 +121,8 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
                 } catch (IOException e) {
                     Log.d("TAGERROR", "error: " + e.getMessage());
                 }
-
+                progressBar.setVisibility(View.GONE);
+                btnplay.setEnabled(true);
             }
 
         });
