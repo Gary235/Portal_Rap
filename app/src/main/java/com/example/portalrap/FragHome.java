@@ -41,7 +41,7 @@ public class FragHome extends Fragment implements View.OnClickListener {
 
         //if (!MainActivity.TodosPermisos) btnEntrenar.setEnabled(false);
 
-        return v;
+            return v;
     }
 
     @Override

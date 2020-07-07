@@ -54,7 +54,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
     FragmentManager adminFragment;
     FragmentTransaction transaccionFragment;
     Fragment fragdeCola;
-    int ModoElegido = MainActivity.PosModo,FrecuenciaElegida = MainActivity.Frecuencia;
+    int ModoElegido = MainActivity.PosModo,FrecuenciaElegida = MainActivity.Frecuencia, aleatorio;
     FirebaseFirestore db;
     Random generador = new Random();
     ArrayList<Palabras> arrPalabras;
@@ -140,6 +140,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         btnCola.setOnClickListener(this);
         btnFav.setOnClickListener(this);
 
+        aleatorio = (int) (Math.random() * 2) + 1;
     }
 
     public void ListenersAdicionales() {
@@ -296,6 +297,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
         switch (ModoElegido){
             case 0:
+                ModoElegido = aleatorio;
                 break;
             case 1:
                 txtConfirmar.setVisibility(View.GONE);
