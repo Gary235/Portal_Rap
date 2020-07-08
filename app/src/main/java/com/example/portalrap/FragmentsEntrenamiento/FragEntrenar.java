@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -23,8 +24,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.portalrap.Clases.Palabras;
+import com.example.portalrap.FragBases;
 import com.example.portalrap.FragmentsInicio.FragIniciarSesion;
 import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
@@ -45,21 +48,24 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
     TextView txtArtista, txtBase, txtDuracion,txtConfirmar;
     ImageView fondoDifuminado;
     SeekBar barradebeat;
-    MediaRecorder grabacion = null;
-    String archivoSalida = null;
+
     MediaPlayer mediaPlayer;
-    CountDownTimer timer,timerinicial, timerdefrecuencia;
+    MediaRecorder grabacion = null;
+
+    String archivoSalida = null,palabrarandom;
+    CountDownTimer timer,timerinicial;
     long tiemporestanteDuracion = 300000,tiemporestanteInicial = 3500;
+
     public static FrameLayout holderparacola;
     FragmentManager adminFragment;
     FragmentTransaction transaccionFragment;
     Fragment fragdeCola;
+
     int ModoElegido = MainActivity.PosModo,FrecuenciaElegida = MainActivity.Frecuencia, aleatorio;
     FirebaseFirestore db;
     Random generador = new Random();
     ArrayList<Palabras> arrPalabras;
-    String palabrarandom;
-
+    Boolean repetirverde = false, favblanco = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,16 +78,20 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
         if (MainActivity.PosModo != -1 && MainActivity.Segundos != -1 && MainActivity.Minutos != -1 && MainActivity.Frecuencia != -1) {
             //personalizado
-            btnRepetir.setImageResource(R.drawable.ic_icono_repetir);
-            btnCola.setImageResource(R.drawable.ic_icono_cola_verde);
             tiemporestanteDuracion = (MainActivity.Minutos * 60000) + (MainActivity.Segundos * 1000);
         } else {
             //predeterminado
-            btnRepetir.setImageResource(R.drawable.ic_repetir_verde);
-            btnCola.setImageResource(R.drawable.ic_icono_cola_blanco);
             ModoElegido = 2;
             FrecuenciaElegida = 1;
         }
+        if(FragBases.UserSelection.size() == 1){
+            btnRepetir.setImageResource(R.drawable.ic_repetir_verde);
+            repetirverde = true;
+        }
+        else {
+            btnRepetir.setImageResource(R.drawable.ic_icono_repetir);
+        }
+
         obtenerPalabraRandom();
         Log.d("Entrenamiento","Frecuencia Elegida: " + FrecuenciaElegida + "Frecuencia Seleccionada: " + MainActivity.Frecuencia);
         Log.d("Entrenamiento","Modo Elegido: " + ModoElegido + "Modo Seleccionado: " + MainActivity.PosModo);
@@ -97,6 +107,8 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             case 4: FrecuenciaElegida = 30 * 1000;
                 break;
         }
+
+
 
         return v;
     }
@@ -202,15 +214,29 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
                 break;
             case R.id.btnColadeentrenar:
-                holderparacola.setVisibility(View.VISIBLE);
+                    holderparacola.setVisibility(View.VISIBLE);
                 break;
             case R.id.btnrepetirbasedeentrenar:
+                if(!repetirverde) {
+                    btnRepetir.setImageResource(R.drawable.ic_repetir_verde);
+                    repetirverde = true;
+                }
+                else {
+                    btnRepetir.setImageResource(R.drawable.ic_icono_repetir);
+                    repetirverde = false;
+                }
                 break;
             case R.id.favdeentrenar:
+                if(!favblanco)
+                {
+                    btnFav.setImageResource(R.drawable.ic_icono_fav_blanco);
+                    favblanco = true;
+                }
+                else {
+                    btnFav.setImageResource(R.drawable.ic_icono_nofav_blanco);
+                    favblanco = false;
+                }
                 break;
-
-
-
         }
     }
     public void empezarTimerDuracion(){

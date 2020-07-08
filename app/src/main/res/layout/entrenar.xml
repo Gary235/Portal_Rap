@@ -150,7 +150,6 @@
         android:layout_marginLeft="40dp"
         android:layout_marginTop="50dp"
         android:background="@drawable/btn_transparente"
-        android:src="@drawable/ic_repetir_verde"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btnGrabardeentrenar" />
 
@@ -161,7 +160,7 @@
         android:layout_marginTop="50dp"
         android:layout_marginRight="40dp"
         android:background="@drawable/btn_transparente"
-        android:src="@drawable/ic_icono_cola_blanco"
+        android:src="@drawable/ic_icono_cola_verde"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btnGrabardeentrenar" />
 
