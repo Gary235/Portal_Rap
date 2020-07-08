@@ -149,6 +149,7 @@ public class FragEditarPerfil extends Fragment {
                         Bitmap bmp = BitmapFactory.decodeStream(imageStream);
                         // Ponemos nuestro bitmap en un ImageView que tengamos en la vista
                         fotoperfil.setImageBitmap(bmp);
+                        fotoperfil.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     }
                 }
                 break;
