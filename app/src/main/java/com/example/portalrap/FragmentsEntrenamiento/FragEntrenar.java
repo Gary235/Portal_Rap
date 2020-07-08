@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Bundle;
 
 import android.os.CountDownTimer;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,10 +34,14 @@ import com.example.portalrap.FragmentsInicio.FragIniciarSesion;
 import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,8 +54,8 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
     TextView txtArtista, txtBase, txtDuracion,txtConfirmar;
     ImageView fondoDifuminado;
     SeekBar barradebeat;
+    ProgressBar cargadebeats;
 
-    MediaPlayer mediaPlayer;
     MediaRecorder grabacion = null;
 
     String archivoSalida = null,palabrarandom;
@@ -61,11 +67,13 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
     FragmentTransaction transaccionFragment;
     Fragment fragdeCola;
 
-    int ModoElegido = MainActivity.PosModo,FrecuenciaElegida = MainActivity.Frecuencia, aleatorio;
+    int ModoElegido = MainActivity.PosModo,FrecuenciaElegida = MainActivity.Frecuencia, aleatorio, index = 0;
     FirebaseFirestore db;
     Random generador = new Random();
-    ArrayList<Palabras> arrPalabras;
     Boolean repetirverde = false, favblanco = false;
+
+    ArrayList<Palabras> arrPalabras;
+    ArrayList<MediaPlayer> arrMediaPlayer = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -108,7 +116,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                 break;
         }
 
-
+        descargarAudioDeEntrenamiento();
 
         return v;
     }
@@ -128,7 +136,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         txtConfirmar = v.findViewById(R.id.txtConfirmar);
         fondoDifuminado = v.findViewById(R.id.recdifuminado);
         barradebeat = v.findViewById(R.id.Barradeentrenar);
-        mediaPlayer = new MediaPlayer();
+        cargadebeats = v.findViewById(R.id.cargainicial);
 
         btnVolver.setEnabled(false);
         btnRepetir.setEnabled(false);
@@ -137,6 +145,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         btnGrabar.setEnabled(false);
         btnPlay.setEnabled(false);
         barradebeat.setEnabled(false);
+        txtConfirmar.setEnabled(false);
 
         holderparacola = v.findViewById(R.id.holderdecola);
         adminFragment = getFragmentManager();
@@ -165,10 +174,9 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                reproducir();
+                pausayReproducir();
             }
         });
-
         txtConfirmar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -239,6 +247,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                 break;
         }
     }
+
     public void empezarTimerDuracion(){
         timer = new CountDownTimer(tiemporestanteDuracion,1000) {
             @Override
@@ -283,6 +292,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             empezarTimerDuracion();
             actualizarTimerFrecuencia();
             empezarTimerFrecuencia();
+            empezarReproduccion();
 
             btnVolver.setEnabled(true);
             btnRepetir.setEnabled(true);
@@ -292,6 +302,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             btnPlay.setEnabled(true);
             barradebeat.setEnabled(true);
             fondoDifuminado.setVisibility(View.GONE);
+            txtConfirmar.setEnabled(false);
         }
     }.start();
 
@@ -373,47 +384,99 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             grabacion.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
             grabacion.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
             grabacion.setOutputFile(archivoSalida);
-
             try{
                 grabacion.prepare();
                 grabacion.start();
             } catch (IOException e){
             }
-
             grabacion.setOnErrorListener(new MediaRecorder.OnErrorListener() {
                 @Override
                 public void onError(MediaRecorder mr, int what, int extra) {
                     Toast.makeText(getActivity(), "error...", Toast.LENGTH_SHORT).show();
-
                 }
             });
-
             btnGrabar.setImageResource(R.drawable.ic_icono_grabar_rojo);
             Toast.makeText(getActivity(), "Grabando...", Toast.LENGTH_SHORT).show();
         } else if(grabacion != null){
-
-
-
             grabacion.stop();
             grabacion.release();
-
-
             grabacion = null;
             btnGrabar.setImageResource(R.drawable.ic_icono_grabar_blanco);
             Toast.makeText(getActivity(), "Grabación finalizada", Toast.LENGTH_SHORT).show();
         }
     }
-    public void reproducir() {
 
-        try {
-            mediaPlayer.setDataSource(archivoSalida);
-            mediaPlayer.prepare();
-        } catch (IOException e){
+    public void pausayReproducir(){
+
+        if(!arrMediaPlayer.get(index).isPlaying()) {
+            btnPlay.setImageResource(R.drawable.ic_icono_pausa_blanco);
+            Toast toast1 = Toast.makeText(getActivity(), "Reproduciendo", Toast.LENGTH_SHORT);
+            toast1.show();
+            while (!arrMediaPlayer.get(index).isPlaying()) {
+                arrMediaPlayer.get(index).start();
+            }
+        }
+        else {
+            Toast toast1 = Toast.makeText(getActivity(), "Pausa", Toast.LENGTH_SHORT);
+            toast1.show();
+            arrMediaPlayer.get(index).pause();
+            btnPlay.setImageResource(R.drawable.ic_icono_play_blanco);
         }
 
-        mediaPlayer.start();
-        Toast.makeText(getActivity(), "Reproduciendo audio", Toast.LENGTH_SHORT).show();
-
     }
+
+
+    public void empezarReproduccion() {
+
+        while (!arrMediaPlayer.get(index).isPlaying()) {
+            arrMediaPlayer.get(index).start();
+        }
+        btnPlay.setImageResource(R.drawable.ic_icono_pausa_blanco);
+    }
+
+
+    public void descargarAudioDeEntrenamiento()
+    {
+        final FirebaseStorage storage = FirebaseStorage.getInstance();
+
+        for(int i = 0; i < FragBases.UserSelection.size(); i++)
+        {
+            final MediaPlayer mediaPlayer = new MediaPlayer();
+            StorageReference storageRef = storage.getReferenceFromUrl("gs://portal-rap-4b1fe.appspot.com/Beats/" + FragBases.UserSelection.get(i).getUrl());
+            storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                try {
+                    final String url = uri.toString();
+                    mediaPlayer.setDataSource(url);
+                    mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                        @Override
+                        public void onPrepared(MediaPlayer mp) {
+                        }
+                    });
+                    // wait for media player to get prepare
+                    mediaPlayer.prepareAsync();
+                } catch (IOException e) {
+                    Log.d("TAGERROR", "error: " + e.getMessage());
+                    Toast toast1 = Toast.makeText(getActivity(), "Error de Red", Toast.LENGTH_SHORT);
+                    toast1.show();
+                }
+            }
+        });
+        storageRef.getDownloadUrl().addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("TAGERROR", "error: " + e.getMessage());
+                Toast toast1 = Toast.makeText(getActivity(), "Error de Red", Toast.LENGTH_SHORT);
+                toast1.show();
+            }
+        });
+        arrMediaPlayer.add(mediaPlayer);
+        }
+        // termina de cargar los beats, habilita la palabra empezar y saca la progress bar en forma de circulo
+        cargadebeats.setVisibility(View.GONE);
+        txtConfirmar.setEnabled(true);
+    }
+
 
 }

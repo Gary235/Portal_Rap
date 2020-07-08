@@ -82,7 +82,6 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
                 }
             }
             else {
-                btnplay.setImageResource(R.drawable.ic_icono_pausa);
                 Toast toast1 = Toast.makeText(getActivity(), "Pausa", Toast.LENGTH_SHORT);
                 toast1.show();
                 mediaplayer.pause();
