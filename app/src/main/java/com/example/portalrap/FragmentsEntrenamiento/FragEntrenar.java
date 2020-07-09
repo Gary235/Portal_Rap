@@ -199,6 +199,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         }
     };
 
+
     @Override
     public void onClick(View v) {
         ImageButton botonapretado;
@@ -432,6 +433,17 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             arrMediaPlayer.get(index).start();
         }
         btnPlay.setImageResource(R.drawable.ic_icono_pausa_blanco);
+
+        arrMediaPlayer.get(index).setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mp.stop();
+                mp.reset();
+                btnPlay.setImageResource(R.drawable.ic_icono_play_blanco);
+                index++;
+                empezarReproduccion();
+            }
+        });
     }
 
 

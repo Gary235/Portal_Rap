@@ -136,12 +136,12 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
                     {
                         FragMiniReproductor.mediaplayer.stop();
                         FragMiniReproductor.mediaplayer.reset();
-
                     }
                     holder.setVisibility(View.VISIBLE);
                     lista.setPadding(0,0, 0, 160);
                 }
             });
+
             lista.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
                 @Override
                 public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
