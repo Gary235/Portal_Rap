@@ -219,7 +219,7 @@ public class adaptadorBases extends BaseAdapter {
 
                     }
                 }
-                actualizarFav(arrBases.get(pos).getNombre(),arrBases.get(pos).getArtista(),arrBases.get(pos).getDestacado(),arrBases.get(pos).getId(),arrBases.get(pos).getUrl(),arrBases.get(pos).getFavoritos());
+                actualizarFav(arrBases.get(pos).getNombre(),arrBases.get(pos).getArtista(),false,arrBases.get(pos).getId(),arrBases.get(pos).getUrl(),arrBases.get(pos).getFavoritos());
             }
         });
 

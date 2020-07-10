@@ -28,6 +28,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.portalrap.Clases.Base;
 import com.example.portalrap.Clases.Palabras;
 import com.example.portalrap.FragBases;
 import com.example.portalrap.FragmentsInicio.FragIniciarSesion;
@@ -45,6 +46,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Random;
 
 
@@ -148,11 +150,6 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         txtConfirmar.setEnabled(false);
 
         holderparacola = v.findViewById(R.id.holderdecola);
-        adminFragment = getFragmentManager();
-        fragdeCola = new FragCola();
-        transaccionFragment=adminFragment.beginTransaction();
-        transaccionFragment.replace(R.id.holderdecola, fragdeCola);
-        transaccionFragment.commit();
 
         holderparacola.setVisibility(View.GONE);
 
@@ -223,7 +220,13 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
                 break;
             case R.id.btnColadeentrenar:
-                    holderparacola.setVisibility(View.VISIBLE);
+                adminFragment = getFragmentManager();
+                fragdeCola = new FragCola();
+                transaccionFragment=adminFragment.beginTransaction();
+                transaccionFragment.replace(R.id.holderdecola, fragdeCola);
+                transaccionFragment.commit();
+
+                holderparacola.setVisibility(View.VISIBLE);
                 break;
             case R.id.btnrepetirbasedeentrenar:
                 if(!repetirverde) {
@@ -236,15 +239,20 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                 }
                 break;
             case R.id.favdeentrenar:
-                if(!favblanco)
+                if(FragBases.UserSelection.get(index).getFavoritos() != null)
                 {
-                    btnFav.setImageResource(R.drawable.ic_icono_fav_blanco);
-                    favblanco = true;
+                    if(FragBases.UserSelection.get(index).getFavoritos()){
+                        FragBases.UserSelection.get(index).setFavoritos(false);
+                        btnFav.setImageResource(R.drawable.ic_icono_nofav_blanco);
+
+                    }else{
+                        FragBases.UserSelection.get(index).setFavoritos(true);
+                        btnFav.setImageResource(R.drawable.ic_icono_fav_blanco);
+
+                    }
                 }
-                else {
-                    btnFav.setImageResource(R.drawable.ic_icono_nofav_blanco);
-                    favblanco = false;
-                }
+                actualizarFav(FragBases.UserSelection.get(index).getNombre(),FragBases.UserSelection.get(index).getArtista(),false,FragBases.UserSelection.get(index).getId(),FragBases.UserSelection.get(index).getUrl(),FragBases.UserSelection.get(index).getFavoritos());
+
                 break;
         }
     }
@@ -304,6 +312,19 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             barradebeat.setEnabled(true);
             fondoDifuminado.setVisibility(View.GONE);
             txtConfirmar.setEnabled(false);
+
+            txtBase.setText(FragBases.UserSelection.get(index).getNombre());
+            txtArtista.setText(FragBases.UserSelection.get(index).getArtista());
+
+            if(FragBases.UserSelection.get(index).getFavoritos())
+            {
+                //desfavear
+                btnFav.setImageResource(R.drawable.ic_icono_fav_blanco);
+            }
+            else if(!FragBases.UserSelection.get(index).getFavoritos()) {
+                //fav
+                btnFav.setImageResource(R.drawable.ic_icono_nofav_blanco);
+            }
         }
     }.start();
 
@@ -343,7 +364,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             case 2:
                 obtenerPalabraRandom();
                 txtConfirmar.setTextSize(50);
-                txtConfirmar.setText(palabrarandom);
+                txtConfirmar.setText(palabrarandom.toUpperCase());
                 break;
         }
 
@@ -434,7 +455,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         }
         btnPlay.setImageResource(R.drawable.ic_icono_pausa_blanco);
 
-        arrMediaPlayer.get(index).setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+        /*arrMediaPlayer.get(index).setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 mp.stop();
@@ -443,7 +464,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                 index++;
                 empezarReproduccion();
             }
-        });
+        });*/
     }
 
 
@@ -490,5 +511,25 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         txtConfirmar.setEnabled(true);
     }
 
+    private void actualizarFav(String nombre,String artista,Boolean destacado, String id, String url, Boolean fav) {
+        Map<String, Object> beat = (new Base(artista,nombre, url,destacado, id,fav)).toMap();
+
+        db.collection("Beats")
+                .document(id)
+                .update(beat)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.e("CambiarFav", "Bien Ahi");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("CambiarFav", "Error al actualizar: " + e);
+
+                    }
+                });
+    }
 
 }

@@ -41,7 +41,6 @@
         android:id="@+id/btnFavoritoCola2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
         android:background="@drawable/btn_transparente"
         android:src="@drawable/ic_icono_nofav_blanco"
 
