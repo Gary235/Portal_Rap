@@ -223,11 +223,6 @@ public class adaptadorBases extends BaseAdapter {
             }
         });
 
-
-
-
-
-
         return convertView;
     }
 

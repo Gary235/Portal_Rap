@@ -59,9 +59,9 @@ public class adaptadorDeColaSiguiente extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) miContexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.item_cola_siguiente, parent, false);
 
-            holder.btnFav = convertView.findViewById(R.id.btnFavlistabases);
-            holder.Nombre = convertView.findViewById(R.id.nombreBase);
-            holder.Artista = convertView.findViewById(R.id.nombreArtista);
+            holder.btnFav = convertView.findViewById(R.id.btnFavoritoCola2);
+            holder.Nombre = convertView.findViewById(R.id.nombreBeatCola2);
+            holder.Artista = convertView.findViewById(R.id.nombreArtistaCola2);
             holder.btnFav.setFocusable(false);
             holder.Nombre.setFocusable(false);
             holder.Artista.setFocusable(false);
@@ -113,7 +113,7 @@ public class adaptadorDeColaSiguiente extends BaseAdapter {
 
                     }
                 }
-                actualizarFav(arrBasesSiguiente.get(pos).getNombre(),arrBasesSiguiente.get(pos).getArtista(),arrBasesSiguiente.get(pos).getDestacado(),arrBasesSiguiente.get(pos).getId(),arrBasesSiguiente.get(pos).getUrl(),arrBasesSiguiente.get(pos).getFavoritos());
+                actualizarFav(arrBasesSiguiente.get(pos).getNombre(),arrBasesSiguiente.get(pos).getArtista(),false,arrBasesSiguiente.get(pos).getId(),arrBasesSiguiente.get(pos).getUrl(),arrBasesSiguiente.get(pos).getFavoritos());
             }
         });
 
@@ -131,8 +131,6 @@ public class adaptadorDeColaSiguiente extends BaseAdapter {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.e("CambiarFav", "Bien Ahi");
-
-
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
