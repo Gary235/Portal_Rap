@@ -190,6 +190,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
                 Fragment fragminireproductor;
                 fragminireproductor = new FragMiniReproductor();
                 Bundle args = new Bundle();
+                args.putString("Artista", Beats.get(position).getArtista());
                 args.putString("Nombre", Beats.get(position).getNombre());
                 args.putString("Url", Beats.get(position).getUrl());
                 fragminireproductor.setArguments(args);

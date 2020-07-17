@@ -18,20 +18,28 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
-public class FragMiniReproductor extends Fragment implements View.OnClickListener {
+public class FragMiniReproductor extends Fragment {
 
     ImageButton btnplay;
-    TextView txtnombre;
+    TextView txtnombre,txtArtista, txtDuracion;
     public static MediaPlayer mediaplayer;
-    String Nombre, Url;
+    String Nombre, Url, Artista,duracion = "";
     ProgressBar progressBar;
+
+    double finalTime;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,60 +48,75 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
 
         Nombre = getArguments().getString("Nombre");
         Url = getArguments().getString("Url");
+        Artista = getArguments().getString("Artista");
+
         mediaplayer = new MediaPlayer();
 
         btnplay = v.findViewById(R.id.btnPlaydeholder);
-        btnplay.setEnabled(false);
-        txtnombre = v.findViewById(R.id.txtdeholder);
+        txtDuracion = v.findViewById(R.id.txtdeholderDuracion);
+        txtnombre = v.findViewById(R.id.txtdeholderBase);
+        txtArtista = v.findViewById(R.id.txtdeholderArtista);
         progressBar = v.findViewById(R.id.progressBar);
         progressBar.setMax(10);
-        //progressBar.setVisibility(View.GONE);
-        txtnombre.setText(Nombre);
-
 
         fetchAudioUrlFromFirebase();
 
+        txtnombre.setText(Nombre);
+        txtArtista.setText(Artista);
 
 
 
-        btnplay.setOnClickListener(this);
+
+        btnplay.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("DefaultLocale")
+            @Override
+            public void onClick(View v) {
+
+                finalTime = mediaplayer.getDuration();
+                duracion = String.format("%d:%d",
+                        TimeUnit.MILLISECONDS.toMinutes((long) finalTime),
+                        TimeUnit.MILLISECONDS.toSeconds((long) finalTime) -
+                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long)
+                                        finalTime)));
+
+                if(!duracion.equals("-10627:-15"))
+                {
+                    txtDuracion.setText(duracion);
+                }
+
+                if(!mediaplayer.isPlaying())
+                {
+                    while (!mediaplayer.isPlaying()) {
+
+                        mediaplayer.start();
+                    }
+                    btnplay.setImageResource(R.drawable.ic_icono_pausa);
+                    Toast toast1 = Toast.makeText(getActivity(), "Reproduciendo", Toast.LENGTH_SHORT);
+                    toast1.show();
+
+
+                }
+                else {
+                    Toast toast1 = Toast.makeText(getActivity(), "Pausa", Toast.LENGTH_SHORT);
+                    toast1.show();
+                    mediaplayer.pause();
+                    btnplay.setImageResource(R.drawable.ic_icono_play);
+                }
+
+            }
+        });
         return v;
     }
 
-    @Override
-    public void onClick(View v) {
-
-        ImageButton botonapretado;
-        botonapretado = (ImageButton) v;
-        int idbotonapretado = botonapretado.getId();
 
 
-        if (idbotonapretado == R.id.btnPlaydeholder) {
-            Log.d("TAGERROR", "error: " );
-
-            if(!mediaplayer.isPlaying())
-            {
-                Log.d("TAGERROR", "error: " );
-                btnplay.setImageResource(R.drawable.ic_icono_pausa);
-                Toast toast1 = Toast.makeText(getActivity(), "Reproduciendo", Toast.LENGTH_SHORT);
-                toast1.show();
-                    while (!mediaplayer.isPlaying()) {
-                    mediaplayer.start();
-                }
-            }
-            else {
-                Toast toast1 = Toast.makeText(getActivity(), "Pausa", Toast.LENGTH_SHORT);
-                toast1.show();
-                mediaplayer.pause();
-                btnplay.setImageResource(R.drawable.ic_icono_play);
-            }
-        }
-    }
 
     private void fetchAudioUrlFromFirebase() {
 
         final FirebaseStorage storage = FirebaseStorage.getInstance();
         // Create a storage reference from our app
+
+        mediaplayer = new MediaPlayer();
         StorageReference storageRef = storage.getReferenceFromUrl("gs://portal-rap-4b1fe.appspot.com/Beats/" + Url);
         Log.d("TAGERROR", "error:3 " );
 
@@ -103,7 +126,7 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
                 try {
                     // Download url of file
                     Log.d("TAGERROR", "error: " );
-                    progressBar.setVisibility(View.VISIBLE);
+
                     //Toast toast1 = Toast.makeText(getActivity(), "Cargando Base", Toast.LENGTH_SHORT);
                     //toast1.show();
 
@@ -122,8 +145,6 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
                     Toast toast1 = Toast.makeText(getActivity(), "Error de Red", Toast.LENGTH_SHORT);
                     toast1.show();
                 }
-                progressBar.setVisibility(View.GONE);
-                btnplay.setEnabled(true);
             }
 
         });
@@ -133,11 +154,17 @@ public class FragMiniReproductor extends Fragment implements View.OnClickListene
                 Log.d("TAGERROR", "error: " + e.getMessage());
                 Toast toast1 = Toast.makeText(getActivity(), "Error de Red", Toast.LENGTH_SHORT);
                 toast1.show();
-
-
+            }
+        });
+        storageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                progressBar.setVisibility(View.GONE);
             }
         });
 
+
     }
+
 
 }

@@ -1,6 +1,7 @@
 package com.example.portalrap.Adaptadores;
 
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ public class adaptadorBases extends BaseAdapter {
     private Context miContexto;
     public static int aja = 0;
     private FirebaseFirestore db;
+    private AnimationDrawable animacion1;
 
     public adaptadorBases(ArrayList<Base> arrayBases,Context contexto)
     {
@@ -88,7 +90,6 @@ public class adaptadorBases extends BaseAdapter {
             holder.Artista.setFocusable(false);
             db = FirebaseFirestore.getInstance();
 
-
             convertView.setTag(holder);
         }else {
             // the getTag returns the viewHolder object set as a tag to the view
@@ -128,8 +129,6 @@ public class adaptadorBases extends BaseAdapter {
                 {
                     if(arrBases.get(pos).getDestacado() ){
                         arrBases.get(pos).setDestacado(false);
-
-
                     }else{
                         arrBases.get(pos).setDestacado(true);
                     }
@@ -191,6 +190,9 @@ public class adaptadorBases extends BaseAdapter {
             {
                 //desfavear
                 holder.btnFav.setImageResource(R.drawable.ic_icono_fav_rojo);
+                //holder.btnFav.setBackgroundResource(R.drawable.animacion_favoritos);
+                //animacion1 = (AnimationDrawable) holder.btnFav.getBackground();
+
             }
             else if(!arrBases.get(position).getFavoritos()) {
                 //fav
@@ -212,11 +214,10 @@ public class adaptadorBases extends BaseAdapter {
                     if(arrBases.get(pos).getFavoritos()){
                         arrBases.get(pos).setFavoritos(false);
                         holder.btnFav.setImageResource(R.drawable.ic_icono_nofav);
-
+                        //animacion1.start();
                     }else{
                         arrBases.get(pos).setFavoritos(true);
                         holder.btnFav.setImageResource(R.drawable.ic_icono_fav_rojo);
-
                     }
                 }
                 actualizarFav(arrBases.get(pos).getNombre(),arrBases.get(pos).getArtista(),false,arrBases.get(pos).getId(),arrBases.get(pos).getUrl(),arrBases.get(pos).getFavoritos());
