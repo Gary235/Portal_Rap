@@ -13,6 +13,7 @@ import android.os.Bundle;
 
 import android.os.CountDownTimer;
 import android.os.Environment;
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -456,6 +457,8 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             final FirebaseStorage storage = FirebaseStorage.getInstance();
 
             mediaPlayer = new MediaPlayer();
+            mediaPlayer.setWakeMode(getActivity(), PowerManager.FULL_WAKE_LOCK);
+
             StorageReference storageRef = storage.getReferenceFromUrl("gs://portal-rap-4b1fe.appspot.com/Beats/" + FragBases.UserSelection.get(index).getUrl());
             storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
