@@ -1,6 +1,7 @@
 package com.example.portalrap;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -95,7 +96,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private BottomNavigationView.OnNavigationItemSelectedListener listenernav= new BottomNavigationView.OnNavigationItemSelectedListener() {
+    private BottomNavigationView.OnNavigationItemSelectedListener listenernav=  new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @SuppressLint("ResourceType")
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment fragseleccionado=null;
@@ -124,6 +126,8 @@ public class MainActivity extends AppCompatActivity {
                     FragBases.UserSelection.clear();
                     break;
             }
+
+
             transaccionFragment=adminFragment.beginTransaction();
             transaccionFragment.replace(R.id.frameLayout, fragseleccionado,null);
             transaccionFragment.addToBackStack(null);
@@ -169,6 +173,7 @@ public class MainActivity extends AppCompatActivity {
     {
         FragGlobal = new FragModo();
         transaccionFragment=adminFragment.beginTransaction();
+        transaccionFragment.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaccionFragment.replace(R.id.frameLayout, FragGlobal);
         transaccionFragment.addToBackStack(null);
 
@@ -208,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
     {
         FragGlobal = new FragEditarPerfil();
         transaccionFragment=adminFragment.beginTransaction();
+        transaccionFragment.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaccionFragment.replace(R.id.frameLayout, FragGlobal);
         transaccionFragment.addToBackStack(null);
 
@@ -230,6 +236,7 @@ public class MainActivity extends AppCompatActivity {
         FragFavoritos.UserSelection.clear();
         FragBases.UserSelection.clear();
         transaccionFragment=adminFragment.beginTransaction();
+        transaccionFragment.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaccionFragment.replace(R.id.frameLayout, FragGlobal);
         transaccionFragment.addToBackStack(null);
 
