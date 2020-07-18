@@ -128,6 +128,8 @@
         android:layout_height="50dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
+        android:thumbTint="#fff"
+        android:progressTint="#fff"
         app:layout_constraintTop_toBottomOf="@+id/nombreArtistaSeleccionadodeentrenar" />
 
     <ImageButton
