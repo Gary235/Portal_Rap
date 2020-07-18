@@ -458,17 +458,26 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
             //mediaPlayer = new MediaPlayer();
             mediaPlayer.setWakeMode(getActivity(), PowerManager.FULL_WAKE_LOCK);
-
+            mediaPlayer.reset();
             StorageReference storageRef = storage.getReferenceFromUrl("gs://portal-rap-4b1fe.appspot.com/Beats/" + FragBases.UserSelection.get(index).getUrl());
             storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 try {
-                    String url = uri.toString();
+                    final String url = uri.toString();
+                    Log.d("Reproduccion", "Url: " + url);
+                    Log.d("Reproduccion", "Index: " + index);
+
                     mediaPlayer.setDataSource(url);
                     mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                         @Override
                         public void onPrepared(MediaPlayer mp) {
+                            if (index > 0)
+                            {
+                                while (!mediaPlayer.isPlaying()) {
+                                    mediaPlayer.start();
+                                }
+                            }
                         }
                     });
 
@@ -555,7 +564,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                 observer.stop();
                 barradebeat.setProgress(mediaPlayer.getCurrentPosition());
                 btnPlay.setImageResource(R.drawable.ic_icono_play_blanco);
-                index = index + 1;
+                index =  1;
                 Log.d("Reproduccion", "setea barra y va a descargar audio");
 
                 descargarAudioDeEntrenamiento();
@@ -568,8 +577,10 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         });
 
         observer = new MediaObserver();
-        while (!mediaPlayer.isPlaying()) {
+        if(index == 0) {
+            while (!mediaPlayer.isPlaying()) {
                 mediaPlayer.start();
+            }
         }
         cargadebeats.setVisibility(View.GONE);
         btnPlay.setImageResource(R.drawable.ic_icono_pausa_blanco);
