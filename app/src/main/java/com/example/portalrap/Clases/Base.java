@@ -6,19 +6,22 @@ import java.util.Map;
 
 public class Base {
 
-    private String Artista,Nombre,Url;
+    private String Artista,Nombre,Url,Duracion;
     private Boolean Destacado,Favoritos;
     private String Id;
 
     //Constructores
-    public Base(String artista, String nombre, String url, Boolean destacado, String id,Boolean fav) {
+
+    public Base(String artista, String nombre, String url, String duracion, Boolean destacado, Boolean favoritos, String id) {
         Artista = artista;
         Nombre = nombre;
         Url = url;
+        Duracion = duracion;
         Destacado = destacado;
+        Favoritos = favoritos;
         Id = id;
-        Favoritos = fav;
     }
+
     public Base( ){
 
 
@@ -33,6 +36,7 @@ public class Base {
         result.put("Url", this.Url);
         result.put("Destacado", this.Destacado);
         result.put("Favoritos", this.Favoritos);
+        result.put("Duracion", this.Duracion);
         return result;
     }
 
@@ -75,4 +79,7 @@ public class Base {
 
     public Boolean getFavoritos() { return Favoritos; }
     public void setFavoritos(Boolean favoritos) { Favoritos = favoritos; }
+
+    public String getDuracion() { return Duracion; }
+    public void setDuracion(String duracion) { Duracion = duracion; }
 }

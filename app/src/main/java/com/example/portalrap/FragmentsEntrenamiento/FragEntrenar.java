@@ -258,7 +258,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
                     }
                 }
-                actualizarFav(FragBases.UserSelection.get(index).getNombre(),FragBases.UserSelection.get(index).getArtista(),false,FragBases.UserSelection.get(index).getId(),FragBases.UserSelection.get(index).getUrl(),FragBases.UserSelection.get(index).getFavoritos());
+                actualizarFav(FragBases.UserSelection.get(index).getNombre(),FragBases.UserSelection.get(index).getArtista(),false,FragBases.UserSelection.get(index).getId(),FragBases.UserSelection.get(index).getUrl(),FragBases.UserSelection.get(index).getFavoritos(),FragBases.UserSelection.get(index).getDuracion());
 
                 break;
         }
@@ -502,8 +502,8 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         // termina de cargar los beats, habilita la palabra empezar y saca la progress bar en forma de circulo
     }
 
-    private void actualizarFav(String nombre,String artista,Boolean destacado, String id, String url, Boolean fav) {
-        Map<String, Object> beat = (new Base(artista,nombre, url,destacado, id,fav)).toMap();
+    private void actualizarFav(String nombre,String artista,Boolean destacado, String id, String url, Boolean fav, String dur) {
+        Map<String, Object> beat = (new Base(artista,nombre, url,dur,destacado, fav,id)).toMap();
 
         db.collection("Beats")
                 .document(id)
@@ -512,6 +512,8 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.e("CambiarFav", "Bien Ahi");
+
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

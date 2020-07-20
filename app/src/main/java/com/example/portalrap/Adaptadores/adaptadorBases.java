@@ -84,10 +84,12 @@ public class adaptadorBases extends BaseAdapter {
             holder.Nombre = convertView.findViewById(R.id.nombreBase);
             holder.Artista = convertView.findViewById(R.id.nombreArtista);
             holder.check = convertView.findViewById(R.id.checkbox);
+            holder.Duracion = convertView.findViewById(R.id.duracionbase);
             holder.btnFav.setFocusable(false);
             holder.check.setFocusable(false);
             holder.Nombre.setFocusable(false);
             holder.Artista.setFocusable(false);
+            holder.Duracion.setFocusable(false);
             db = FirebaseFirestore.getInstance();
 
             convertView.setTag(holder);
@@ -96,6 +98,7 @@ public class adaptadorBases extends BaseAdapter {
             holder = (ViewHolder)convertView.getTag();
         }
 
+        holder.Duracion.setText(arrBases.get(position).getDuracion());
         holder.Nombre.setText(arrBases.get(position).getNombre());
         holder.Artista.setText(arrBases.get(position).getArtista());
         if(FragBases.isActionMode || FragFavoritos.isActionMode)
@@ -220,7 +223,7 @@ public class adaptadorBases extends BaseAdapter {
                         holder.btnFav.setImageResource(R.drawable.ic_icono_fav_rojo);
                     }
                 }
-                actualizarFav(arrBases.get(pos).getNombre(),arrBases.get(pos).getArtista(),false,arrBases.get(pos).getId(),arrBases.get(pos).getUrl(),arrBases.get(pos).getFavoritos());
+                actualizarFav(arrBases.get(pos).getNombre(),arrBases.get(pos).getArtista(),false,arrBases.get(pos).getId(),arrBases.get(pos).getUrl(),arrBases.get(pos).getFavoritos(), arrBases.get(pos).getDuracion());
             }
         });
 
@@ -228,13 +231,13 @@ public class adaptadorBases extends BaseAdapter {
     }
 
     private class ViewHolder {
-        protected TextView Nombre,Artista;
+        protected TextView Nombre,Artista, Duracion;
         protected ImageButton btnFav;
         protected CheckBox check;
 
     }
-    private void actualizarFav(String nombre,String artista,Boolean destacado, String id, String url, Boolean fav) {
-        Map<String, Object> beat = (new Base(artista,nombre, url,destacado, id,fav)).toMap();
+    private void actualizarFav(String nombre,String artista,Boolean destacado, String id, String url, Boolean fav, String dur) {
+        Map<String, Object> beat = (new Base(artista,nombre, url,dur,destacado, fav,id)).toMap();
 
         db.collection("Beats")
                 .document(id)

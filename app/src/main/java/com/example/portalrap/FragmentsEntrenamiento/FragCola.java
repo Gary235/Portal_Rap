@@ -89,7 +89,7 @@ public class FragCola extends Fragment{
 
                     }
                 }
-                actualizarFav(baseSonando.getNombre(),baseSonando.getArtista(),false,baseSonando.getId(),baseSonando.getUrl(),baseSonando.getFavoritos());
+                actualizarFav(baseSonando.getNombre(),baseSonando.getArtista(),false,baseSonando.getId(),baseSonando.getUrl(),baseSonando.getFavoritos(), baseSonando.getDuracion());
             }
         });
 
@@ -119,8 +119,8 @@ public class FragCola extends Fragment{
         }
 
     }
-    private void actualizarFav(String nombre,String artista,Boolean destacado, String id, String url, Boolean fav) {
-        Map<String, Object> beat = (new Base(artista,nombre, url,destacado, id,fav)).toMap();
+    private void actualizarFav(String nombre,String artista,Boolean destacado, String id, String url, Boolean fav, String dur) {
+        Map<String, Object> beat = (new Base(artista,nombre, url,dur,destacado, fav,id)).toMap();
 
         db.collection("Beats")
                 .document(id)
@@ -129,6 +129,8 @@ public class FragCola extends Fragment{
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.e("CambiarFav", "Bien Ahi");
+
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

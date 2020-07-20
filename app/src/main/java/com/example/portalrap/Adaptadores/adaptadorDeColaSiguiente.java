@@ -113,7 +113,7 @@ public class adaptadorDeColaSiguiente extends BaseAdapter {
 
                     }
                 }
-                actualizarFav(arrBasesSiguiente.get(pos).getNombre(),arrBasesSiguiente.get(pos).getArtista(),false,arrBasesSiguiente.get(pos).getId(),arrBasesSiguiente.get(pos).getUrl(),arrBasesSiguiente.get(pos).getFavoritos());
+                actualizarFav(arrBasesSiguiente.get(pos).getNombre(),arrBasesSiguiente.get(pos).getArtista(),false,arrBasesSiguiente.get(pos).getId(),arrBasesSiguiente.get(pos).getUrl(),arrBasesSiguiente.get(pos).getFavoritos(), arrBasesSiguiente.get(pos).getDuracion());
             }
         });
 
@@ -121,8 +121,8 @@ public class adaptadorDeColaSiguiente extends BaseAdapter {
         return convertView;
     }
 
-    private void actualizarFav(String nombre,String artista,Boolean destacado, String id, String url, Boolean fav) {
-        Map<String, Object> beat = (new Base(artista,nombre, url,destacado, id,fav)).toMap();
+    private void actualizarFav(String nombre,String artista,Boolean destacado, String id, String url, Boolean fav, String dur) {
+        Map<String, Object> beat = (new Base(artista,nombre, url,dur,destacado, fav,id)).toMap();
 
         db.collection("Beats")
                 .document(id)
@@ -131,6 +131,8 @@ public class adaptadorDeColaSiguiente extends BaseAdapter {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.e("CambiarFav", "Bien Ahi");
+
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
