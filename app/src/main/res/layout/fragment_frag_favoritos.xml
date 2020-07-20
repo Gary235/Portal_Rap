@@ -8,9 +8,6 @@
     >
 
 
-
-
-
     <ImageView
         android:id="@+id/fondo2"
         android:layout_width="match_parent"
