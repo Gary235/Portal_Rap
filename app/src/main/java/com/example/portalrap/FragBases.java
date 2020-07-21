@@ -190,6 +190,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
                 args.putString("Artista", Beats.get(position).getArtista());
                 args.putString("Nombre", Beats.get(position).getNombre());
                 args.putString("Url", Beats.get(position).getUrl());
+                args.putString("Duracion", Beats.get(position).getDuracion());
                 fragminireproductor.setArguments(args);
                 transaccionFragment = adminFragment.beginTransaction();
                 transaccionFragment.replace(R.id.holderdebases, fragminireproductor);

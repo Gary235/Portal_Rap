@@ -35,7 +35,7 @@ public class FragMiniReproductor extends Fragment {
     ImageButton btnplay;
     TextView txtnombre,txtArtista, txtDuracion;
     public static MediaPlayer mediaplayer;
-    String Nombre, Url, Artista,duracion = "";
+    String Nombre, Url, Artista, Duracion;
     ProgressBar progressBar;
 
     double finalTime;
@@ -49,6 +49,7 @@ public class FragMiniReproductor extends Fragment {
         Nombre = getArguments().getString("Nombre");
         Url = getArguments().getString("Url");
         Artista = getArguments().getString("Artista");
+        Duracion = getArguments().getString("Duracion");
 
         mediaplayer = new MediaPlayer();
 
@@ -63,7 +64,7 @@ public class FragMiniReproductor extends Fragment {
 
         txtnombre.setText(Nombre);
         txtArtista.setText(Artista);
-
+        txtDuracion.setText(Duracion);
 
 
 
@@ -72,17 +73,6 @@ public class FragMiniReproductor extends Fragment {
             @Override
             public void onClick(View v) {
 
-                finalTime = mediaplayer.getDuration();
-                duracion = String.format("%d:%d",
-                        TimeUnit.MILLISECONDS.toMinutes((long) finalTime),
-                        TimeUnit.MILLISECONDS.toSeconds((long) finalTime) -
-                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long)
-                                        finalTime)));
-
-                if(!duracion.equals("-10627:-15"))
-                {
-                    txtDuracion.setText(duracion);
-                }
 
                 if(!mediaplayer.isPlaying())
                 {

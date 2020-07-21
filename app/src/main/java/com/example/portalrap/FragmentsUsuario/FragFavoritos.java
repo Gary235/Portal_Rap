@@ -107,6 +107,9 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
                             Bundle args = new Bundle();
                             args.putString("Nombre", arrBasesFav.get(position).getNombre());
                             args.putString("Url", arrBasesFav.get(position).getUrl());
+                            args.putString("Artista", arrBasesFav.get(position).getArtista());
+                            args.putString("Duracion", arrBasesFav.get(position).getDuracion());
+
                             fragminireproductor.setArguments(args);
                             transaccionFragment = adminFragment.beginTransaction();
                             transaccionFragment.replace(R.id.holder, fragminireproductor);
