@@ -1,6 +1,5 @@
 package com.example.portalrap.FragmentsUsuario;
 
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -8,7 +7,6 @@ import android.os.Bundle;
 
 import android.util.Log;
 import android.view.ActionMode;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,31 +17,23 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.widget.Toolbar;
-
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.portalrap.Adaptadores.adaptadorBases;
 import com.example.portalrap.Adaptadores.adaptadorGrabacionesUsuario;
 import com.example.portalrap.Clases.Base;
 import com.example.portalrap.Clases.Grabacion;
-import com.example.portalrap.Clases.Palabras;
 import com.example.portalrap.FragMiniReproductor;
 import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -52,8 +42,7 @@ import java.util.List;
 
 public class FragFavoritos extends Fragment implements View.OnClickListener {
 
-    ImageView delineado, delineado2;
-    ImageButton btnGrabado, btnBeats, btnVolver;
+    ImageButton btnVolver;
     ListView lista;
     ArrayList<Grabacion> arrGrabacionesFav = new ArrayList<>();
     adaptadorGrabacionesUsuario adaptadorGrabacionesUsuarioFav;
@@ -70,19 +59,7 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
     TabItem item1,item2;
 
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-        setHasOptionsMenu(true);
-
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.actionbar_menu, menu);
-        super.onCreateOptionsMenu(menu,inflater);
-    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

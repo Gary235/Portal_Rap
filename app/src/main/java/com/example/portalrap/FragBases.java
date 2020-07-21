@@ -45,7 +45,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
 
     int textlength=0;
     ArrayList<Base> array_sort = new ArrayList<>();
-    ImageButton btnSiguiente,btnAnterior,btnInfo;
+    ImageButton btnAnterior,btnInfo;
     ImageView fondo1,paso4;
     TextView txtTitulo,lbl,lbl2,lbl3;
     EditText edtBuscar;
@@ -76,7 +76,6 @@ public class FragBases extends Fragment implements View.OnClickListener {
         ListenersAdicionales();
 
         if (desdedur != "si") {
-            btnSiguiente.setVisibility(View.GONE);
             btnAnterior.setVisibility(View.GONE);
             paso4.setVisibility(View.GONE);
             scrol.setVisibility(View.GONE);
@@ -95,7 +94,6 @@ public class FragBases extends Fragment implements View.OnClickListener {
         fondo1 =v.findViewById(R.id.fondo1debases);
         txtTitulo = v.findViewById(R.id.txtTitulodeBases);
         btnAnterior = v.findViewById(R.id.botonanteriordebases);
-        btnSiguiente = v.findViewById(R.id.botonsiguientedebases);
         edtBuscar = v.findViewById(R.id.edtBuscar);
         lbl = v.findViewById(R.id.textolabel1debases);
         lbl2 = v.findViewById(R.id.textolabel2debases);
@@ -104,7 +102,6 @@ public class FragBases extends Fragment implements View.OnClickListener {
         holder = v.findViewById(R.id.holderdebases);
 
         btnAnterior.setOnClickListener(this);
-        btnSiguiente.setOnClickListener(this);
         btnInfo.setOnClickListener(this);
 
         if(MainActivity.PosModo == 0)
@@ -237,20 +234,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
         int idbotonapretado = botonapretado.getId();
         MainActivity main=(MainActivity) getActivity();
 
-        if(idbotonapretado == R.id.botonsiguientedebases)
-         {
-             if(adaptadorBases.aja > 0)
-             {
-                 if (desdedur == "si")
-                 { main.PasaraFragTodoListo(desdedur); }
-                 else { main.PasaraFragTodoListo("no"); }
-             }
-             else {
-                 Toast toast1 = Toast.makeText(getActivity(),"Ninguna Base fue seleccionada", Toast.LENGTH_SHORT);
-                 toast1.show();
-             }
-         }
-         else if(idbotonapretado == R.id.botonanteriordebases)
+             if(idbotonapretado == R.id.botonanteriordebases)
          {
              main.PasaraFragmentDuracion();
          }
@@ -259,7 +243,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
              AlertDialog.Builder mensaje;
              mensaje = new AlertDialog.Builder(getActivity());
              mensaje.setTitle("Elegir Bases");
-             mensaje.setMessage("Mantén apretado para seleccionar una Base. El tiempo de duración de la base no determinara el tiempo de duración del entrenamiento. Puedes elegir más de una base.");
+             mensaje.setMessage("· Mantén apretado para seleccionar una Base\n\n· El tiempo de duración de la base no determinara el tiempo de duración TOTAL del entrenamiento\n\n· Puedes elegir más de una base\n\n· Para ir a entrenar elige todas las bases que quieras y aprieta el boton con forma de rayo");
              mensaje.setPositiveButton("Aceptar",null);
              mensaje.create();
              mensaje.show();

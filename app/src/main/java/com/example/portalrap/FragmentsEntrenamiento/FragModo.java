@@ -85,7 +85,7 @@ public class FragModo extends Fragment implements View.OnClickListener {
             AlertDialog.Builder mensaje;
             mensaje = new AlertDialog.Builder(getActivity());
             mensaje.setTitle("Elegir Modo");
-            mensaje.setMessage("Elige un modo para poder entrenar luego.");
+            mensaje.setMessage("· Elige un modo para poder entrenar luego\n\n· Desliza hacia la derecha o hacia la izquierda para cambiar el modo");
             mensaje.setPositiveButton("Aceptar",null);
             mensaje.create();
             mensaje.show();

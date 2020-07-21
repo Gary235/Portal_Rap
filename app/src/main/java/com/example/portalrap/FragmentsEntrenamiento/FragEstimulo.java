@@ -70,7 +70,7 @@ public class FragEstimulo extends Fragment implements View.OnClickListener {
                 AlertDialog.Builder mensaje;
                 mensaje = new AlertDialog.Builder(getActivity());
                 mensaje.setTitle("Elegir Frecuencia");
-                mensaje.setMessage("Elige una frecuencia para controlar, cada cuanto tiempo aparecen las palabras, imagenes u objetos por la pantalla.");
+                mensaje.setMessage("· Elige una frecuencia para controlar, cada cuanto tiempo aparecen las palabras, imagenes u objetos por la pantalla\n\n· Desliza para ver las opciones y aprieta la que más se adapte a tu gusto");
                 mensaje.setPositiveButton("Aceptar",null);
                 mensaje.create();
                 mensaje.show();

@@ -117,7 +117,7 @@ public class FragDuracion extends Fragment implements View.OnClickListener {
                 AlertDialog.Builder mensaje;
                 mensaje = new AlertDialog.Builder(getActivity());
                 mensaje.setTitle("Elegir Duración");
-                mensaje.setMessage("Elige el tiempo de duración del entrenamiento.");
+                mensaje.setMessage("· Elige el tiempo de duración del entrenamiento\n\n· Este será el que determine el tiempo TOTAL del entrenamiento\n\n· Desliza y aprieta, para modificar el tiempo de duracion");
                 mensaje.setPositiveButton("Aceptar",null);
                 mensaje.create();
                 mensaje.show();

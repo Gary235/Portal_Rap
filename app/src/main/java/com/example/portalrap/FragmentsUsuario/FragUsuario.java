@@ -44,7 +44,6 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
     adaptadorGrabacionesUsuario adaptador;
     FirebaseFirestore db;
     ArrayList<Grabacion> Grabaciones = new ArrayList<>();
-    TabItem item1,item2;
 
 
     @Override
