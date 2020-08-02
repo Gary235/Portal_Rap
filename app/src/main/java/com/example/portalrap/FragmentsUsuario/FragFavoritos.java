@@ -170,10 +170,6 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
                     });
 
                 }
-
-
-
-
             }
 
             @Override

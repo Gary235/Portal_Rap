@@ -22,10 +22,7 @@ public class Base {
         Id = id;
     }
 
-    public Base( ){
-
-
-    }
+    public Base(){ }
 
     //map
     public Map<String, Object> toMap() {

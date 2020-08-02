@@ -27,18 +27,23 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.portalrap.Adaptadores.adaptadorBases;
 import com.example.portalrap.Clases.Base;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 public class FragBases extends Fragment implements View.OnClickListener {
@@ -129,6 +134,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
         listabases.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
 
         obtenerListaBases();
+        //listaBases();
 
     }
 
@@ -254,12 +260,14 @@ public class FragBases extends Fragment implements View.OnClickListener {
 
     private void obtenerListaBases() {
 
-
-        db.collection("Beats").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        db.collection("Beats")
+                .orderBy("Nombre")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
                 Beats.clear();
                 listabases.setAdapter(null);
+                assert snapshots != null;
                 for (DocumentSnapshot document : snapshots) {
                     Base beat = document.toObject(Base.class);
                     assert beat != null;
@@ -276,4 +284,31 @@ public class FragBases extends Fragment implements View.OnClickListener {
 
     }
 
-}
+
+    /*private void listaBases(){
+        db.collection("Beats")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        Beats.clear();
+                        listabases.setAdapter(null);
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                //Base beat = document.toObject(Base.class);
+                                Map<String, Object> map = task.getResult().getData());
+
+                                assert beat != null;
+                                beat.setId(document.getId());
+                                Beats.add(beat);
+                            }
+                            adaptador = new adaptadorBases(Beats,getActivity());
+                            listabases.setAdapter(adaptador);
+
+                        } else {
+
+                        }
+                    }
+                });
+    }
+*/}
