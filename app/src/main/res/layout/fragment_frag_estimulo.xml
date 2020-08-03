@@ -126,7 +126,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="60dp"
-        android:fontFamily="sans-serif-medium"
+        android:fontFamily="@font/poppins_bold"
         android:text="Elegir Frecuencia"
         android:id="@+id/textotitulodeestimulo"
         android:textColor="#000"
@@ -178,6 +178,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textolabel1deestimulo"
+        android:fontFamily="@font/helvetica_medium"
 
         app:layout_constraintTop_toTopOf="@id/label1deestimulo"
         app:layout_constraintBottom_toBottomOf="@id/label1deestimulo"

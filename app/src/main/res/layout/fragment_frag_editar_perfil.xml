@@ -38,6 +38,7 @@
         android:id="@+id/textotitulodeeditarperfil"
         android:textColor="#000"
         android:textSize="30dp"
+        android:fontFamily="@font/poppins_bold"
         app:layout_constraintLeft_toLeftOf="@id/flechitabajodeeditarperfil"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="20dp"
@@ -95,7 +96,7 @@
 
         android:layout_marginTop="5dp"
         android:elevation="11dp"
-        android:fontFamily="sans-serif-light"
+        android:fontFamily="@font/helvetica_light"
         android:text="Cambiar foto de perfil"
 
         android:textColor="#FF0000"

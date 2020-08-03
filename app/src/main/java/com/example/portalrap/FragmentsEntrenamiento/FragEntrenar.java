@@ -45,8 +45,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -125,6 +128,8 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         }
 
         descargarAudioDeEntrenamiento();
+        //descargarXBytes();
+
 
         return v;
     }
@@ -545,7 +550,6 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         }
     }
 
-
     public void runMedia() {
 
         cargadebeats.setVisibility(View.VISIBLE);
@@ -566,10 +570,11 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                 observer.stop();
                 barradebeat.setProgress(mediaPlayer.getCurrentPosition());
                 btnPlay.setImageResource(R.drawable.ic_icono_play_blanco);
-                index =  1;
+                //index =  1;
                 Log.d("Reproduccion", "setea barra y va a descargar audio");
 
                 descargarAudioDeEntrenamiento();
+                //descargarXBytes();
                 Log.d("Reproduccion", "termino de descargar audio y va a runMedia");
 
                 runMedia();
@@ -579,14 +584,74 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         });
 
         observer = new MediaObserver();
-        if(index == 0) {
-            while (!mediaPlayer.isPlaying()) {
+
+        while (!mediaPlayer.isPlaying()) {
                 mediaPlayer.start();
-            }
         }
+
         cargadebeats.setVisibility(View.GONE);
         btnPlay.setImageResource(R.drawable.ic_icono_pausa_blanco);
         new Thread(observer).start();
     }
+
+
+    private void descargarXBytes(){
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+
+        mediaPlayer.setWakeMode(getActivity(), PowerManager.FULL_WAKE_LOCK);
+        mediaPlayer.reset();
+
+
+        //StorageReference gsReference = storage.getReferenceFromUrl("gs://portal-rap-4b1fe.appspot.com/Beats/" + FragBases.UserSelection.get(index).getUrl());
+        //StorageReference gsReference = storage.getReferenceFromUrl("gs://bucket/Beats/" + FragBases.UserSelection.get(index).getUrl());
+        StorageReference pathReference = storageRef.child("Beats/Pumkin_Spice.mp3");
+        //StorageReference httpsReference = storage.getReferenceFromUrl("https://firebasestorage.googleapis.com/v0/b/portal-rap-4b1fe.appspot.com/o/Beats%2FPumkin_Spice.mp3?alt=media&token=3880dd02-2a9c-4263-b8d0-a5a6836b780c");
+
+
+
+        final long tope = 5500000;
+        pathReference.getBytes(tope).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                // Data for "images/island.jpg" is returns, use this as needed
+                FileInputStream rawmp3file= null;
+                try {
+                    rawmp3file = new FileInputStream(Arrays.toString(bytes));
+                    mediaPlayer.setDataSource(rawmp3file.getFD());
+
+                    mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                        @Override
+                        public void onPrepared(MediaPlayer mp) {
+                            mp.start();
+                        }
+                    });
+
+                    // wait for media player to get prepare
+                    mediaPlayer.prepareAsync();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.d("TAGERROR", "error: " + e.getMessage());
+                }
+
+
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+                Log.d("TAGERROR", "error: " + exception.getMessage());
+                Toast toast1 = Toast.makeText(getActivity(), "Error de Red", Toast.LENGTH_SHORT);
+                toast1.show();
+            }
+        });
+
+    }
+
+
+
 
 }

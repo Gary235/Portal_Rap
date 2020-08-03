@@ -25,6 +25,7 @@
         android:textSize="25dp"
         android:textColor="#000"
         android:id="@+id/text"
+        android:fontFamily="@font/helvetica_medium"
 
         app:layout_constraintTop_toBottomOf="@id/logo"
         android:layout_marginTop="20dp"

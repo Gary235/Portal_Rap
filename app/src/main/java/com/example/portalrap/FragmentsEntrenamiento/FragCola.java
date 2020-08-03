@@ -30,7 +30,7 @@ import java.util.Map;
 
 public class FragCola extends Fragment{
 
-    TextView txtTituloSonando, txtArtistaSonando;
+    TextView txtTituloSonando, txtArtistaSonando,txtSiguiente;
     ImageButton btnVolver, btnFav;
     ListView listaSiguiente;
     ArrayList<Base> arrBasesSiguiente = new ArrayList<>();
@@ -61,6 +61,7 @@ public class FragCola extends Fragment{
         listaSiguiente = v.findViewById(R.id.listaSiguiente);
         txtArtistaSonando = v.findViewById(R.id.txtArtistaBeatCola);
         txtTituloSonando = v.findViewById(R.id.nombreBeatCola);
+        txtSiguiente = v.findViewById(R.id.siguiente);
         adaptador = new adaptadorDeColaSiguiente(arrBasesSiguiente,getActivity());
         listaSiguiente.setAdapter(adaptador);
 
@@ -117,6 +118,10 @@ public class FragCola extends Fragment{
         {
             arrBasesSiguiente.add(FragBases.UserSelection.get(i));
         }
+
+
+        if(arrBasesSiguiente.size() <= 1) txtSiguiente.setVisibility(View.GONE);
+        else  txtSiguiente.setVisibility(View.VISIBLE);
 
     }
     private void actualizarFav(String nombre,String artista,Boolean destacado, String id, String url, Boolean fav, String dur) {

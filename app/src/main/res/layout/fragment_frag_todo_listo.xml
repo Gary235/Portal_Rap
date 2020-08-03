@@ -23,6 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textolabel1deTodolisto"
+        android:fontFamily="@font/helvetica_medium"
 
         app:layout_constraintTop_toTopOf="@id/label1deTodolisto"
         app:layout_constraintBottom_toBottomOf="@id/label1deTodolisto"
@@ -51,6 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textolabel2deTodolisto"
+        android:fontFamily="@font/helvetica_medium"
 
         app:layout_constraintTop_toTopOf="@id/label2deTodolisto"
         app:layout_constraintBottom_toBottomOf="@id/label2deTodolisto"
@@ -79,6 +81,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textolabel3deTodolisto"
+        android:fontFamily="@font/helvetica_medium"
 
         app:layout_constraintTop_toTopOf="@id/label3deTodolisto"
         app:layout_constraintBottom_toBottomOf="@id/label3deTodolisto"
@@ -99,6 +102,7 @@
         android:textColor="#000"
         android:text="Ya Estas Listo!"
         android:textSize="40dp"
+        android:fontFamily="@font/poppins_bold"
 
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -113,6 +117,7 @@
         android:textColor="#808080"
         android:text="Ya puedes empezar a entrenar"
         android:textSize="18dp"
+        android:fontFamily="@font/helvetica_medium"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtGrande"

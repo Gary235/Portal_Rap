@@ -29,7 +29,7 @@
         android:text="portal rap"
         android:textColor="#000"
 
-
+        android:fontFamily="@font/medel"
         android:textSize="30dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

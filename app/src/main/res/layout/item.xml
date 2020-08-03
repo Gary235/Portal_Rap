@@ -25,7 +25,7 @@
                     android:textSize="30dp"
                     android:id="@+id/textomodo"
                     android:textColor="#fff"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@font/helvetica_medium"
                     android:layout_marginTop="115dp"
                     app:layout_constraintTop_toTopOf="@id/imagenModo"
                     app:layout_constraintLeft_toLeftOf="parent"
