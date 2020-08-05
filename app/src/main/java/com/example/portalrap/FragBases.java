@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.portalrap.Adaptadores.adaptadorBases;
 import com.example.portalrap.Clases.Base;
@@ -78,19 +79,18 @@ public class FragBases extends Fragment implements View.OnClickListener {
 
         View v = inflater.inflate(R.layout.fragment_frag_bases, container, false);
         Setear(v);
-        ListenersAdicionales();
+        ListenersAdicionales(v);
 
         if (desdedur != "si") {
             btnAnterior.setVisibility(View.GONE);
             paso4.setVisibility(View.GONE);
             scrol.setVisibility(View.GONE);
-            return v;
         }
         else {
             txtTitulo.setText("Elegir Base");
             listabases.setPadding(0,0,0,300);
-            return v;
         }
+        return v;
     }
 
     public void Setear(View v) {
@@ -138,7 +138,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
 
     }
 
-    public void  ListenersAdicionales(){
+    public void  ListenersAdicionales(final View v){
 
         listabases.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
             @Override
@@ -208,7 +208,17 @@ public class FragBases extends Fragment implements View.OnClickListener {
 
                 }
                 holder.setVisibility(View.VISIBLE);
-                listabases.setPadding(0,0, 0, 160);
+                if(desdedur.equals("si"))
+                {
+                    listabases.setPadding(0,0, 0, 400);
+                    ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) v.findViewById(R.id.botonanteriordebases).getLayoutParams();
+                    layoutParams.setMargins(0, 0, 0, 0);
+
+
+                }
+                else {
+                    listabases.setPadding(0,0, 0, 160);
+                }
             }
         });
 
