@@ -260,7 +260,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
              AlertDialog.Builder mensaje;
              mensaje = new AlertDialog.Builder(getActivity());
              mensaje.setTitle("Elegir Bases");
-             mensaje.setMessage("· Mantén apretado para seleccionar una Base\n\n· El tiempo de duración de la base no determinara el tiempo de duración TOTAL del entrenamiento\n\n· Puedes elegir más de una base\n\n· Para ir a entrenar elige todas las bases que quieras y aprieta el boton con forma de rayo");
+             mensaje.setMessage("· Mantén apretado para seleccionar una Base\n\n· El tiempo de duración de la base no determinara el tiempo de duración TOTAL del entrenamiento\n\n· Puedes elegir más de una base\n\n· Para ir a entrenar elige todas las bases que quieras y aprieta el boton con forma de tick");
              mensaje.setPositiveButton("Aceptar",null);
              mensaje.create();
              mensaje.show();
