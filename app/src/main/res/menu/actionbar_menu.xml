@@ -4,7 +4,7 @@
     <item
         android:id="@+id/usar"
         android:title="Usar Base"
-        android:icon="@drawable/ic_icono_usar"
+        android:icon="@drawable/ic_tick_completo"
         />
 
 </menu>
