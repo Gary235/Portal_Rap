@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,12 +33,8 @@ import com.example.portalrap.FragmentsInicio.FragRegistro;
 import com.example.portalrap.FragmentsUsuario.FragEditarPerfil;
 import com.example.portalrap.FragmentsUsuario.FragFavoritos;
 import com.example.portalrap.FragmentsUsuario.FragUsuario;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
@@ -68,11 +63,7 @@ public class MainActivity extends AppCompatActivity {
             //Redirijo a donde necesite. Esto es si ya hay un usuario logueado.
             actualizarUsuario(usuarioActual);
             PasaraFragmentHome();
-
-
-
         }
-
     }
 
 
@@ -158,7 +149,6 @@ public class MainActivity extends AppCompatActivity {
             transaccionFragment.replace(R.id.frameLayout, fragseleccionado,null);
             transaccionFragment.addToBackStack(null);
             transaccionFragment.commit();
-
             return true;
         }
     };
@@ -303,7 +293,6 @@ public class MainActivity extends AppCompatActivity {
     public void actualizarUsuario(FirebaseUser user){
         usuarioActual = user;
     }
-
     public FirebaseUser obtenerUsuario(){
         return usuarioActual;
     }
@@ -319,6 +308,4 @@ public class MainActivity extends AppCompatActivity {
             getFragmentManager().popBackStack();
         }
     }
-
-
 }

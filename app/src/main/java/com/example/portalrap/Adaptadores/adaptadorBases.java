@@ -1,7 +1,6 @@
 package com.example.portalrap.Adaptadores;
 
 import android.content.Context;
-import android.graphics.drawable.AnimationDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,15 +10,12 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.example.portalrap.Clases.Base;
-import com.example.portalrap.Clases.Grabacion;
 import com.example.portalrap.FragBases;
 import com.example.portalrap.FragmentsUsuario.FragFavoritos;
-import com.example.portalrap.FragmentsUsuario.FragUsuario;
 import com.example.portalrap.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -33,7 +29,6 @@ public class adaptadorBases extends BaseAdapter {
     private Context miContexto;
     public static int aja = 0;
     private FirebaseFirestore db;
-    private AnimationDrawable animacion1;
 
     public adaptadorBases(ArrayList<Base> arrayBases,Context contexto)
     {
@@ -101,16 +96,14 @@ public class adaptadorBases extends BaseAdapter {
         holder.Duracion.setText(arrBases.get(position).getDuracion());
         holder.Nombre.setText(arrBases.get(position).getNombre());
         holder.Artista.setText(arrBases.get(position).getArtista());
-        if(FragBases.isActionMode || FragFavoritos.isActionMode)
-        {
+
+        if(FragBases.isActionMode || FragFavoritos.isActionMode) {
             holder.check.setVisibility(View.VISIBLE);
         }
-        else
-        {
+        else {
             holder.check.setVisibility(View.INVISIBLE);
         }
-        if(arrBases.get(position).getDestacado() != null)
-        {
+        if(arrBases.get(position).getDestacado() != null) {
             holder.check.setChecked(arrBases.get(position).getDestacado());
         }
 
@@ -128,15 +121,13 @@ public class adaptadorBases extends BaseAdapter {
                 //TextView tv = (TextView) tempview.findViewById(R.id.animal);
                 Integer pos = (Integer)  holder.check.getTag();
 
-                if(arrBases.get(pos).getDestacado()!= null)
-                {
+                if(arrBases.get(pos).getDestacado()!= null) {
                     if(arrBases.get(pos).getDestacado() ){
                         arrBases.get(pos).setDestacado(false);
                     }else{
                         arrBases.get(pos).setDestacado(true);
                     }
                 }
-
 
                 if(FragBases.UserSelection.contains(arrBases.get(position))) {
                     FragBases.UserSelection.remove(arrBases.get(position));
@@ -180,8 +171,7 @@ public class adaptadorBases extends BaseAdapter {
 
                 }
 
-                for(int i=0;i<FragBases.UserSelection.size();i++)
-                {
+                for(int i=0;i<FragBases.UserSelection.size();i++) {
                     Log.d("BeatSeleccionado","" + FragBases.UserSelection.get(i).getNombre());
                 }
 
@@ -226,7 +216,6 @@ public class adaptadorBases extends BaseAdapter {
                 actualizarFav(arrBases.get(pos).getNombre(),arrBases.get(pos).getArtista(),false,arrBases.get(pos).getId(),arrBases.get(pos).getUrl(),arrBases.get(pos).getFavoritos(), arrBases.get(pos).getDuracion());
             }
         });
-
         return convertView;
     }
 

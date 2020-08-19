@@ -6,21 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.portalrap.Clases.Base;
 import com.example.portalrap.Clases.Grabacion;
-import com.example.portalrap.FragmentsUsuario.FragFavoritos;
-import com.example.portalrap.FragmentsUsuario.FragUsuario;
-import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
