@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.regex.Pattern;
@@ -122,7 +123,10 @@ public class FragIniciarSesion extends Fragment implements View.OnClickListener{
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("TAG", "signInWithEmail:failure", task.getException());
-                            Toast.makeText(getActivity(), "Fallo en el ingreso", Toast.LENGTH_SHORT).show();
+                            if(task.getException() instanceof FirebaseAuthInvalidCredentialsException)
+                                    Toast.makeText(getActivity(), "Contraseña o Email inválidos", Toast.LENGTH_SHORT).show();
+                            else
+                                    Toast.makeText(getActivity(), "Fallo en el Ingreso", Toast.LENGTH_SHORT).show();
 
                         }
 
