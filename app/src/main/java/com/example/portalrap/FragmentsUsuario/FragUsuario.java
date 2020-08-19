@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -28,6 +29,7 @@ import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -43,8 +45,9 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
     ListView lista;
     adaptadorGrabacionesUsuario adaptador;
     FirebaseFirestore db;
+    FirebaseUser user;
     ArrayList<Grabacion> Grabaciones = new ArrayList<>();
-
+    TextView txtUsuario;
 
     @Override
     public void onStart() {
@@ -62,10 +65,13 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
         db = FirebaseFirestore.getInstance();
         View v=inflater.inflate(R.layout.fragment_frag_usuario, container, false);
 
-        TabLayout tabLayout = (TabLayout) v.findViewById(R.id.tabusuario);
+        TabLayout tabLayout = v.findViewById(R.id.tabusuario);
         btneditar =  v.findViewById(R.id.btneditar);
         btnfav = v.findViewById(R.id.btnfav);
         fotoperfil = v.findViewById(R.id.imgperfil);
+        txtUsuario = v.findViewById(R.id.txtusuario);
+
+        setearInfo();
 
         btneditar.setOnClickListener(this);
         btnfav.setOnClickListener(this);
@@ -139,6 +145,18 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
                 lista.setAdapter(adaptador);
             }
         });
+
+
+    }
+
+    public void setearInfo(){
+
+        MainActivity main = (MainActivity) getActivity();
+        user = main.obtenerUsuario();
+        String email = user.getEmail();
+        int posArroba = email.indexOf("@");
+        String emailCortado = email.substring(0, posArroba);
+        txtUsuario.setText(emailCortado);
 
 
     }

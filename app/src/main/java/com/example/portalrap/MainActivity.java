@@ -274,7 +274,7 @@ public class MainActivity extends AppCompatActivity {
         usuarioActual = user;
     }
 
-    public FirebaseUser obtener(){
+    public FirebaseUser obtenerUsuario(){
         return usuarioActual;
     }
 
