@@ -34,6 +34,7 @@ import com.example.portalrap.FragmentsUsuario.FragEditarPerfil;
 import com.example.portalrap.FragmentsUsuario.FragFavoritos;
 import com.example.portalrap.FragmentsUsuario.FragUsuario;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
     PagerAdapter pagerAdapter;
     BottomNavigationView bottom;
     public static int PosModo = -1, Frecuencia = -1, Segundos = -1 , Minutos = -1;
+    FirebaseUser usuarioActual;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -264,6 +268,14 @@ public class MainActivity extends AppCompatActivity {
         transaccionFragment.replace(R.id.frameLayout, FragGlobal);
         transaccionFragment.addToBackStack(null);
         transaccionFragment.commit();
+    }
+
+    public void actualizarUsuario(FirebaseUser user){
+        usuarioActual = user;
+    }
+
+    public FirebaseUser obtener(){
+        return usuarioActual;
     }
 
     @Override
