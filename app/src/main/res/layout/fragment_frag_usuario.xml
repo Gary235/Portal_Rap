@@ -8,6 +8,24 @@
     >
 
 
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/logout"
+        android:src="@drawable/ic_logout"
+        android:background="@drawable/btn_transparente"
+
+        app:layout_constraintTop_toTopOf="@id/txtusuario"
+        app:layout_constraintBottom_toBottomOf="@id/txtusuario"
+        app:layout_constraintLeft_toRightOf="@id/txtusuario"
+        app:layout_constraintRight_toRightOf="parent"
+
+        />
+
+
+
+
     <ImageView
         android:id="@+id/imgperfil"
         android:layout_width="120dp"
@@ -22,12 +40,12 @@
 
     <TextView
         android:id="@+id/txtusuario"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:fontFamily="@font/helvetica_medium"
         android:textColor="#000"
-        android:textSize="25dp"
+        android:textSize="23dp"
         app:layout_constraintBottom_toBottomOf="@id/imgperfil"
         app:layout_constraintLeft_toRightOf="@+id/imgperfil"
         app:layout_constraintTop_toTopOf="@id/imgperfil" />
@@ -42,7 +60,6 @@
         app:layout_constraintLeft_toLeftOf="@id/imgperfil"
         app:layout_constraintRight_toRightOf="@id/imgperfil"
         app:layout_constraintTop_toTopOf="@id/imgperfil" />
-
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabusuario"
@@ -69,7 +86,6 @@
 
 
     </com.google.android.material.tabs.TabLayout>
-
 
     <ListView
         android:id="@+id/lista"

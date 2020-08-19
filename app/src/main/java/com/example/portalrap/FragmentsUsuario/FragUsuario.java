@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.portalrap.Adaptadores.adaptadorBases;
@@ -27,8 +28,11 @@ import com.example.portalrap.Clases.Grabacion;
 import com.example.portalrap.FragMiniReproductor;
 import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -40,7 +44,7 @@ import java.util.ArrayList;
 
 public class FragUsuario extends Fragment implements View.OnClickListener{
 
-    ImageButton btneditar,btnfav;
+    ImageButton btneditar,btnfav, logout;
     public static ImageView fotoperfil;
     ListView lista;
     adaptadorGrabacionesUsuario adaptador;
@@ -48,6 +52,7 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
     FirebaseUser user;
     ArrayList<Grabacion> Grabaciones = new ArrayList<>();
     TextView txtUsuario;
+    private FirebaseAuth mAuth;
 
     @Override
     public void onStart() {
@@ -63,6 +68,7 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
 
         db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         View v=inflater.inflate(R.layout.fragment_frag_usuario, container, false);
 
         TabLayout tabLayout = v.findViewById(R.id.tabusuario);
@@ -70,12 +76,12 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
         btnfav = v.findViewById(R.id.btnfav);
         fotoperfil = v.findViewById(R.id.imgperfil);
         txtUsuario = v.findViewById(R.id.txtusuario);
-
+        logout = v.findViewById(R.id.logout);
         setearInfo();
 
         btneditar.setOnClickListener(this);
         btnfav.setOnClickListener(this);
-
+        logout.setOnClickListener(this);
 
         lista = v.findViewById(R.id.lista);
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -123,6 +129,12 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
         {
             main.PasaraFragFavoritos();
         }
+        else if(idbotonapretado == R.id.logout){
+
+            mAuth.signOut();
+            main.PasaraFragmentIniciarSesion();
+
+        }
     }
 
 
@@ -158,6 +170,7 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
         String emailCortado = email.substring(0, posArroba);
         txtUsuario.setText(emailCortado);
 
+        //fotoperfil.setImageBitmap(user.getPhotoUrl());
 
     }
 

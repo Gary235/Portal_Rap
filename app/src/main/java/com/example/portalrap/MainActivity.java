@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,7 +34,12 @@ import com.example.portalrap.FragmentsInicio.FragRegistro;
 import com.example.portalrap.FragmentsUsuario.FragEditarPerfil;
 import com.example.portalrap.FragmentsUsuario.FragFavoritos;
 import com.example.portalrap.FragmentsUsuario.FragUsuario;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
@@ -50,7 +56,24 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottom;
     public static int PosModo = -1, Frecuencia = -1, Segundos = -1 , Minutos = -1;
     FirebaseUser usuarioActual;
+    private FirebaseAuth mAuth;
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser usuarioActual = mAuth.getCurrentUser();
+        if(usuarioActual != null){
+            //Redirijo a donde necesite. Esto es si ya hay un usuario logueado.
+            actualizarUsuario(usuarioActual);
+            PasaraFragmentHome();
+
+
+
+        }
+
+    }
 
 
     @Override
@@ -81,10 +104,7 @@ public class MainActivity extends AppCompatActivity {
         bottom.setOnNavigationItemSelectedListener(listenernav);
 
         adminFragment = getFragmentManager();
-        FragGlobal = new FragIniciarSesion();
-        transaccionFragment=adminFragment.beginTransaction();
-        transaccionFragment.replace(R.id.frameLayout, FragGlobal,null);
-        transaccionFragment.commit();
+        PasaraFragmentIniciarSesion();
     }
 
     @Override
@@ -143,6 +163,16 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+
+    public void PasaraFragmentIniciarSesion()
+    {
+        bottom.setVisibility(View.GONE);
+        FragGlobal = new FragIniciarSesion();
+        transaccionFragment=adminFragment.beginTransaction();
+        transaccionFragment.replace(R.id.frameLayout, FragGlobal,null);
+        transaccionFragment.commit();
+
+    }
     public void PasaraFragmentRegistro()
     {
         FragGlobal = new FragRegistro();
