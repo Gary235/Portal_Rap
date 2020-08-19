@@ -1,6 +1,7 @@
 package com.example.portalrap.FragmentsInicio;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,7 +32,8 @@ public class FragIniciarSesion extends Fragment implements View.OnClickListener{
     EditText editContrasenia,editUsuario;
     Button btnIniciarSesion,btnRegistro;
     private FirebaseAuth mAuth;
-
+    ProgressBar progressBar;
+    ProgressDialog dialogo;
 
     @Nullable
     @Override
@@ -44,6 +47,8 @@ public class FragIniciarSesion extends Fragment implements View.OnClickListener{
         editUsuario = vista.findViewById(R.id.edtUsuario);
         btnIniciarSesion = vista.findViewById(R.id.btnIniciarSesion);
         btnRegistro = vista.findViewById(R.id.btnRegistrarse);
+        progressBar = vista.findViewById(R.id.progress);
+        dialogo = new ProgressDialog(getActivity());
 
         btnRegistro.setOnClickListener(this);
         btnIniciarSesion.setOnClickListener(this);
@@ -60,9 +65,13 @@ public class FragIniciarSesion extends Fragment implements View.OnClickListener{
 
         if(botonapretado.getId() == R.id.btnIniciarSesion)
         {
+            //progressBar.setVisibility(View.VISIBLE);
+            dialogo.show();
             validar();
             if (validar())
                 loguearUsuario(editUsuario.getText().toString().trim(), editContrasenia.getText().toString().trim());
+            dialogo.dismiss();
+            //progressBar.setVisibility(View.GONE);
         }
         else if (botonapretado.getId() == R.id.btnRegistrarse)
         {
@@ -75,6 +84,7 @@ public class FragIniciarSesion extends Fragment implements View.OnClickListener{
     public Boolean validar(){
         String mail = editUsuario.getText().toString().trim();
         String contra = editContrasenia.getText().toString().trim();
+        dialogo.setMessage("Validando...");
 
         if(mail.length() == 0 || contra.length() == 0)
             Toast.makeText(getActivity(), "Ingreso Invalido", Toast.LENGTH_SHORT).show();
@@ -93,12 +103,16 @@ public class FragIniciarSesion extends Fragment implements View.OnClickListener{
         return pattern.matcher(mail).matches();
     }
     private void loguearUsuario(String email, String password) {
+        dialogo.setMessage("Iniciando Sesion de " + email);
+
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
+                            dialogo.setMessage("Iniciado Exitoso");
+
                             Log.d("TAG", "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             MainActivity main = (MainActivity) getActivity();

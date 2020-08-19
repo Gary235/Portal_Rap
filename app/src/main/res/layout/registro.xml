@@ -45,7 +45,7 @@
         android:textAllCaps="false"
         android:textColor="#000"
         android:textColorHint="#797777"
-        android:hint="Nombre de Usuario"
+        android:hint="Email"
         android:textIsSelectable="true"
         android:paddingStart="20dp"
 

@@ -46,9 +46,9 @@
         android:background="@drawable/edttext_sinmarcos"
         android:cursorVisible="true"
         android:drawableStart="@drawable/icono_usuario"
-        android:drawablePadding="10dp"
+        android:drawablePadding="19dp"
         android:elevation="0dp"
-        android:hint="   Usuario"
+        android:hint="Email"
         android:singleLine="true"
         android:textAllCaps="false"
         android:textColor="#000"
@@ -69,15 +69,15 @@
 
         android:background="@drawable/edttext_sinmarcos"
         android:drawableStart="@drawable/ic_icono_candado"
-        android:drawablePadding="10dp"
+        android:drawablePadding="20dp"
 
-        android:inputType="textPassword"
         android:elevation="0dp"
-        android:hint="   Contraseña"
+        android:hint="Contraseña"
+        android:inputType="textPassword"
         android:singleLine="true"
-        android:textIsSelectable="true"
         android:textColor="#000"
         android:textColorHint="#797777"
+        android:textIsSelectable="true"
         android:translationZ="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -127,4 +127,18 @@
         android:textColor="#FF0000"
         app:layout_constraintStart_toEndOf="@id/texto"
         app:layout_constraintTop_toBottomOf="@id/btnIniciarSesion" />
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progress"
+        android:visibility="gone"
+        android:indeterminate="true"
+
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
