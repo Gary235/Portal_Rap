@@ -6,6 +6,8 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
@@ -29,12 +31,18 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Registry;
+import com.bumptech.glide.annotation.GlideModule;
+import com.bumptech.glide.module.AppGlideModule;
 import com.example.portalrap.Clases.Base;
+import com.example.portalrap.Clases.ImageLoader;
 import com.example.portalrap.Clases.Palabras;
 import com.example.portalrap.FragBases;
 import com.example.portalrap.FragmentsInicio.FragIniciarSesion;
 import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -42,12 +50,18 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
@@ -59,9 +73,10 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
     ImageButton btnFav, btnPlay, btnRepetir, btnCola, btnVolver, btnGrabar;
     TextView txtArtista, txtBase, txtDuracion,txtConfirmar;
-    ImageView fondoDifuminado;
+    ImageView fondoDifuminado, fotoObjeto;
     SeekBar barradebeat;
     ProgressBar cargadebeats;
+    Bitmap bm = null;
 
     MediaRecorder grabacion = null;
     MediaPlayer mediaPlayer = new MediaPlayer();
@@ -128,7 +143,6 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         }
 
         descargarAudioDeEntrenamiento();
-        //descargarXBytes();
 
 
         return v;
@@ -142,6 +156,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         btnFav = v.findViewById(R.id.favdeentrenar);
         btnPlay = v.findViewById(R.id.Playdeentrenar);
         btnRepetir = v.findViewById(R.id.btnrepetirbasedeentrenar);
+        fotoObjeto = v.findViewById(R.id.imagenObjeto);
 
         txtArtista = v.findViewById(R.id.nombreArtistaSeleccionadodeentrenar);
         txtBase = v.findViewById(R.id.nombreBaseSeleccionadadeentrenar);
@@ -160,6 +175,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         btnGrabar.setEnabled(false);
         btnPlay.setEnabled(false);
         barradebeat.setEnabled(false);
+        //fotoObjeto.setVisibility(View.GONE);
 
         holderparacola = v.findViewById(R.id.holderdecola);
 
@@ -360,8 +376,14 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                 break;
             case 1:
                 txtConfirmar.setVisibility(View.GONE);
+                fotoObjeto.setVisibility(View.VISIBLE);
+                descargarFotoObjeto();
+
+
+
                 break;
             case 2:
+                fotoObjeto.setVisibility(View.GONE);
                 obtenerPalabraRandom();
                 txtConfirmar.setTextSize(50);
                 if (palabrarandom != null )txtConfirmar.setText(palabrarandom.toUpperCase());
@@ -651,7 +673,59 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
     }
 
+    public void descargarFotoObjeto() {
 
+        final FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReferenceFromUrl("gs://portal-rap-4b1fe.appspot.com/Imagenes/Acuario.png");
+
+        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                InputStream is = null;
+                BufferedInputStream bis = null;
+                try
+                {
+                    URLConnection conn = new URL(uri.toString()).openConnection();
+                    conn.connect();
+                    is = conn.getInputStream();
+                    bis = new BufferedInputStream(is, 8192);
+                    bm = BitmapFactory.decodeStream(bis);
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                finally {
+                    if (bis != null)
+                    {
+                        try
+                        {
+                            bis.close();
+                        }
+                        catch (IOException e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (is != null)
+                    {
+                        try
+                        {
+                            is.close();
+                        }
+                        catch (IOException e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
+        fotoObjeto.setImageBitmap(bm);
+
+
+
+    }
 
 
 }

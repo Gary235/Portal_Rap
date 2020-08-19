@@ -45,8 +45,6 @@ public class FragIniciarSesion extends Fragment implements View.OnClickListener{
 
         if(botonapretado.getId() == R.id.btnIniciarSesion)
         {
-
-
             main.PasaraFragmentHome();
         }
         else if (botonapretado.getId() == R.id.btnRegistrarse)
