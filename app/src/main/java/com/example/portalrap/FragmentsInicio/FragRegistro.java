@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.regex.Pattern;
@@ -110,6 +111,9 @@ public class FragRegistro extends Fragment{
                             Log.w("TAG", "createUserWithEmail:failure", task.getException());
                             if (task.getException() instanceof FirebaseAuthUserCollisionException)
                                 Toast.makeText(getActivity(), "Ya existe un usuario con ese email", Toast.LENGTH_SHORT).show();
+                            else if (task.getException() instanceof FirebaseAuthWeakPasswordException)
+                                Toast.makeText(getActivity(), "La contraseña ingresada es muy débil", Toast.LENGTH_SHORT).show();
+
                             else
                                 Toast.makeText(getActivity(), "Fallo en el registro", Toast.LENGTH_SHORT).show();
 
