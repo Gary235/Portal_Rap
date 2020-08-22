@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,7 +30,7 @@ import java.util.regex.Pattern;
 
 public class FragIniciarSesion extends Fragment implements View.OnClickListener{
 
-
+    TextView sinSesion;
     EditText editContrasenia,editUsuario;
     Button btnIniciarSesion,btnRegistro;
     private FirebaseAuth mAuth;
@@ -50,6 +51,20 @@ public class FragIniciarSesion extends Fragment implements View.OnClickListener{
         btnRegistro = vista.findViewById(R.id.btnRegistrarse);
         progressBar = vista.findViewById(R.id.progress);
         dialogo = new ProgressDialog(getActivity());
+        sinSesion = vista.findViewById(R.id.entrarSinSesion);
+
+
+
+        sinSesion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity main = (MainActivity) getActivity();
+                main.actualizarUsuario(null);
+
+                main.PasaraFragmentHome();
+            }
+        });
+
 
         btnRegistro.setOnClickListener(this);
         btnIniciarSesion.setOnClickListener(this);

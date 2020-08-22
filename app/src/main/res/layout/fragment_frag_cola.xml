@@ -6,104 +6,107 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/fondo_degradado_oscuro">
 
-    <ImageButton
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:id="@+id/btnVOlverdecola"
-
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
 
 
-        android:src="@drawable/ic_flecha_fina_abajo_blanca"
-        android:background="@drawable/btn_transparente"
-        />
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/btnVOlverdecola"
 
-    <TextView
-        android:id="@+id/sonando"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="90dp"
-        android:fontFamily="@font/poppins_bold"
-        android:text="Estas Escuchando"
-        android:textColor="#fff"
-        android:textSize="25dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/nombreBeatCola"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Beat #001"
-        android:textColor="#fff"
-        android:textSize="20dp"
-
-        android:fontFamily="@font/helvetica_medium"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        app:layout_constraintTop_toBottomOf="@id/sonando"
-        app:layout_constraintLeft_toRightOf="@id/btnFavdeCola"
- />
-
-    <TextView
-        android:id="@+id/txtArtistaBeatCola"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Artista #001"
-        android:textColor="#808080"
-        android:textSize="15dp"
-        android:fontFamily="@font/helvetica_light"
-
-        app:layout_constraintTop_toBottomOf="@id/nombreBeatCola"
-        app:layout_constraintLeft_toLeftOf="@id/nombreBeatCola"
-
-        />
-
-    <ImageButton
-        android:id="@+id/btnFavdeCola"
-        android:layout_width="25dp"
-        android:layout_height="23dp"
-        android:layout_marginLeft="20dp"
-        android:background="@drawable/btn_transparente"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@id/nombreBeatCola"
-        app:layout_constraintBottom_toBottomOf="@id/txtArtistaBeatCola"
-        android:scaleType="fitCenter"
-         />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
 
 
-    <TextView
-        android:id="@+id/siguiente"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="50dp"
-        android:fontFamily="@font/poppins_bold"
-        android:text="Siguiente"
-        android:textColor="#fff"
-        android:textSize="25dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@id/txtArtistaBeatCola" />
+                android:src="@drawable/ic_flecha_fina_abajo_blanca"
+                android:background="@drawable/btn_transparente"
+                />
+
+            <TextView
+                android:id="@+id/sonando"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="90dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Estas Escuchando"
+                android:textColor="#fff"
+                android:textSize="25dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/nombreBeatCola"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Beat #001"
+                android:textColor="#fff"
+                android:textSize="20dp"
+
+                android:fontFamily="@font/helvetica_medium"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                app:layout_constraintTop_toBottomOf="@id/sonando"
+                app:layout_constraintLeft_toRightOf="@id/btnFavdeCola"
+                />
+
+            <TextView
+                android:id="@+id/txtArtistaBeatCola"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Artista #001"
+                android:textColor="#808080"
+                android:textSize="15dp"
+                android:fontFamily="@font/helvetica_light"
+
+                app:layout_constraintTop_toBottomOf="@id/nombreBeatCola"
+                app:layout_constraintLeft_toLeftOf="@id/nombreBeatCola"
+
+                />
+
+            <ImageButton
+                android:id="@+id/btnFavdeCola"
+                android:layout_width="25dp"
+                android:layout_height="23dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/btn_transparente"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="@id/nombreBeatCola"
+                app:layout_constraintBottom_toBottomOf="@id/txtArtistaBeatCola"
+                android:scaleType="fitCenter"
+                />
+
+
+            <TextView
+                android:id="@+id/siguiente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Siguiente"
+                android:textColor="#fff"
+                android:textSize="25dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="@id/txtArtistaBeatCola" />
 
 
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:id="@+id/listaSiguiente"
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:id="@+id/listaSiguiente"
 
-        android:dividerHeight="10dp"
-        android:divider="@drawable/btn_transparente"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        app:layout_constraintTop_toBottomOf="@id/siguiente"
-        />
+                android:dividerHeight="10dp"
+                android:divider="@drawable/btn_transparente"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                app:layout_constraintTop_toBottomOf="@id/siguiente"
+                />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

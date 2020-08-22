@@ -141,4 +141,23 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/entrarSinSesion"
+
+        android:text="Entrar sin Iniciar Sesion"
+        android:fontFamily="@font/helvetica_medium"
+        android:textSize="18dp"
+        android:textColor="#000"
+
+
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

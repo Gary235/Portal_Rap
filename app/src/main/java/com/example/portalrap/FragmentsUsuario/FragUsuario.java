@@ -153,9 +153,15 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
 
         MainActivity main = (MainActivity) getActivity();
         user = main.obtenerUsuario();
-        String email = user.getEmail();
-        int posArroba = email.indexOf("@");
-        String emailCortado = email.substring(0, posArroba);
+        String emailCortado;
+        if(user != null){
+            String email = user.getEmail();
+            int posArroba = email.indexOf("@");
+            emailCortado = email.substring(0, posArroba);
+        }
+        else {
+            emailCortado = "anonimo";
+        }
         txtUsuario.setText(emailCortado);
 
         //fotoperfil.setImageBitmap(user.getPhotoUrl());

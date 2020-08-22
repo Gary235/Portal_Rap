@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
+
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,203 +13,193 @@
 
 
 
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/cargainicial"
+            <FrameLayout
+                android:id="@+id/holderdecola"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
+                android:elevation="100dp"
 
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:elevation="200dp"
-        />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/holderdecola"
-        android:elevation="100dp"
-        />
+            <ImageView
+                android:id="@+id/recdifuminado"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#AB000000"
+                app:layout_constraintTop_toTopOf="parent"
+                android:elevation="50dp"
+                tools:ignore="MissingConstraints" />
 
-    <ImageView
-        android:id="@+id/recdifuminado"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#AB000000"
-        app:layout_constraintTop_toTopOf="parent"
-        android:elevation="50dp"
-        />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtConfirmar"
+                android:fontFamily="@font/poppins_bold"
+                android:textColor="#E1A9F4"
+                android:textSize="60dp"
+                android:text="EMPEZAR"
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtConfirmar"
-        android:fontFamily="@font/poppins_bold"
-        android:textColor="#E1A9F4"
-        android:textSize="80dp"
-        android:text="EMPEZAR"
+                android:elevation="60dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/recfondo"
+                app:layout_constraintBottom_toBottomOf="@id/recfondo"
+                />
 
-        android:elevation="60dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/recfondo"
-        app:layout_constraintBottom_toBottomOf="@id/recfondo"
-        />
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:id="@+id/imagenObjeto"
 
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:id="@+id/imagenObjeto"
+                android:elevation="50dp"
+                android:translationZ="50dp"
+                app:layout_constraintLeft_toLeftOf="@id/recfondo"
+                app:layout_constraintRight_toRightOf="@id/recfondo"
+                app:layout_constraintTop_toTopOf="@id/recfondo"
+                app:layout_constraintBottom_toBottomOf="@id/recfondo"
+                />
 
-        android:elevation="50dp"
-        android:translationZ="50dp"
-        app:layout_constraintLeft_toLeftOf="@id/recfondo"
-        app:layout_constraintRight_toRightOf="@id/recfondo"
-        app:layout_constraintTop_toTopOf="@id/recfondo"
-        app:layout_constraintBottom_toBottomOf="@id/recfondo"
-        />
+            <ImageView
+                android:id="@+id/recfondo"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:layout_marginTop="80dp"
+                android:background="@drawable/rectangulo_redondeado_girs"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+            <ImageView
+                android:id="@+id/recfondotimer"
+                android:layout_width="130dp"
+                android:layout_height="100dp"
+                android:background="@drawable/rec_stroke_negro2"
+                app:layout_constraintTop_toTopOf="@id/TiempoFreedeentrenar"
+                app:layout_constraintBottom_toBottomOf="@id/TiempoFreedeentrenar"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:elevation="20dp"
+                />
+            <TextView
+                android:id="@+id/TiempoFreedeentrenar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-    <ImageView
-        android:id="@+id/recfondo"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:layout_marginTop="80dp"
-        android:background="@drawable/rectangulo_redondeado_girs"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="invisible"
-        />
-    <ImageView
-        android:id="@+id/recfondotimer"
-        android:layout_width="130dp"
-        android:layout_height="100dp"
-        android:background="@drawable/rec_stroke_negro2"
-        app:layout_constraintTop_toTopOf="@id/TiempoFreedeentrenar"
-        app:layout_constraintBottom_toBottomOf="@id/TiempoFreedeentrenar"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:elevation="20dp"
-        />
-    <TextView
-        android:id="@+id/TiempoFreedeentrenar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/helvetica_medium"
+                android:text=""
+                android:textColor="#fff"
+                android:textSize="50dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:elevation="40dp"
+                />
 
-        android:layout_marginTop="50dp"
-        android:fontFamily="@font/helvetica_medium"
-        android:text=""
-        android:textColor="#fff"
-        android:textSize="50dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:elevation="40dp"
-        />
+            <TextView
+                android:id="@+id/nombreBaseSeleccionadadeentrenar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="40dp"
+                android:fontFamily="@font/helvetica_medium"
+                android:textColor="#fff"
+                android:textSize="25dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recfondo" />
 
-    <TextView
-        android:id="@+id/nombreBaseSeleccionadadeentrenar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="40dp"
-        android:fontFamily="@font/helvetica_medium"
-        android:textColor="#fff"
-        android:textSize="25dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recfondo" />
+            <TextView
+                android:id="@+id/nombreArtistaSeleccionadodeentrenar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-    <TextView
-        android:id="@+id/nombreArtistaSeleccionadodeentrenar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+                android:fontFamily="@font/helvetica_light"
+                android:textColor="#808080"
+                android:textSize="15dp"
+                app:layout_constraintLeft_toLeftOf="@id/nombreBaseSeleccionadadeentrenar"
+                app:layout_constraintTop_toBottomOf="@id/nombreBaseSeleccionadadeentrenar"
 
-        android:fontFamily="@font/helvetica_light"
-        android:textColor="#808080"
-        android:textSize="15dp"
-        app:layout_constraintLeft_toLeftOf="@id/nombreBaseSeleccionadadeentrenar"
-        app:layout_constraintTop_toBottomOf="@id/nombreBaseSeleccionadadeentrenar"
+                />
 
-        />
+            <ImageButton
+                android:id="@+id/favdeentrenar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_transparente"
+                android:layout_marginRight="43dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/nombreBaseSeleccionadadeentrenar"
+                app:layout_constraintBottom_toBottomOf="@id/nombreArtistaSeleccionadodeentrenar"/>
 
-    <ImageButton
-        android:id="@+id/favdeentrenar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/btn_transparente"
-        android:layout_marginRight="43dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/nombreBaseSeleccionadadeentrenar"
-        app:layout_constraintBottom_toBottomOf="@id/nombreArtistaSeleccionadodeentrenar"/>
+            <SeekBar
+                android:id="@+id/Barradeentrenar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:thumbTint="#fff"
+                android:progressTint="#fff"
+                app:layout_constraintTop_toBottomOf="@+id/nombreArtistaSeleccionadodeentrenar" />
 
-    <SeekBar
-        android:id="@+id/Barradeentrenar"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:thumbTint="#fff"
-        android:progressTint="#fff"
-        app:layout_constraintTop_toBottomOf="@+id/nombreArtistaSeleccionadodeentrenar" />
-
-    <ImageButton
-        android:id="@+id/Playdeentrenar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:src="@drawable/ic_icono_play_blanco"
-        android:background="@drawable/btn_transparente"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Barradeentrenar"
-        />
+            <ImageButton
+                android:id="@+id/Playdeentrenar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/ic_icono_play_blanco"
+                android:background="@drawable/btn_transparente"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Barradeentrenar"
+                />
 
 
-    <ImageButton
-        android:id="@+id/btnGrabardeentrenar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:scaleType="centerCrop"
-        android:background="@drawable/btn_transparente"
-        android:src="@drawable/ic_icono_grabar_blanco"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Playdeentrenar" />
+            <ImageButton
+                android:id="@+id/btnGrabardeentrenar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:scaleType="centerCrop"
+                android:background="@drawable/btn_transparente"
+                android:src="@drawable/ic_icono_grabar_blanco"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Playdeentrenar" />
 
-    <ImageButton
-        android:id="@+id/btnrepetirbasedeentrenar"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/btn_transparente"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnGrabardeentrenar" />
+            <ImageButton
+                android:id="@+id/btnrepetirbasedeentrenar"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/btn_transparente"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/btnGrabardeentrenar" />
 
-    <ImageButton
-        android:id="@+id/btnColadeentrenar"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="40dp"
-        android:background="@drawable/btn_transparente"
-        android:src="@drawable/ic_icono_cola_verde"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnGrabardeentrenar" />
+            <ImageButton
+                android:id="@+id/btnColadeentrenar"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="40dp"
+                android:background="@drawable/btn_transparente"
+                android:src="@drawable/ic_icono_cola_blanco"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/btnGrabardeentrenar" />
 
-    <ImageButton
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:id="@+id/btnVOlverdeentrenar"
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/btnVOlverdeentrenar"
 
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
 
-        android:src="@drawable/ic_flecha_fina_abajo_blanca"
-        android:background="@drawable/btn_transparente"
-        />
+                android:src="@drawable/ic_flecha_fina_abajo_blanca"
+                android:background="@drawable/btn_transparente"
+                />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
