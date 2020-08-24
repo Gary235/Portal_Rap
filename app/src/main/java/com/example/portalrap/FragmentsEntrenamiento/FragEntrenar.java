@@ -96,7 +96,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
     MediaPlayer mediaPlayer = new MediaPlayer();
     private MediaObserver observer = null;
 
-    String  path_file="", name, carpeta = "/portal_rap/", archivo = "archivooo";
+    String  path_file="", name, carpeta = "/Portal Rap/", archivo = "default_name";
     File localfile;
     String palabrarandom;
     CountDownTimer timer,timerinicial;
@@ -300,7 +300,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
         switch (idbotonapretado) {
             case R.id.btnVOlverdeentrenar:
-
+            case R.id.btnVOlverdeentrenarpantallachica:
                 //tambien habria que frenar el beat
 
                 AlertDialog.Builder mensaje;
@@ -313,6 +313,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                 mensaje.show();
 
                 break;
+
             case R.id.btnColadeentrenar:
                 adminFragment = getFragmentManager();
                 fragdeCola = new FragCola();
@@ -322,7 +323,9 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
                 holderparacola.setVisibility(View.VISIBLE);
                 break;
+
             case R.id.btnrepetirbasedeentrenar:
+            case R.id.btnrepetirbasedeentrenarpantallachica:
                 if(!repetirverde) {
                     btnRepetir.setImageResource(R.drawable.ic_repetir_verde);
                     repetirverde = true;
@@ -332,7 +335,9 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                     repetirverde = false;
                 }
                 break;
+
             case R.id.favdeentrenar:
+            case R.id.favdeentrenarpantallachica:
                 if(FragBases.UserSelection.get(index).getFavoritos() != null)
                 {
                     if(FragBases.UserSelection.get(index).getFavoritos()){
@@ -348,6 +353,18 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                 actualizarFav(FragBases.UserSelection.get(index).getNombre(),FragBases.UserSelection.get(index).getArtista(),false,FragBases.UserSelection.get(index).getId(),FragBases.UserSelection.get(index).getUrl(),FragBases.UserSelection.get(index).getFavoritos(),FragBases.UserSelection.get(index).getDuracion());
 
                 break;
+
+            case R.id.btnColadeentrenarpantallachica:
+                adminFragment = getFragmentManager();
+                fragdeCola = new FragCola();
+                transaccionFragment=adminFragment.beginTransaction();
+                transaccionFragment.replace(R.id.holderdecolapantallachica, fragdeCola);
+                transaccionFragment.commit();
+
+                holderparacola.setVisibility(View.VISIBLE);
+                break;
+
+
         }
     }
 
