@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.PowerManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -94,7 +96,6 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
     MediaPlayer mediaPlayer = new MediaPlayer();
     private MediaObserver observer = null;
 
-    File archivoSalida = null;
     String palabrarandom;
     CountDownTimer timer,timerinicial;
     long tiemporestanteDuracion = 300000,tiemporestanteInicial = 3500;
@@ -112,17 +113,24 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
     ArrayList<Palabras> arrPalabras;
     ArrayList<MediaPlayer> arrMediaPlayer = new ArrayList<>();
 
-    String var;
     File file;
-
-    public FragEntrenar() {
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.entrenar, container, false);
-        Setear(v);
+        MainActivity main = (MainActivity) getActivity();
+
+        int alto = main.obtenerAlto();
+        Log.d("Dimensiones" , "alto: " + alto);
+        View v;
+        if(alto <= 1600){
+            v = inflater.inflate(R.layout.entrenar_pantalla_chica, container, false);
+            SetearPantallaChica(v);
+        }
+        else {
+            v = inflater.inflate(R.layout.entrenar, container, false);
+            Setear(v);
+        }
         ListenersAdicionales();
         db = FirebaseFirestore.getInstance();
 
@@ -195,6 +203,44 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         //fotoObjeto.setVisibility(View.GONE);
 
         holderparacola = v.findViewById(R.id.holderdecola);
+
+        holderparacola.setVisibility(View.GONE);
+
+        btnVolver.setOnClickListener(this);
+        btnRepetir.setOnClickListener(this);
+        btnCola.setOnClickListener(this);
+        btnFav.setOnClickListener(this);
+
+        aleatorio = (int) (Math.random() * 2) + 1;
+    }
+    public void SetearPantallaChica(View v) {
+
+        btnGrabar = v.findViewById(R.id.btnGrabardeentrenarpantallachica);
+        btnVolver = v.findViewById(R.id.btnVOlverdeentrenarpantallachica);
+        btnCola = v.findViewById(R.id.btnColadeentrenarpantallachica);
+        btnFav = v.findViewById(R.id.favdeentrenarpantallachica);
+        btnPlay = v.findViewById(R.id.Playdeentrenarpantallachica);
+        btnRepetir = v.findViewById(R.id.btnrepetirbasedeentrenarpantallachica);
+        fotoObjeto = v.findViewById(R.id.imagenObjetopantallachica);
+
+        txtArtista = v.findViewById(R.id.nombreArtistaSeleccionadodeentrenarpantallachica);
+        txtBase = v.findViewById(R.id.nombreBaseSeleccionadadeentrenarpantallachica);
+        txtDuracion = v.findViewById(R.id.TiempoFreedeentrenarpantallachica);
+        txtConfirmar = v.findViewById(R.id.txtConfirmarpantallachica);
+        fondoDifuminado = v.findViewById(R.id.recdifuminadopantallachica);
+        barradebeat = v.findViewById(R.id.Barradeentrenarpantallachica);
+        mediaPlayer = new MediaPlayer();
+
+        btnVolver.setEnabled(false);
+        btnRepetir.setEnabled(false);
+        btnCola.setEnabled(false);
+        btnFav.setEnabled(false);
+        btnGrabar.setEnabled(false);
+        btnPlay.setEnabled(false);
+        barradebeat.setEnabled(false);
+        //fotoObjeto.setVisibility(View.GONE);
+
+        holderparacola = v.findViewById(R.id.holderdecolapantallachica);
 
         holderparacola.setVisibility(View.GONE);
 
@@ -438,7 +484,6 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public void Recorder(){
         if(grabacion == null){
             btnGrabar.setImageResource(R.drawable.ic_icono_grabar_rojo);
@@ -447,11 +492,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             grabacion.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
             grabacion.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
 
-
-            String separador = File.separator;
-            String  path_file="", name, carpeta = "/pruebas/", archivo = "migrabacion2";
-
-
+            String  path_file="", name, carpeta = "/portal_rap/", archivo = "archivooo";
             path_file = Environment.getExternalStorageDirectory() + carpeta;
             File localfile = new File(path_file);
 
@@ -462,8 +503,8 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             name = archivo + ".mp3";
             file = new File(localfile, name);
 
+            grabacion.setOutputFile(file.getAbsolutePath());
 
-            grabacion.setOutputFile(file);
 
             try{
                 grabacion.prepare();
@@ -497,13 +538,15 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             mensaje.setTitle("Cambiar Nombre de la Grabacion");
             input = new EditText(getActivity());
             mensaje.setView(input);
-            mensaje.setPositiveButton("Guardar",escuchadordealert);
+            mensaje.setPositiveButton("Guardar", escuchadordealert);
+            mensaje.setNegativeButton("Volver", escuchadordealert);
             mensaje.create();
             mensaje.show();
         }
     }
 
     DialogInterface.OnClickListener escuchadordealert = new DialogInterface.OnClickListener() {
+        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void onClick(DialogInterface dialog, int which) {
             MainActivity main = (MainActivity) getActivity();
@@ -515,6 +558,8 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                 }
                 else {
                     FirebaseUser usuario = main.obtenerUsuario();
+
+                    //cambiar nombre del archivo
 
                     if(usuario != null){
                         FirebaseStorage storage =  FirebaseStorage.getInstance();
@@ -537,10 +582,15 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                                         // ...
                                     }
                                 });
+
+
                     }
 
                     grabacion = null;
                 }
+            }
+            else {
+                dialog.cancel();
             }
 
 

@@ -7,6 +7,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseUser usuarioActual;
     private FirebaseAuth mAuth;
 
-
+    int anchoPantalla, altoPantalla;
     @Override
     public void onStart() {
         super.onStart();
@@ -88,6 +89,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        anchoPantalla = metrics.widthPixels;
+        altoPantalla = metrics.heightPixels;
 
         bottom = findViewById(R.id.bottomnavigation);
         pager = findViewById(R.id.pager);
@@ -295,6 +300,13 @@ public class MainActivity extends AppCompatActivity {
     }
     public FirebaseUser obtenerUsuario(){
         return usuarioActual;
+    }
+
+    public int obtenerAlto(){
+        return altoPantalla;
+    }
+    public int obtenerAncho(){
+        return anchoPantalla;
     }
 
     @Override
