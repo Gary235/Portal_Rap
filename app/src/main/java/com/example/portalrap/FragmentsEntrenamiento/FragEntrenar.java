@@ -96,6 +96,8 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
     MediaPlayer mediaPlayer = new MediaPlayer();
     private MediaObserver observer = null;
 
+    String  path_file="", name, carpeta = "/portal_rap/", archivo = "archivooo";
+    File localfile;
     String palabrarandom;
     CountDownTimer timer,timerinicial;
     long tiemporestanteDuracion = 300000,tiemporestanteInicial = 3500;
@@ -492,9 +494,8 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             grabacion.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
             grabacion.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
 
-            String  path_file="", name, carpeta = "/portal_rap/", archivo = "archivooo";
             path_file = Environment.getExternalStorageDirectory() + carpeta;
-            File localfile = new File(path_file);
+            localfile = new File(path_file);
 
             if(!localfile.exists()) {
                 localfile.mkdir();
@@ -560,11 +561,20 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                     FirebaseUser usuario = main.obtenerUsuario();
 
                     //cambiar nombre del archivo
+                    File currentFile = new File(localfile, name);
+                    File newFile = new File(localfile, input.getText().toString().trim() + ".mp3");
 
+                    if (rename(currentFile, newFile)) {
+                        //Success
+                        Log.i("Tag", "Success");
+                    } else {
+                        //Fail
+                        Log.i("Tag", "Fail");
+                    }
                     if(usuario != null){
                         FirebaseStorage storage =  FirebaseStorage.getInstance();
                         StorageReference reference = storage.getReference();
-                        Uri fromFile = Uri.fromFile(file);
+                        Uri fromFile = Uri.fromFile(newFile);
                         StorageReference ref = reference.child("Grabaciones/" + fromFile.getLastPathSegment());
 
                         ref.putFile(fromFile)
@@ -596,6 +606,11 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
         }
     };
+
+    private boolean rename(File from, File to) {
+        return from.getParentFile().exists() && from.exists() && from.renameTo(to);
+    }
+
     public void pausayReproducir(){
 
         if(!mediaPlayer.isPlaying()) {
