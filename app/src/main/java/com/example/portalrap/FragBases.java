@@ -288,31 +288,5 @@ public class FragBases extends Fragment implements View.OnClickListener {
 
     }
 
-    /*private void listaBases(){
-        db.collection("Beats")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        Beats.clear();
-                        listabases.setAdapter(null);
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                //Base beat = document.toObject(Base.class);
-                                Map<String, Object> map = task.getResult().getData());
 
-                                assert beat != null;
-                                beat.setId(document.getId());
-                                Beats.add(beat);
-                            }
-                            adaptador = new adaptadorBases(Beats,getActivity());
-                            listabases.setAdapter(adaptador);
-
-                        } else {
-
-                        }
-                    }
-                });
-    }
-*/
 }

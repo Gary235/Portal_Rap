@@ -13,9 +13,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.example.portalrap.Clases.Grabacion;
+import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -27,6 +29,11 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
     private FirebaseFirestore db;
     private adaptadorGrabacionesUsuario adaptadorGrabacionesUsuario;
     private ListView listaa;
+    FirebaseUser user;
+    MainActivity main;
+
+
+
     public adaptadorGrabacionesUsuario(ArrayList<Grabacion> arrayGrabacion, Context contexto,adaptadorGrabacionesUsuario adaptador,ListView listaaa) {
         arrGrabacion = arrayGrabacion;
         miContexto = contexto;
@@ -50,6 +57,10 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
         return position;
     }
 
+    public Context getContext(){
+        return miContexto;
+    }
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
@@ -66,6 +77,8 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
             holder.btnFav.setFocusable(false);
             holder.Nombre.setFocusable(false);
             db = FirebaseFirestore.getInstance();
+            main = (MainActivity) getContext();
+            user = main.obtenerUsuario();
 
             convertView.setTag(holder);
         }else {
@@ -112,6 +125,9 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
 
                 actualizarFav(arrGrabacion.get(pos).getNombre(),arrGrabacion.get(pos).getId(),arrGrabacion.get(pos).getUrl(),arrGrabacion.get(pos).getFavoritos());
                 Log.d("corazon","Bool: " + arrGrabacion.get(pos).getFavoritos() + ", Pos" + pos);
+                Log.d("CambiarFav","Id: " + arrGrabacion.get(pos).getId() );
+                Log.d("CambiarFav","UId: " + user.getUid() );
+
             }
         });
 
@@ -126,7 +142,7 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
     private void actualizarFav(String nombre, String id, String url, Boolean fav) {
         Map<String, Object> grabacion = (new Grabacion(nombre, id, fav, url)).toMap();
 
-        db.collection("Grabaciones")
+        db.collection("Grabaciones").document(user.getUid()).collection("Grabaciones")
                 .document(id)
                 .update(grabacion)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -144,5 +160,8 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
                     }
                 });
     }
+
+
+
 
 }

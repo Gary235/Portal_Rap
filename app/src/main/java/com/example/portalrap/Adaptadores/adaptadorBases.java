@@ -16,9 +16,11 @@ import androidx.annotation.NonNull;
 import com.example.portalrap.Clases.Base;
 import com.example.portalrap.FragBases;
 import com.example.portalrap.FragmentsUsuario.FragFavoritos;
+import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ public class adaptadorBases extends BaseAdapter {
     private Context miContexto;
     public static int aja = 0;
     private FirebaseFirestore db;
+    MainActivity main;
 
     public adaptadorBases(ArrayList<Base> arrayBases,Context contexto)
     {
@@ -65,6 +68,10 @@ public class adaptadorBases extends BaseAdapter {
     @Override
     public long getItemId(int position) { return position; }
 
+    public Context getContext(){
+        return miContexto;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
@@ -86,6 +93,7 @@ public class adaptadorBases extends BaseAdapter {
             holder.Artista.setFocusable(false);
             holder.Duracion.setFocusable(false);
             db = FirebaseFirestore.getInstance();
+            main = (MainActivity) getContext();
 
             convertView.setTag(holder);
         }else {
@@ -179,18 +187,11 @@ public class adaptadorBases extends BaseAdapter {
         });
 
         Log.d("CorazonBase", "" + arrBases.get(position).getFavoritos());
-            if(arrBases.get(position).getFavoritos())
-            {
-                //desfavear
+            if(arrBases.get(position).getFavoritos()) {
                 holder.btnFav.setImageResource(R.drawable.ic_icono_fav_rojo);
-                //holder.btnFav.setBackgroundResource(R.drawable.animacion_favoritos);
-                //animacion1 = (AnimationDrawable) holder.btnFav.getBackground();
-
             }
             else if(!arrBases.get(position).getFavoritos()) {
-                //fav
                 holder.btnFav.setImageResource(R.drawable.ic_icono_nofav);
-
             }
 
 
@@ -207,13 +208,16 @@ public class adaptadorBases extends BaseAdapter {
                     if(arrBases.get(pos).getFavoritos()){
                         arrBases.get(pos).setFavoritos(false);
                         holder.btnFav.setImageResource(R.drawable.ic_icono_nofav);
-                        //animacion1.start();
+                        main.eliminarFav(arrBases.get(pos).getNombre(),arrBases.get(pos).getArtista(),false,arrBases.get(pos).getId(),arrBases.get(pos).getUrl(),arrBases.get(pos).getFavoritos(), arrBases.get(pos).getDuracion());
+
                     }else{
                         arrBases.get(pos).setFavoritos(true);
                         holder.btnFav.setImageResource(R.drawable.ic_icono_fav_rojo);
+                        main.agregarFav(arrBases.get(pos).getNombre(),arrBases.get(pos).getArtista(),false,arrBases.get(pos).getId(),arrBases.get(pos).getUrl(),arrBases.get(pos).getFavoritos(), arrBases.get(pos).getDuracion());
+
                     }
                 }
-                actualizarFav(arrBases.get(pos).getNombre(),arrBases.get(pos).getArtista(),false,arrBases.get(pos).getId(),arrBases.get(pos).getUrl(),arrBases.get(pos).getFavoritos(), arrBases.get(pos).getDuracion());
+                //actualizarFav(arrBases.get(pos).getNombre(),arrBases.get(pos).getArtista(),false,arrBases.get(pos).getId(),arrBases.get(pos).getUrl(),arrBases.get(pos).getFavoritos(), arrBases.get(pos).getDuracion());
             }
         });
         return convertView;
@@ -247,6 +251,9 @@ public class adaptadorBases extends BaseAdapter {
                     }
                 });
     }
+
+
+
 
 
 

@@ -12,6 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.example.portalrap.Clases.Base;
+import com.example.portalrap.FragBases;
+import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,6 +26,7 @@ public class adaptadorDeColaSiguiente extends BaseAdapter {
     private ArrayList<Base> arrBasesSiguiente = new ArrayList<>();
     private Context miContexto;
     private FirebaseFirestore db;
+    MainActivity main;
 
     public adaptadorDeColaSiguiente(ArrayList<Base> arrBasesSiguiente, Context miContexto) {
         this.arrBasesSiguiente = arrBasesSiguiente;
@@ -48,6 +51,11 @@ public class adaptadorDeColaSiguiente extends BaseAdapter {
         protected TextView Nombre,Artista;
         protected ImageButton btnFav;
     }
+
+    public Context getContext(){
+        return miContexto;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
@@ -65,6 +73,7 @@ public class adaptadorDeColaSiguiente extends BaseAdapter {
             holder.Nombre.setFocusable(false);
             holder.Artista.setFocusable(false);
             db = FirebaseFirestore.getInstance();
+            main = (MainActivity) getContext();
 
 
             convertView.setTag(holder);
@@ -105,14 +114,13 @@ public class adaptadorDeColaSiguiente extends BaseAdapter {
                     if(arrBasesSiguiente.get(pos).getFavoritos()){
                         arrBasesSiguiente.get(pos).setFavoritos(false);
                         holder.btnFav.setImageResource(R.drawable.ic_icono_nofav_blanco);
-
+                        main.eliminarFav(arrBasesSiguiente.get(pos).getNombre(),arrBasesSiguiente.get(pos).getArtista(),false,arrBasesSiguiente.get(pos).getId(),arrBasesSiguiente.get(pos).getUrl(),arrBasesSiguiente.get(pos).getFavoritos(), arrBasesSiguiente.get(pos).getDuracion());
                     }else{
                         arrBasesSiguiente.get(pos).setFavoritos(true);
                         holder.btnFav.setImageResource(R.drawable.ic_icono_fav_blanco);
-
+                        main.agregarFav(arrBasesSiguiente.get(pos).getNombre(),arrBasesSiguiente.get(pos).getArtista(),false,arrBasesSiguiente.get(pos).getId(),arrBasesSiguiente.get(pos).getUrl(),arrBasesSiguiente.get(pos).getFavoritos(), arrBasesSiguiente.get(pos).getDuracion());
                     }
                 }
-                actualizarFav(arrBasesSiguiente.get(pos).getNombre(),arrBasesSiguiente.get(pos).getArtista(),false,arrBasesSiguiente.get(pos).getId(),arrBasesSiguiente.get(pos).getUrl(),arrBasesSiguiente.get(pos).getFavoritos(), arrBasesSiguiente.get(pos).getDuracion());
             }
         });
 
@@ -120,27 +128,5 @@ public class adaptadorDeColaSiguiente extends BaseAdapter {
         return convertView;
     }
 
-    private void actualizarFav(String nombre,String artista,Boolean destacado, String id, String url, Boolean fav, String dur) {
-        Map<String, Object> beat = (new Base(artista,nombre, url,dur,destacado, fav,id)).toMap();
-
-        db.collection("Beats")
-                .document(id)
-                .update(beat)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.e("CambiarFav", "Bien Ahi");
-
-
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e("CambiarFav", "Error al actualizar: " + e);
-
-                    }
-                });
-    }
 
 }

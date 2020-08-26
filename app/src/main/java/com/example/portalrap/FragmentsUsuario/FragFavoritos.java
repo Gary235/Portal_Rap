@@ -30,6 +30,7 @@ import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -55,6 +56,7 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
     FragmentTransaction transaccionFragment;
     FrameLayout holder;
     FirebaseFirestore db;
+    FirebaseUser user;
 
     TabItem item1,item2;
 
@@ -64,8 +66,12 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_frag_favoritos, container, false);
+
+        MainActivity main = (MainActivity) getActivity();
+        user = main.obtenerUsuario();
+
         adminFragment = getFragmentManager();
-        TabLayout tabLayout = (TabLayout) v.findViewById(R.id.tab);
+        TabLayout tabLayout = v.findViewById(R.id.tab);
         item1 =  v.findViewById(R.id.tabitem1);
         item2 =  v.findViewById(R.id.tabitem2);
         db = FirebaseFirestore.getInstance();
@@ -202,7 +208,7 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
 
     public void obtenerListaGrabacionesfav() {
 
-        db.collection("Grabaciones")
+        db.collection("Usuarios").document(user.getUid()).collection("Grabaciones")
                 .whereEqualTo("Favoritos", true)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -225,7 +231,7 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
 
     public void obtenerListaBeatsfav() {
 
-        db.collection("Beats")
+        db.collection("Usuarios").document(user.getUid()).collection("BeatsFav")
                 .whereEqualTo("Favoritos", true)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override

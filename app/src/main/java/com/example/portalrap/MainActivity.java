@@ -21,6 +21,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.portalrap.Adaptadores.SliderPageAdapter;
+import com.example.portalrap.Clases.Base;
 import com.example.portalrap.FragmentsEntrenamiento.FragDuracion;
 import com.example.portalrap.FragmentsEntrenamiento.FragEntrenar;
 import com.example.portalrap.FragmentsEntrenamiento.FragEstimulo;
@@ -34,12 +35,16 @@ import com.example.portalrap.FragmentsInicio.FragRegistro;
 import com.example.portalrap.FragmentsUsuario.FragEditarPerfil;
 import com.example.portalrap.FragmentsUsuario.FragFavoritos;
 import com.example.portalrap.FragmentsUsuario.FragUsuario;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
     public static int PosModo = -1, Frecuencia = -1, Segundos = -1 , Minutos = -1;
     FirebaseUser usuarioActual;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
+
+
 
     int anchoPantalla, altoPantalla;
     @Override
@@ -87,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
                     Manifest.permission.WAKE_LOCK
             }, 1);
         }
+        db = FirebaseFirestore.getInstance();
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         DisplayMetrics metrics = new DisplayMetrics();
@@ -320,4 +329,53 @@ public class MainActivity extends AppCompatActivity {
             getFragmentManager().popBackStack();
         }
     }
+
+
+
+
+
+
+    public void agregarFav(String nombre,String artista,Boolean destacado, String id, String url, Boolean fav, String dur) {
+        Map<String, Object> beat = (new Base(artista,nombre, url,dur,destacado, fav,id)).toMap();
+
+        db.collection("Usuarios").document(usuarioActual.getUid()).collection("BeatsFav")
+                .document(id)
+                .set(beat)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.e("CambiarFav", "Bien Ahi");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("CambiarFav", "Error al actualizar: " + e);
+                    }
+                });
+    }
+    public void eliminarFav(String nombre,String artista,Boolean destacado, String id, String url, Boolean fav, String dur) {
+        Map<String, Object> beat = (new Base(artista,nombre, url,dur,destacado, fav,id)).toMap();
+
+        db.collection("Usuarios").document(usuarioActual.getUid()).collection("BeatsFav")
+                .document(id)
+                .set(beat)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.e("CambiarFav", "Bien Ahi");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("CambiarFav", "Error al actualizar: " + e);
+                    }
+                });
+    }
+
+
+
+
+
 }

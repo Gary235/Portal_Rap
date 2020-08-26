@@ -128,7 +128,7 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
 
     private void obtenerListaGrabaciones() {
 
-        db.collection("Grabaciones")
+        db.collection("Usuarios").document(user.getUid()).collection("Grabaciones")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {

@@ -78,19 +78,22 @@ public class FragCola extends Fragment{
         btnFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                MainActivity main = (MainActivity) getActivity();
                 if(baseSonando.getFavoritos()!= null)
                 {
                     if(baseSonando.getFavoritos()){
                         baseSonando.setFavoritos(false);
                         btnFav.setImageResource(R.drawable.ic_icono_nofav_blanco);
+                        main.eliminarFav(FragBases.UserSelection.get(index).getNombre(),FragBases.UserSelection.get(index).getArtista(),false,FragBases.UserSelection.get(index).getId(),FragBases.UserSelection.get(index).getUrl(),FragBases.UserSelection.get(index).getFavoritos(),FragBases.UserSelection.get(index).getDuracion());
 
                     }else{
                         baseSonando.setFavoritos(true);
                         btnFav.setImageResource(R.drawable.ic_icono_fav_blanco);
+                        main.agregarFav(FragBases.UserSelection.get(index).getNombre(),FragBases.UserSelection.get(index).getArtista(),false,FragBases.UserSelection.get(index).getId(),FragBases.UserSelection.get(index).getUrl(),FragBases.UserSelection.get(index).getFavoritos(),FragBases.UserSelection.get(index).getDuracion());
 
                     }
                 }
-                actualizarFav(baseSonando.getNombre(),baseSonando.getArtista(),false,baseSonando.getId(),baseSonando.getUrl(),baseSonando.getFavoritos(), baseSonando.getDuracion());
             }
         });
 
@@ -124,27 +127,6 @@ public class FragCola extends Fragment{
         else  txtSiguiente.setVisibility(View.VISIBLE);
 
     }
-    private void actualizarFav(String nombre,String artista,Boolean destacado, String id, String url, Boolean fav, String dur) {
-        Map<String, Object> beat = (new Base(artista,nombre, url,dur,destacado, fav,id)).toMap();
 
-        db.collection("Beats")
-                .document(id)
-                .update(beat)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.e("CambiarFav", "Bien Ahi");
-
-
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e("CambiarFav", "Error al actualizar: " + e);
-
-                    }
-                });
-    }
 
 }

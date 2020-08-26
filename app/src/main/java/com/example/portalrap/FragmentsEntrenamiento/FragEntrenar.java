@@ -343,15 +343,13 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                     if(FragBases.UserSelection.get(index).getFavoritos()){
                         FragBases.UserSelection.get(index).setFavoritos(false);
                         btnFav.setImageResource(R.drawable.ic_icono_nofav_blanco);
-
+                        main.eliminarFav(FragBases.UserSelection.get(index).getNombre(),FragBases.UserSelection.get(index).getArtista(),false,FragBases.UserSelection.get(index).getId(),FragBases.UserSelection.get(index).getUrl(),FragBases.UserSelection.get(index).getFavoritos(),FragBases.UserSelection.get(index).getDuracion());
                     }else{
                         FragBases.UserSelection.get(index).setFavoritos(true);
                         btnFav.setImageResource(R.drawable.ic_icono_fav_blanco);
-
+                        main.agregarFav(FragBases.UserSelection.get(index).getNombre(),FragBases.UserSelection.get(index).getArtista(),false,FragBases.UserSelection.get(index).getId(),FragBases.UserSelection.get(index).getUrl(),FragBases.UserSelection.get(index).getFavoritos(),FragBases.UserSelection.get(index).getDuracion());
                     }
                 }
-                actualizarFav(FragBases.UserSelection.get(index).getNombre(),FragBases.UserSelection.get(index).getArtista(),false,FragBases.UserSelection.get(index).getId(),FragBases.UserSelection.get(index).getUrl(),FragBases.UserSelection.get(index).getFavoritos(),FragBases.UserSelection.get(index).getDuracion());
-
                 break;
 
             case R.id.btnColadeentrenarpantallachica:
@@ -581,13 +579,11 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                     File currentFile = new File(localfile, name);
                     File newFile = new File(localfile, input.getText().toString().trim() + ".mp3");
 
-                    if (rename(currentFile, newFile)) {
-                        //Success
+                    if (rename(currentFile, newFile))
                         Log.i("Tag", "Success");
-                    } else {
-                        //Fail
+                     else
                         Log.i("Tag", "Fail");
-                    }
+
                     if(usuario != null){
                         FirebaseStorage storage =  FirebaseStorage.getInstance();
                         StorageReference reference = storage.getReference();
@@ -609,9 +605,11 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                                         // ...
                                     }
                                 });
-
-
                     }
+
+
+
+
 
                     grabacion = null;
                 }
@@ -707,28 +705,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         // termina de cargar los beats, habilita la palabra empezar y saca la progress bar en forma de circulo
     }
 
-    private void actualizarFav(String nombre,String artista,Boolean destacado, String id, String url, Boolean fav, String dur) {
-        Map<String, Object> beat = (new Base(artista,nombre, url,dur,destacado, fav,id)).toMap();
 
-        db.collection("Beats")
-                .document(id)
-                .update(beat)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.e("CambiarFav", "Bien Ahi");
-
-
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e("CambiarFav", "Error al actualizar: " + e);
-
-                    }
-                });
-    }
 
     private class MediaObserver implements Runnable {
         private AtomicBoolean stop = new AtomicBoolean(false);
