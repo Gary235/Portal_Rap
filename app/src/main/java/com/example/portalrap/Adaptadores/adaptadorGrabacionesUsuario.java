@@ -142,7 +142,7 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
     private void actualizarFav(String nombre, String id, String url, Boolean fav) {
         Map<String, Object> grabacion = (new Grabacion(nombre, id, fav, url)).toMap();
 
-        db.collection("Grabaciones").document(user.getUid()).collection("Grabaciones")
+        db.collection("Usuarios").document(user.getUid()).collection("Grabaciones")
                 .document(id)
                 .update(grabacion)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

@@ -331,12 +331,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
     public void agregarFav(String nombre,String artista,Boolean destacado, String id, String url, Boolean fav, String dur) {
-        Map<String, Object> beat = (new Base(artista,nombre, url,dur,destacado, fav,id)).toMap();
+        Map<String, Object> beat = (new Base(artista,nombre, url,dur,destacado, true, id)).toMap();
 
         db.collection("Usuarios").document(usuarioActual.getUid()).collection("BeatsFav")
                 .document(id)
@@ -353,13 +349,13 @@ public class MainActivity extends AppCompatActivity {
                         Log.e("CambiarFav", "Error al actualizar: " + e);
                     }
                 });
+
     }
     public void eliminarFav(String nombre,String artista,Boolean destacado, String id, String url, Boolean fav, String dur) {
-        Map<String, Object> beat = (new Base(artista,nombre, url,dur,destacado, fav,id)).toMap();
 
         db.collection("Usuarios").document(usuarioActual.getUid()).collection("BeatsFav")
                 .document(id)
-                .set(beat)
+                .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

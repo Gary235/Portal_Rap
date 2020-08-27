@@ -32,6 +32,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.portalrap.Adaptadores.adaptadorBases;
 import com.example.portalrap.Clases.Base;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -44,7 +45,7 @@ import java.util.List;
 
 public class FragBases extends Fragment implements View.OnClickListener {
 
-    int textlength=0;
+    int textlength = 0, i = 0;
     ArrayList<Base> array_sort = new ArrayList<>();
     ImageButton btnAnterior,btnInfo;
     ImageView fondo1,paso4;
@@ -62,7 +63,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
     FragmentManager adminFragment;
     FragmentTransaction transaccionFragment;
     FrameLayout holder;
-
+    FirebaseUser user;
 
     @Nullable
     @Override
@@ -75,6 +76,10 @@ public class FragBases extends Fragment implements View.OnClickListener {
         View v = inflater.inflate(R.layout.fragment_frag_bases, container, false);
         Setear(v);
         ListenersAdicionales(v);
+
+        MainActivity main = (MainActivity) getActivity();
+        user = main.obtenerUsuario();
+
 
         if (desdedur != "si") {
             btnAnterior.setVisibility(View.GONE);
@@ -129,7 +134,6 @@ public class FragBases extends Fragment implements View.OnClickListener {
         listabases.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
 
         obtenerListaBases();
-        //listaBases();
 
     }
 
@@ -280,6 +284,27 @@ public class FragBases extends Fragment implements View.OnClickListener {
                 }
                 Log.d("CorazonBase2", "" + Beats.get(0).getNombre());
 
+                db.collection("Usuarios").document(user.getUid()).collection("BeatsFav")
+                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
+                                assert snapshots != null;
+                                for (DocumentSnapshot document : snapshots) {
+                                    Base beat = document.toObject(Base.class);
+                                    assert beat != null;
+                                    beat.setId(document.getId());
+
+                                    if(Beats.get(i).getNombre().equals(beat.getNombre()))
+                                    {
+                                        Beats.get(i).setFavoritos(beat.getFavoritos());
+                                    }
+                                    i++;
+                                }
+                            }
+
+                        });
+
+                //seteadorDeFavoritos();
                 adaptador = new adaptadorBases(Beats,getActivity());
                 listabases.setAdapter(adaptador);
             }
@@ -288,5 +313,26 @@ public class FragBases extends Fragment implements View.OnClickListener {
 
     }
 
+    private void seteadorDeFavoritos(){
 
+        db.collection("Usuarios").document(user.getUid()).collection("BeatsFav")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
+                        assert snapshots != null;
+                        for (DocumentSnapshot document : snapshots) {
+                            Base beat = document.toObject(Base.class);
+                            assert beat != null;
+                            beat.setId(document.getId());
+
+                            if(Beats.get(i).getNombre().equals(beat.getNombre()))
+                            {
+                                Beats.get(i).setFavoritos(beat.getFavoritos());
+                            }
+                            i++;
+                        }
+                    }
+
+                });
+        }
 }

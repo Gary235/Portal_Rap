@@ -103,7 +103,7 @@ public class FragRegistro extends Fragment{
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("TAG", "createUserWithEmail:success");
                             Toast.makeText(getActivity(), "Registro Existoso", Toast.LENGTH_SHORT).show();
-
+                            registroEnFirestore();
                             loguearUsuario(email, password);
 
                         } else {
@@ -151,7 +151,13 @@ public class FragRegistro extends Fragment{
 
     }
 
+    private void registroEnFirestore(){
 
+
+
+
+
+    }
 
 
 }
