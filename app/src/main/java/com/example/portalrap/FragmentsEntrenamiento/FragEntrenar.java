@@ -552,7 +552,8 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
             AlertDialog.Builder mensaje;
             mensaje = new AlertDialog.Builder(getActivity());
-            mensaje.setTitle("Cambiar Nombre de la Grabacion");
+            mensaje.setTitle("Nombrar Grabacion");
+            mensaje.setMessage("No la nombres igual a otra grabacion poruqe se va a sobreescribir");
             input = new EditText(getActivity());
             mensaje.setView(input);
             mensaje.setPositiveButton("Guardar", escuchadordealert);
@@ -591,7 +592,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
                         StorageReference reference = storage.getReference();
                         Uri fromFile = Uri.fromFile(newFile);
-                        StorageReference ref = reference.child("Grabaciones/" + fromFile.getLastPathSegment());
+                        StorageReference ref = reference.child("Grabaciones/"+ usuario.getUid() + "/" + fromFile.getLastPathSegment());
 
                         ref.putFile(fromFile)
                                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -608,6 +609,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                                         // ...
                                     }
                                 });
+
                         HashMap<String, Object> mapGrab = new HashMap<>();
                         mapGrab.put("Nombre", input.getText().toString().trim());
                         mapGrab.put("Favoritos", false);
