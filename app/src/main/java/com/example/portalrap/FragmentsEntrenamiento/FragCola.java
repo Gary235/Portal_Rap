@@ -85,7 +85,7 @@ public class FragCola extends Fragment{
                     if(baseSonando.getFavoritos()){
                         baseSonando.setFavoritos(false);
                         btnFav.setImageResource(R.drawable.ic_icono_nofav_blanco);
-                        main.eliminarFav(FragBases.UserSelection.get(index).getNombre(),FragBases.UserSelection.get(index).getArtista(),false,FragBases.UserSelection.get(index).getId(),FragBases.UserSelection.get(index).getUrl(),FragBases.UserSelection.get(index).getFavoritos(),FragBases.UserSelection.get(index).getDuracion());
+                        main.eliminarFav(FragBases.UserSelection.get(index).getId());
 
                     }else{
                         baseSonando.setFavoritos(true);

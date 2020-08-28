@@ -76,6 +76,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -343,7 +344,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                     if(FragBases.UserSelection.get(index).getFavoritos()){
                         FragBases.UserSelection.get(index).setFavoritos(false);
                         btnFav.setImageResource(R.drawable.ic_icono_nofav_blanco);
-                        main.eliminarFav(FragBases.UserSelection.get(index).getNombre(),FragBases.UserSelection.get(index).getArtista(),false,FragBases.UserSelection.get(index).getId(),FragBases.UserSelection.get(index).getUrl(),FragBases.UserSelection.get(index).getFavoritos(),FragBases.UserSelection.get(index).getDuracion());
+                        main.eliminarFav(FragBases.UserSelection.get(index).getId());
                     }else{
                         FragBases.UserSelection.get(index).setFavoritos(true);
                         btnFav.setImageResource(R.drawable.ic_icono_fav_blanco);
@@ -586,6 +587,8 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
                     if(usuario != null){
                         FirebaseStorage storage =  FirebaseStorage.getInstance();
+                        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
                         StorageReference reference = storage.getReference();
                         Uri fromFile = Uri.fromFile(newFile);
                         StorageReference ref = reference.child("Grabaciones/" + fromFile.getLastPathSegment());
@@ -605,6 +608,14 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                                         // ...
                                     }
                                 });
+                        HashMap<String, Object> mapGrab = new HashMap<>();
+                        mapGrab.put("Nombre", input.getText().toString().trim());
+                        mapGrab.put("Favoritos", false);
+                        mapGrab.put("Url", input.getText().toString().trim() + ".mp3");
+
+                        firestore.collection("Usuarios").document(usuario.getUid()).collection("Grabaciones").add(mapGrab);
+
+
                     }
 
 

@@ -114,7 +114,7 @@ public class adaptadorDeColaSiguiente extends BaseAdapter {
                     if(arrBasesSiguiente.get(pos).getFavoritos()){
                         arrBasesSiguiente.get(pos).setFavoritos(false);
                         holder.btnFav.setImageResource(R.drawable.ic_icono_nofav_blanco);
-                        main.eliminarFav(arrBasesSiguiente.get(pos).getNombre(),arrBasesSiguiente.get(pos).getArtista(),false,arrBasesSiguiente.get(pos).getId(),arrBasesSiguiente.get(pos).getUrl(),arrBasesSiguiente.get(pos).getFavoritos(), arrBasesSiguiente.get(pos).getDuracion());
+                        main.eliminarFav(arrBasesSiguiente.get(pos).getId());
                     }else{
                         arrBasesSiguiente.get(pos).setFavoritos(true);
                         holder.btnFav.setImageResource(R.drawable.ic_icono_fav_blanco);

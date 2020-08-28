@@ -23,7 +23,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
 import java.util.regex.Pattern;
 
 public class FragRegistro extends Fragment{
@@ -93,8 +95,6 @@ public class FragRegistro extends Fragment{
 
     private void registrarUsuario(final String email, final String password){
 
-
-
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener( getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
@@ -103,7 +103,10 @@ public class FragRegistro extends Fragment{
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("TAG", "createUserWithEmail:success");
                             Toast.makeText(getActivity(), "Registro Existoso", Toast.LENGTH_SHORT).show();
-                            registroEnFirestore();
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            MainActivity main = (MainActivity) getActivity();
+                            main.actualizarUsuario(user);
+                            registroEnFirestore(user.getUid());
                             loguearUsuario(email, password);
 
                         } else {
@@ -133,9 +136,7 @@ public class FragRegistro extends Fragment{
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("TAG", "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
                             MainActivity main = (MainActivity) getActivity();
-                            main.actualizarUsuario(user);
                             main.PasaraFragmentSlider();
 
                         } else {
@@ -151,12 +152,17 @@ public class FragRegistro extends Fragment{
 
     }
 
-    private void registroEnFirestore(){
+    private void registroEnFirestore(String uid){
 
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
+        HashMap<String, Object> mapBeatVacio = new HashMap<>();
+        mapBeatVacio.put("valor_inicial", "");
+        HashMap<String, Object> mapGrabVacio = new HashMap<>();
+        mapGrabVacio.put("valor_inicial", "");
 
-
-
+        firestore.collection("Usuarios").document(uid).collection("BeatsFav").add(mapBeatVacio);
+        firestore.collection("Usuarios").document(uid).collection("Grabaciones").add(mapGrabVacio);
     }
 
 

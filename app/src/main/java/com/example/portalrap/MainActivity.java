@@ -351,7 +351,7 @@ public class MainActivity extends AppCompatActivity {
                 });
 
     }
-    public void eliminarFav(String nombre,String artista,Boolean destacado, String id, String url, Boolean fav, String dur) {
+    public void eliminarFav(String id) {
 
         db.collection("Usuarios").document(usuarioActual.getUid()).collection("BeatsFav")
                 .document(id)

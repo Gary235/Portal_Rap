@@ -208,7 +208,7 @@ public class adaptadorBases extends BaseAdapter {
                     if(arrBases.get(pos).getFavoritos()){
                         arrBases.get(pos).setFavoritos(false);
                         holder.btnFav.setImageResource(R.drawable.ic_icono_nofav);
-                        main.eliminarFav(arrBases.get(pos).getNombre(),arrBases.get(pos).getArtista(),false,arrBases.get(pos).getId(),arrBases.get(pos).getUrl(),arrBases.get(pos).getFavoritos(), arrBases.get(pos).getDuracion());
+                        main.eliminarFav(arrBases.get(pos).getId());
 
                     }else{
                         arrBases.get(pos).setFavoritos(true);
@@ -217,7 +217,6 @@ public class adaptadorBases extends BaseAdapter {
 
                     }
                 }
-                //actualizarFav(arrBases.get(pos).getNombre(),arrBases.get(pos).getArtista(),false,arrBases.get(pos).getId(),arrBases.get(pos).getUrl(),arrBases.get(pos).getFavoritos(), arrBases.get(pos).getDuracion());
             }
         });
         return convertView;
@@ -229,28 +228,7 @@ public class adaptadorBases extends BaseAdapter {
         protected CheckBox check;
 
     }
-    private void actualizarFav(String nombre,String artista,Boolean destacado, String id, String url, Boolean fav, String dur) {
-        Map<String, Object> beat = (new Base(artista,nombre, url,dur,destacado, fav,id)).toMap();
 
-        db.collection("Beats")
-                .document(id)
-                .update(beat)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.e("CambiarFav", "Bien Ahi");
-
-
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e("CambiarFav", "Error al actualizar: " + e);
-
-                    }
-                });
-    }
 
 
 

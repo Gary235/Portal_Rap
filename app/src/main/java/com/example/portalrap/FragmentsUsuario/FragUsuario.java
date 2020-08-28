@@ -28,7 +28,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.lang.reflect.Array;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class FragUsuario extends Fragment implements View.OnClickListener{
 
@@ -129,6 +133,7 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
     private void obtenerListaGrabaciones() {
 
         db.collection("Usuarios").document(user.getUid()).collection("Grabaciones")
+                .whereGreaterThan("Nombre","")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
