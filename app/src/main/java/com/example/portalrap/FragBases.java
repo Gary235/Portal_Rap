@@ -294,7 +294,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
                                     assert beat != null;
                                     beat.setId(document.getId());
 
-                                    if(Beats.get(i).getNombre().equals(beat.getNombre()))
+                                    if(Beats.get(i).getId().equals(beat.getId()))
                                     {
                                         Beats.get(i).setFavoritos(beat.getFavoritos());
                                     }
