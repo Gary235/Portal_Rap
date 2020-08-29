@@ -30,7 +30,7 @@
 
         android:src="@drawable/ic_letra_i"
         android:layout_marginRight="10dp"
-        android:background="@drawable/circulo_blanco"
+        android:background="@drawable/circulo_violeta"
         app:layout_constraintBottom_toBottomOf="@id/txtTitulodeBases"
         app:layout_constraintRight_toLeftOf="@id/txtTitulodeBases"
         app:layout_constraintTop_toTopOf="@id/txtTitulodeBases"

@@ -4,63 +4,103 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/fondo_degradado_oscuro">
+    android:background="#fff">
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="600dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
-        android:layout_marginTop="32dp"
-        android:scaleX="2"
-        android:scaleY="2"
-        android:src="@drawable/fotoinicial_3"
+        android:id="@+id/foto"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/ic_foto_mejora"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+ />
 
     <TextView
         android:id="@+id/texto1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:elevation="2dp"
-        android:fontFamily="sans-serif-black"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/poppins_bold"
 
         android:text="Mejora"
-        android:textColor="#fff"
+        android:textColor="#7D6FA8"
         android:textSize="35dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/foto" />
 
     <TextView
         android:id="@+id/texto2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="500dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="16dp"
-        android:elevation="2dp"
 
         android:fontFamily="sans-serif-light"
-        android:text="Descarga tus videos o grabaciones, usalos para
- superarte a ti mismo y conviertete en
-un Profesional"
+        android:text="Descarga tus videos o grabaciones, usalos para superarte a ti mismo y conviertete en un Profesional"
         android:textAlignment="center"
-        android:textColor="#fff"
+        android:textColor="#000"
 
-        android:textSize="19dp"
+        android:textSize="17dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/texto1" />
 
-    <ImageButton
-        android:layout_width="170dp"
-        android:layout_height="120dp"
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="40dp"
         android:id="@+id/btnEmpezar"
-        android:background="@drawable/rectangulo_esquinado_blanco"
-        android:src="@drawable/ic_flecha_haciaderecha"
+        android:background="@drawable/redondeado_violeta"
+
+        android:textColor="#fff"
+        android:text="Empezemos"
+        android:textAllCaps="false"
+        android:fontFamily="@font/montserrat_semibold"
+
+        app:layout_constraintTop_toBottomOf="@id/texto2"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/texto2"
+        android:layout_marginTop="40dp"
+        />
+    <ImageView
+        android:id="@+id/circuloblancoizquierda"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+
+        android:layout_marginRight="10dp"
+        android:background="@drawable/circulo_violeta"
+        app:layout_constraintRight_toLeftOf="@+id/circuloblancomedio"
+
+        app:layout_constraintBottom_toBottomOf="@id/circuloblancomedio"
+        app:layout_constraintTop_toTopOf="@id/circuloblancomedio" />
+
+    <ImageView
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:background="@drawable/circulo_violeta"
+        android:id="@+id/circuloblancomedio"
+
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="50dp"
+
         />
 
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="6dp"
+        android:background="@drawable/circulo_violeta"
+        android:id="@+id/circuloblancoderecha"
+
+        app:layout_constraintLeft_toRightOf="@id/circuloblancomedio"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintTop_toTopOf="@id/circuloblancomedio"
+        app:layout_constraintBottom_toBottomOf="@id/circuloblancomedio"
+
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
