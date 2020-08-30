@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -47,11 +48,13 @@ public class FragBases extends Fragment implements View.OnClickListener {
 
     int textlength = 0, i = 0;
     ArrayList<Base> array_sort = new ArrayList<>();
-    ImageButton btnAnterior,btnInfo;
+    ImageButton btnAnterior;
+    Button btnInfo;
     ImageView fondo1,paso4;
     TextView txtTitulo,lbl,lbl2,lbl3;
     EditText edtBuscar;
     ListView listabases;
+
     adaptadorBases adaptador,adaptador2;
     public static Boolean isActionMode = false;
     public static List<Base> UserSelection = new ArrayList<>();
@@ -65,11 +68,21 @@ public class FragBases extends Fragment implements View.OnClickListener {
     FrameLayout holder;
     FirebaseUser user;
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        MainActivity main = (MainActivity) getActivity();
+        user = main.obtenerUsuario();
+        db = FirebaseFirestore.getInstance();
+        obtenerListaBases();
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-        db = FirebaseFirestore.getInstance();
         desdedur = getArguments().getString("desdedur");
         adminFragment = getFragmentManager();
 
@@ -77,11 +90,8 @@ public class FragBases extends Fragment implements View.OnClickListener {
         Setear(v);
         ListenersAdicionales(v);
 
-        MainActivity main = (MainActivity) getActivity();
-        user = main.obtenerUsuario();
 
-
-        if (desdedur != "si") {
+        if (!desdedur.equals("si")) {
             btnAnterior.setVisibility(View.GONE);
             paso4.setVisibility(View.GONE);
             scrol.setVisibility(View.GONE);
@@ -90,13 +100,14 @@ public class FragBases extends Fragment implements View.OnClickListener {
             txtTitulo.setText("Elegir Base");
             listabases.setPadding(0,0,0,300);
         }
+
         return v;
     }
 
     public void Setear(View v) {
         btnInfo = v.findViewById(R.id.botoninfodebases);
-        paso4 =v.findViewById(R.id.paso4);
-        fondo1 =v.findViewById(R.id.fondo1debases);
+        paso4 = v.findViewById(R.id.paso4);
+        fondo1 = v.findViewById(R.id.fondo1debases);
         txtTitulo = v.findViewById(R.id.txtTitulodeBases);
         btnAnterior = v.findViewById(R.id.botonanteriordebases);
         edtBuscar = v.findViewById(R.id.edtBuscar);
@@ -133,7 +144,6 @@ public class FragBases extends Fragment implements View.OnClickListener {
         listabases = v.findViewById(R.id.listabases);
         listabases.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
 
-        obtenerListaBases();
 
     }
 
@@ -191,29 +201,29 @@ public class FragBases extends Fragment implements View.OnClickListener {
                 //reproducir
                 Fragment fragminireproductor;
                 fragminireproductor = new FragMiniReproductor();
+
                 Bundle args = new Bundle();
                 args.putString("Artista", Beats.get(position).getArtista());
                 args.putString("Nombre", Beats.get(position).getNombre());
                 args.putString("Url", Beats.get(position).getUrl());
                 args.putString("Duracion", Beats.get(position).getDuracion());
+
                 fragminireproductor.setArguments(args);
                 transaccionFragment = adminFragment.beginTransaction();
                 transaccionFragment.replace(R.id.holderdebases, fragminireproductor);
                 transaccionFragment.commit();
-                if(FragMiniReproductor.mediaplayer != null)
-                {
+
+                if(FragMiniReproductor.mediaplayer != null) {
                     FragMiniReproductor.mediaplayer.stop();
                     FragMiniReproductor.mediaplayer.reset();
-
                 }
+
                 holder.setVisibility(View.VISIBLE);
-                if(desdedur.equals("si"))
-                {
+
+                if(desdedur.equals("si")) {
                     listabases.setPadding(0,0, 0, 400);
                     ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) v.findViewById(R.id.botonanteriordebases).getLayoutParams();
                     layoutParams.setMargins(0, 0, 0, 0);
-
-
                 }
                 else {
                     listabases.setPadding(0,0, 0, 160);
@@ -241,6 +251,22 @@ public class FragBases extends Fragment implements View.OnClickListener {
             @Override
             public void afterTextChanged(Editable s) { }
         });
+
+
+        btnInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder mensaje;
+                mensaje = new AlertDialog.Builder(getActivity());
+                mensaje.setTitle("Elegir Bases");
+                mensaje.setMessage("· Mantén apretado para seleccionar una Base\n\n· El tiempo de duración de la base no determinara el tiempo de duración TOTAL del entrenamiento\n\n· Puedes elegir más de una base\n\n· Para ir a entrenar elige todas las bases que quieras y aprieta el boton con forma de tick");
+                mensaje.setPositiveButton("Aceptar",null);
+                mensaje.create();
+                mensaje.show();
+            }
+        });
+
+
     }
 
     @Override
@@ -253,86 +279,48 @@ public class FragBases extends Fragment implements View.OnClickListener {
          if(idbotonapretado == R.id.botonanteriordebases) {
              main.PasaraFragmentDuracion();
          }
-         else if(idbotonapretado == R.id.botoninfodebases)
-         {
-             AlertDialog.Builder mensaje;
-             mensaje = new AlertDialog.Builder(getActivity());
-             mensaje.setTitle("Elegir Bases");
-             mensaje.setMessage("· Mantén apretado para seleccionar una Base\n\n· El tiempo de duración de la base no determinara el tiempo de duración TOTAL del entrenamiento\n\n· Puedes elegir más de una base\n\n· Para ir a entrenar elige todas las bases que quieras y aprieta el boton con forma de tick");
-             mensaje.setPositiveButton("Aceptar",null);
-             mensaje.create();
-             mensaje.show();
-         }
-
     }
 
     private void obtenerListaBases() {
-
         db.collection("Beats")
                 .orderBy("Nombre")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
-                Beats.clear();
-                listabases.setAdapter(null);
-                assert snapshots != null;
-                for (DocumentSnapshot document : snapshots) {
-                    Base beat = document.toObject(Base.class);
-                    assert beat != null;
-                    beat.setId(document.getId());
-                    Beats.add(beat);
-                }
-                Log.d("CorazonBase2", "" + Beats.get(0).getNombre());
-
-                db.collection("Usuarios").document(user.getUid()).collection("BeatsFav")
-                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                            @Override
-                            public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
-                                assert snapshots != null;
-                                for (DocumentSnapshot document : snapshots) {
-                                    Base beat = document.toObject(Base.class);
-                                    assert beat != null;
-                                    beat.setId(document.getId());
-
-                                    if(Beats.get(i).getId().equals(beat.getId()))
-                                    {
-                                        Beats.get(i).setFavoritos(beat.getFavoritos());
-                                    }
-                                    i++;
-                                }
-                            }
-
-                        });
-
-                //seteadorDeFavoritos();
-                adaptador = new adaptadorBases(Beats,getActivity());
-                listabases.setAdapter(adaptador);
-            }
-        });
-
-
-    }
-
-    private void seteadorDeFavoritos(){
-
-        db.collection("Usuarios").document(user.getUid()).collection("BeatsFav")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
+                        Beats.clear();
+                        listabases.setAdapter(null);
                         assert snapshots != null;
                         for (DocumentSnapshot document : snapshots) {
                             Base beat = document.toObject(Base.class);
                             assert beat != null;
                             beat.setId(document.getId());
-
-                            if(Beats.get(i).getNombre().equals(beat.getNombre()))
-                            {
-                                Beats.get(i).setFavoritos(beat.getFavoritos());
-                            }
-                            i++;
+                            Beats.add(beat);
                         }
                     }
-
                 });
-        }
+
+        db.collection("Usuarios").document(user.getUid()).collection("BeatsFav")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
+                        listabases.setAdapter(null);
+                        for (DocumentSnapshot document : snapshots) {
+                            Base beat = document.toObject(Base.class);
+                            assert beat != null;
+                            beat.setId(document.getId());
+                            for(int j = 0; j < Beats.size();j++) {
+                                if(Beats.get(j).getNombre().equals(beat.getNombre())) {
+                                    Beats.get(j).setFavoritos(beat.getFavoritos());
+                                }
+                            }
+                        }
+
+
+                        adaptador = new adaptadorBases(Beats, getActivity());
+                        listabases.setAdapter(adaptador);
+                    }
+                });
+    }
+
+
 }

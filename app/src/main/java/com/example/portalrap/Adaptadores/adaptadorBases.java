@@ -1,7 +1,7 @@
 package com.example.portalrap.Adaptadores;
 
 import android.content.Context;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,20 +11,15 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-
 import com.example.portalrap.Clases.Base;
 import com.example.portalrap.FragBases;
 import com.example.portalrap.FragmentsUsuario.FragFavoritos;
 import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseUser;
+
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class adaptadorBases extends BaseAdapter {
     private ArrayList<Base> arrBases;
@@ -41,19 +36,12 @@ public class adaptadorBases extends BaseAdapter {
     @Override
     public int getViewTypeCount() {
         if(getCount() <= 1)
-        {
             return 1;
-        }
         else
-        {
             return arrBases.size();
-        }
     }
     @Override
-    public int getItemViewType(int position) {
-
-        return position;
-    }
+    public int getItemViewType(int position) { return position; }
 
     @Override
     public int getCount() { return arrBases.size(); }
@@ -68,9 +56,7 @@ public class adaptadorBases extends BaseAdapter {
     @Override
     public long getItemId(int position) { return position; }
 
-    public Context getContext(){
-        return miContexto;
-    }
+    public Context getContext(){ return miContexto; }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -124,9 +110,6 @@ public class adaptadorBases extends BaseAdapter {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 int position = (int) buttonView.getTag();
-
-                View tempview = (View) holder.check.getTag(R.integer.btnplusview);
-                //TextView tv = (TextView) tempview.findViewById(R.id.animal);
                 Integer pos = (Integer)  holder.check.getTag();
 
                 if(arrBases.get(pos).getDestacado()!= null) {
@@ -140,8 +123,7 @@ public class adaptadorBases extends BaseAdapter {
                 if(FragBases.UserSelection.contains(arrBases.get(position))) {
                     FragBases.UserSelection.remove(arrBases.get(position));
                     aja = aja - 1;
-                }
-                else {
+                } else {
                     FragBases.UserSelection.add(arrBases.get(position));
                     aja = aja + 1;
                 }
@@ -149,48 +131,34 @@ public class adaptadorBases extends BaseAdapter {
                 if(FragFavoritos.UserSelection.contains(arrBases.get(position))) {
                     FragFavoritos.UserSelection.remove(arrBases.get(position));
                     aja = aja - 1;
-                }
-                else {
+                } else {
                     FragFavoritos.UserSelection.add(arrBases.get(position));
                     aja = aja + 1;
                 }
 
                 if(FragFavoritos.isActionMode) {
-                    if(FragFavoritos.UserSelection != null)
-                    {
+                    if(FragFavoritos.UserSelection != null) {
                         if(FragFavoritos.UserSelection.size() == 0)
-                        {
                             FragFavoritos.actionMode.setTitle(" 0 Bases seleccionadas");
-                        }
-                        else  {
+                        else
                             FragFavoritos.actionMode.setTitle(FragFavoritos.UserSelection.size() + " Bases seleccionadas");
-                        }
                     }
-                }
-                else if(FragBases.isActionMode){
-                    if(FragBases.UserSelection != null)
-                    {
+                } else if(FragBases.isActionMode){
+                    if(FragBases.UserSelection != null) {
                         if(FragBases.UserSelection.size() == 0 )
-                        {
                             FragBases.actionMode.setTitle(" 0 Bases seleccionadas");
-                        }
+
                         FragBases.actionMode.setTitle(FragBases.UserSelection.size()+ " Bases seleccionadas");
                     }
-
                 }
 
-                for(int i=0;i<FragBases.UserSelection.size();i++) {
-                    Log.d("BeatSeleccionado","" + FragBases.UserSelection.get(i).getNombre());
-                }
 
             }
         });
 
-        Log.d("CorazonBase", "" + arrBases.get(position).getFavoritos());
             if(arrBases.get(position).getFavoritos()) {
                 holder.btnFav.setImageResource(R.drawable.ic_icono_fav_rojo);
-            }
-            else if(!arrBases.get(position).getFavoritos()) {
+            } else if(!arrBases.get(position).getFavoritos()) {
                 holder.btnFav.setImageResource(R.drawable.ic_icono_nofav);
             }
 
@@ -198,23 +166,17 @@ public class adaptadorBases extends BaseAdapter {
         holder.btnFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                View tempview = (View) holder.btnFav.getTag(R.integer.btnplusview);
-                //TextView tv = (TextView) tempview.findViewById(R.id.animal);
                 Integer pos = (Integer)  holder.btnFav.getTag();
 
-                if(arrBases.get(pos).getFavoritos()!= null)
-                {
+                if(arrBases.get(pos).getFavoritos()!= null) {
                     if(arrBases.get(pos).getFavoritos()){
                         arrBases.get(pos).setFavoritos(false);
                         holder.btnFav.setImageResource(R.drawable.ic_icono_nofav);
                         main.eliminarFav(arrBases.get(pos).getId());
-
                     }else{
                         arrBases.get(pos).setFavoritos(true);
                         holder.btnFav.setImageResource(R.drawable.ic_icono_fav_rojo);
                         main.agregarFav(arrBases.get(pos).getNombre(),arrBases.get(pos).getArtista(),false,arrBases.get(pos).getId(),arrBases.get(pos).getUrl(),arrBases.get(pos).getFavoritos(), arrBases.get(pos).getDuracion());
-
                     }
                 }
             }
@@ -228,11 +190,4 @@ public class adaptadorBases extends BaseAdapter {
         protected CheckBox check;
 
     }
-
-
-
-
-
-
-
 }

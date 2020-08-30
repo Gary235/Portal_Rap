@@ -23,17 +23,22 @@
         android:layout_marginTop="70dp"
 
          />
-    <ImageButton
+    <Button
         android:id="@+id/botoninfodebases"
         android:layout_width="25dp"
         android:layout_height="25dp"
 
-        android:src="@drawable/ic_letra_i"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/circulo_violeta"
-        app:layout_constraintBottom_toBottomOf="@id/txtTitulodeBases"
+        android:background="@drawable/edttext_conmarcos"
+        android:backgroundTint="#fff"
+        android:text="?"
+        android:textSize="18dp"
+        android:textColor="#000"
+        android:gravity="center"
+
+        android:layout_marginTop="15dp"
         app:layout_constraintRight_toLeftOf="@id/txtTitulodeBases"
         app:layout_constraintTop_toTopOf="@id/txtTitulodeBases"
+        app:layout_constraintLeft_toLeftOf="parent"
         />
     <TextView
         android:layout_width="wrap_content"
