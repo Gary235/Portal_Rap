@@ -15,6 +15,8 @@
         android:translationZ="20dp"
         />
 
+
+
     <ImageView
         android:id="@+id/fondo2"
         android:layout_width="match_parent"
@@ -22,7 +24,7 @@
         android:background="@drawable/edttext_conmarcos"
 
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="70dp"
 
         />
 
@@ -32,9 +34,9 @@
         android:layout_marginLeft="60dp"
         android:fontFamily="@font/poppins_bold"
         android:text="Elegir Modo"
-        android:id="@+id/textotitulo"
+        android:id="@+id/textotitulodeestimulo"
         android:textColor="#000"
-        android:textSize="30dp"
+        android:textSize="25dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="20dp"
@@ -48,25 +50,27 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
+
         />
 
-
-
-    <ImageButton
+    <Button
         android:id="@+id/botoninfodemodo"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:elevation="20dp"
-        android:translationZ="20dp"
-        android:src="@drawable/ic_letra_i"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/btn_info"
-        app:layout_constraintBottom_toBottomOf="@id/textotitulo"
-        app:layout_constraintRight_toLeftOf="@id/textotitulo"
-        app:layout_constraintTop_toTopOf="@id/textotitulo" />
 
+        android:elevation="50dp"
+        android:translationZ="1000dp"
+        android:text="?"
+        android:textSize="14dp"
+        android:textColor="#000"
 
+        android:background="@drawable/redondeado_stroke_negro_medio_grueso"
+        app:layout_constraintBottom_toBottomOf="@id/textotitulodeestimulo"
+        app:layout_constraintRight_toLeftOf="@id/textotitulodeestimulo"
+        app:layout_constraintTop_toTopOf="@id/textotitulodeestimulo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
 
     <ImageView
         android:layout_width="315dp"

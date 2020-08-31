@@ -148,17 +148,21 @@
 
         />
 
-    <ImageButton
+    <Button
         android:id="@+id/botoninfodeestimulo"
         android:layout_width="25dp"
         android:layout_height="25dp"
 
-        android:src="@drawable/ic_letra_i"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/btn_info"
+        android:text="?"
+        android:textSize="14dp"
+        android:textColor="#000"
+
+        android:background="@drawable/redondeado_stroke_negro_medio_grueso"
         app:layout_constraintBottom_toBottomOf="@id/textotitulodeestimulo"
         app:layout_constraintRight_toLeftOf="@id/textotitulodeestimulo"
-        app:layout_constraintTop_toTopOf="@id/textotitulodeestimulo" />
+        app:layout_constraintTop_toTopOf="@id/textotitulodeestimulo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
 
     <ImageButton
         android:id="@+id/label1deestimulo"

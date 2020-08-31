@@ -19,8 +19,8 @@ import com.example.portalrap.R;
 public class FragDuracion extends Fragment implements View.OnClickListener {
 
 
-    ImageButton btnSiguiente,btnAnterior,btnInfo;
-    Button btnSec1,btnSec2,btnSec3,btnSec4,btnSec5,btnMin1,btnMin2,btnMin3,btnMin4,btnMin5;
+    ImageButton btnSiguiente,btnAnterior;
+    Button btnSec1,btnSec2,btnSec3,btnSec4,btnSec5,btnMin1,btnMin2,btnMin3,btnMin4,btnMin5,btnInfo;
     TextView txtDurMin,txtDurSec,lbl,lbl2;
     String desdedur;
 

@@ -17,8 +17,8 @@ import com.example.portalrap.R;
 
 public class FragEstimulo extends Fragment implements View.OnClickListener {
 
-    ImageButton btnSiguiente,btnAnterior,btnInfo;
-    Button btnsec1,btnsec2,btnsec3,btnsec4,btnsec5;
+    ImageButton btnSiguiente,btnAnterior;
+    Button btnsec1,btnsec2,btnsec3,btnsec4,btnsec5,btnInfo;
     TextView txtfrecelegida,lbl;
 
     @Override
