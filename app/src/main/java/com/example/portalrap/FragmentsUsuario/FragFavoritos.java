@@ -15,8 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
@@ -57,8 +59,10 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
     FrameLayout holder;
     FirebaseFirestore db;
     FirebaseUser user;
-
     TabItem item1,item2;
+
+    ImageView fotoNoHay;
+    Button btnNoHay;
 
 
 
@@ -78,11 +82,17 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
         btnVolver = v.findViewById(R.id.flechitabajodefavoritos);
         lista = v.findViewById(R.id.listagrabacionesbasesfav);
         holder = v.findViewById(R.id.holder);
+        fotoNoHay = v.findViewById(R.id.fotoNoDeFav);
+        btnNoHay = v.findViewById(R.id.btnNoDeFav);
+
+        fotoNoHay.setVisibility(View.GONE);
+        btnNoHay.setVisibility(View.GONE);
 
         btnVolver.setOnClickListener(this);
 
         obtenerListaBeatsfav();
         obtenerListaGrabacionesfav();
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -97,6 +107,27 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
 
                         }
                     });
+
+                    if(arrGrabacionesFav.size() == 0){
+                        fotoNoHay.setVisibility(View.VISIBLE);
+                        btnNoHay.setVisibility(View.VISIBLE);
+
+                        fotoNoHay.setImageResource(R.drawable.ic_nolikegrab);
+                        btnNoHay.setText("Ir a grabaciones");
+
+                        btnNoHay.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                MainActivity main = (MainActivity) getActivity();
+                                main.PasaraFragUsuario();
+                            }
+                        });
+
+
+                    } else {
+                        fotoNoHay.setVisibility(View.GONE);
+                        btnNoHay.setVisibility(View.GONE);
+                    }
 
                 }
                 if(tab.getPosition() == 1)
@@ -175,6 +206,28 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
                         }
                     });
 
+                    if(arrBasesFav.size() == 0){
+                        fotoNoHay.setVisibility(View.VISIBLE);
+                        btnNoHay.setVisibility(View.VISIBLE);
+
+                        fotoNoHay.setImageResource(R.drawable.ic_nolikebase);
+                        btnNoHay.setText("Ir a bases");
+
+                        btnNoHay.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                MainActivity main = (MainActivity) getActivity();
+                                main.PasaraFragBases("no");
+                            }
+                        });
+
+
+                    } else {
+                        fotoNoHay.setVisibility(View.GONE);
+                        btnNoHay.setVisibility(View.GONE);
+                    }
+
+
                 }
             }
 
@@ -188,6 +241,7 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
 
             }
         });
+
 
         return v;
     }
@@ -226,6 +280,26 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
 
                     }
                 });
+        if(arrGrabacionesFav.size() == 0){
+            fotoNoHay.setVisibility(View.VISIBLE);
+            btnNoHay.setVisibility(View.VISIBLE);
+
+            fotoNoHay.setImageResource(R.drawable.ic_nolikegrab);
+            btnNoHay.setText("Ir a grabaciones");
+
+            btnNoHay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MainActivity main = (MainActivity) getActivity();
+                    main.PasaraFragUsuario();
+                }
+            });
+
+
+        } else {
+            fotoNoHay.setVisibility(View.GONE);
+            btnNoHay.setVisibility(View.GONE);
+        }
 
     }
 

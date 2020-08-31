@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -45,14 +46,13 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
     ArrayList<Grabacion> Grabaciones = new ArrayList<>();
     TextView txtUsuario;
     private FirebaseAuth mAuth;
+    ImageView fotoNograb;
+    Button btnNograb;
+
 
     @Override
     public void onStart() {
         super.onStart();
-
-
-        obtenerListaGrabaciones();
-
     }
 
     @Override
@@ -69,11 +69,15 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
         fotoperfil = v.findViewById(R.id.imgperfil);
         txtUsuario = v.findViewById(R.id.txtusuario);
         logout = v.findViewById(R.id.logout);
+        btnNograb = v.findViewById(R.id.btnNoGrabUsuario);
+        fotoNograb = v.findViewById(R.id.fotoUsuarioNoGrab);
         setearInfo();
 
         btneditar.setOnClickListener(this);
         btnfav.setOnClickListener(this);
         logout.setOnClickListener(this);
+        fotoNograb.setVisibility(View.GONE);
+        btnNograb.setVisibility(View.GONE);
 
         lista = v.findViewById(R.id.lista);
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -100,7 +104,16 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
 
             }
         });
+        obtenerListaGrabaciones();
 
+
+        btnNograb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity main = (MainActivity) getActivity();
+                main.PasaraFragmentModo();
+            }
+        });
 
         return v;
     }
@@ -151,6 +164,13 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
             }
         });
 
+        if(Grabaciones.size() == 0){
+            fotoNograb.setVisibility(View.GONE);
+            btnNograb.setVisibility(View.GONE);
+        } else {
+            fotoNograb.setVisibility(View.VISIBLE);
+            btnNograb.setVisibility(View.VISIBLE);
+        }
 
     }
 
