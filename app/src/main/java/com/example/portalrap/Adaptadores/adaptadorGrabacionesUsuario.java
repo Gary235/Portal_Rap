@@ -27,18 +27,16 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
     private ArrayList<Grabacion> arrGrabacion;
     private Context miContexto;
     private FirebaseFirestore db;
-    private adaptadorGrabacionesUsuario adaptadorGrabacionesUsuario;
-    private ListView listaa;
+
     FirebaseUser user;
     MainActivity main;
 
 
 
-    public adaptadorGrabacionesUsuario(ArrayList<Grabacion> arrayGrabacion, Context contexto,adaptadorGrabacionesUsuario adaptador,ListView listaaa) {
+    public adaptadorGrabacionesUsuario(ArrayList<Grabacion> arrayGrabacion, Context contexto) {
         arrGrabacion = arrayGrabacion;
         miContexto = contexto;
-        adaptadorGrabacionesUsuario = adaptador;
-        listaa = listaaa;
+
     }
 
 

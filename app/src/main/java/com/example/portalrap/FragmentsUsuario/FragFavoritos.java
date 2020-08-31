@@ -88,11 +88,8 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
         fotoNoHay.setVisibility(View.GONE);
         btnNoHay.setVisibility(View.GONE);
 
+        Log.d("Adaptador" , "" + lista.getAdapter());
         btnVolver.setOnClickListener(this);
-
-        obtenerListaBeatsfav();
-        obtenerListaGrabacionesfav();
-
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -226,21 +223,21 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
                         fotoNoHay.setVisibility(View.GONE);
                         btnNoHay.setVisibility(View.GONE);
                     }
-
-
                 }
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
+
+        obtenerListaBeatsfav();
+        obtenerListaGrabacionesfav();
+
 
 
         return v;
@@ -275,31 +272,34 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
                             grab.setId(document.getId());
                             arrGrabacionesFav.add(grab);
                         }
-                        adaptadorGrabacionesUsuarioFav = new adaptadorGrabacionesUsuario(arrGrabacionesFav, getActivity(),adaptadorGrabacionesUsuarioFav,lista);
+
+                        if(arrGrabacionesFav.size() == 0){
+                            fotoNoHay.setVisibility(View.VISIBLE);
+                            btnNoHay.setVisibility(View.VISIBLE);
+
+                            fotoNoHay.setImageResource(R.drawable.ic_nolikegrab);
+                            btnNoHay.setText("Ir a grabaciones");
+
+                            btnNoHay.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    MainActivity main = (MainActivity) getActivity();
+                                    main.PasaraFragUsuario();
+                                }
+                            });
+                        } else {
+                            fotoNoHay.setVisibility(View.GONE);
+                            btnNoHay.setVisibility(View.GONE);
+                        }
+                        Log.d("Adaptador" , "" + lista.getAdapter());
+
+
+
+                        adaptadorGrabacionesUsuarioFav = new adaptadorGrabacionesUsuario(arrGrabacionesFav, getActivity());
                         lista.setAdapter(adaptadorGrabacionesUsuarioFav);
-
                     }
+
                 });
-        if(arrGrabacionesFav.size() == 0){
-            fotoNoHay.setVisibility(View.VISIBLE);
-            btnNoHay.setVisibility(View.VISIBLE);
-
-            fotoNoHay.setImageResource(R.drawable.ic_nolikegrab);
-            btnNoHay.setText("Ir a grabaciones");
-
-            btnNoHay.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    MainActivity main = (MainActivity) getActivity();
-                    main.PasaraFragUsuario();
-                }
-            });
-
-
-        } else {
-            fotoNoHay.setVisibility(View.GONE);
-            btnNoHay.setVisibility(View.GONE);
-        }
 
     }
 
@@ -311,18 +311,18 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
                         arrBasesFav.clear();
-                        lista.setAdapter(null);
+                        //lista.setAdapter(null);
                         for (DocumentSnapshot document : snapshots) {
                             Base base = document.toObject(Base.class);
                             assert base != null;
                             base.setId(document.getId());
                             arrBasesFav.add(base);
                         }
-                        adaptadorBasesFav = new adaptadorBases(arrBasesFav, getActivity());
+                       /* adaptadorBasesFav = new adaptadorBases(arrBasesFav, getActivity());
                         if(lista.getAdapter() != adaptadorGrabacionesUsuarioFav)
                         {
                             lista.setAdapter(adaptadorBasesFav);
-                        }
+                        }*/
                     }
                 });
 

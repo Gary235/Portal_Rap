@@ -159,7 +159,7 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
                     grab.setId(document.getId());
                     Grabaciones.add(grab);
                 }
-                adaptador = new adaptadorGrabacionesUsuario(Grabaciones,getActivity(),adaptador,lista);
+                adaptador = new adaptadorGrabacionesUsuario(Grabaciones,getActivity());
                 lista.setAdapter(adaptador);
             }
         });

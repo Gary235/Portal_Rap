@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
     {
         FragGlobal = new FragBases();
         Bundle args = new Bundle();
-        args.putString("desdedur","si");
+        args.putString("desdedur",desdedur);
         FragGlobal.setArguments(args);
         transaccionFragment=adminFragment.beginTransaction();
         transaccionFragment.replace(R.id.frameLayout, FragGlobal);
