@@ -13,8 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#000"
-        android:textSize="20dp"
-        android:fontFamily="@font/helvetica_medium"
+        android:textSize="18dp"
+        android:fontFamily="@font/montserrat_semibold"
 
         app:layout_constraintLeft_toLeftOf="@id/btnFavlista"
         app:layout_constraintTop_toTopOf="parent"

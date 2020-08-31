@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,9 +6,6 @@
     android:background="@drawable/fondo_degradado_oscuro"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
-
-
-
             <FrameLayout
                 android:id="@+id/holderdecola"
                 android:layout_width="match_parent"
@@ -37,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/txtConfirmar"
                 android:fontFamily="@font/poppins_bold"
-                android:textColor="#E1A9F4"
+                android:textColor="#7D6FA8"
                 android:textSize="60dp"
                 android:text="EMPEZAR"
 
@@ -86,10 +79,10 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginTop="50dp"
-                android:fontFamily="@font/helvetica_medium"
+                android:fontFamily="@font/poppins_bold"
                 android:text=""
                 android:textColor="#fff"
-                android:textSize="50dp"
+                android:textSize="45dp"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -102,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="40dp"
-                android:fontFamily="@font/helvetica_medium"
+                android:fontFamily="@font/montserrat_semibold"
                 android:textColor="#fff"
                 android:textSize="25dp"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -113,7 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:fontFamily="@font/helvetica_light"
+                android:fontFamily="@font/montserrat_regular"
                 android:textColor="#808080"
                 android:textSize="15dp"
                 app:layout_constraintLeft_toLeftOf="@id/nombreBaseSeleccionadadeentrenar"

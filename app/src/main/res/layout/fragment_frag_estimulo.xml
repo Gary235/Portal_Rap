@@ -182,7 +182,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textolabel1deestimulo"
-        android:fontFamily="@font/helvetica_medium"
+        android:fontFamily="@font/montserrat_medium"
 
         app:layout_constraintTop_toTopOf="@id/label1deestimulo"
         app:layout_constraintBottom_toBottomOf="@id/label1deestimulo"
@@ -191,7 +191,7 @@
         android:elevation="10dp"
 
         android:text=""
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:textColor="#000"
         />
 

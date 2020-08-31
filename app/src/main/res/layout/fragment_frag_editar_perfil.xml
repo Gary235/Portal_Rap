@@ -6,16 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#fff">
 
-    <ImageView
-        android:id="@+id/fondo2"
-        android:layout_width="match_parent"
-        android:layout_height="1.5dp"
-        android:background="@drawable/edttext_conmarcos"
 
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="80dp"
-
-        />
 
     <ImageButton
         android:layout_width="25dp"
@@ -33,16 +24,33 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
+        android:layout_marginLeft="60dp"
         android:text="Editar Perfil"
         android:id="@+id/textotitulodeeditarperfil"
+
         android:textColor="#000"
-        android:textSize="30dp"
+        android:textSize="25dp"
         android:fontFamily="@font/poppins_bold"
         app:layout_constraintLeft_toLeftOf="@id/flechitabajodeeditarperfil"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="20dp"
         />
+
+
+    <ImageView
+        android:id="@+id/fondo2"
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:background="@drawable/edttext_conmarcos"
+
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="70dp"
+
+        />
+
+
+
+
 
     <ImageButton
         android:id="@+id/btnCambiar"
@@ -96,7 +104,7 @@
 
         android:layout_marginTop="5dp"
         android:elevation="11dp"
-        android:fontFamily="@font/helvetica_light"
+        android:fontFamily="@font/montserrat_regular"
         android:text="Cambiar foto de perfil"
 
         android:textColor="#FF0000"

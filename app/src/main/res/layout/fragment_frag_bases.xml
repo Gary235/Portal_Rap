@@ -102,13 +102,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/textolabel1debases"
-                    android:fontFamily="@font/helvetica_medium"
+                    android:fontFamily="@font/montserrat_regular"
                     app:layout_constraintTop_toTopOf="@id/label1debases"
                     app:layout_constraintBottom_toBottomOf="@id/label1debases"
                     app:layout_constraintLeft_toLeftOf="@id/label1debases"
                     app:layout_constraintRight_toRightOf="@id/label1debases"
                     android:text=""
-                    android:textSize="20dp"
+                    android:textSize="18dp"
                     android:textColor="#000"
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -127,13 +127,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/textolabel2debases"
-                    android:fontFamily="@font/helvetica_medium"
+                    android:fontFamily="@font/montserrat_regular"
                     app:layout_constraintTop_toTopOf="@id/label2debases"
                     app:layout_constraintBottom_toBottomOf="@id/label2debases"
                     app:layout_constraintLeft_toLeftOf="@id/label2debases"
                     app:layout_constraintRight_toRightOf="@id/label2debases"
                     android:text=""
-                    android:textSize="20dp"
+                    android:textSize="18dp"
                     android:textColor="#000"
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -152,13 +152,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/textolabel3debases"
-                    android:fontFamily="@font/helvetica_medium"
+                    android:fontFamily="@font/montserrat_regular"
                     app:layout_constraintTop_toTopOf="@id/label3debases"
                     app:layout_constraintBottom_toBottomOf="@id/label3debases"
                     app:layout_constraintLeft_toLeftOf="@id/label3debases"
                     app:layout_constraintRight_toRightOf="@id/label3debases"
                     android:text=""
-                    android:textSize="20dp"
+                    android:textSize="18dp"
                     android:textColor="#000"
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>

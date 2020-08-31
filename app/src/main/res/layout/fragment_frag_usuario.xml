@@ -36,9 +36,9 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:fontFamily="@font/helvetica_medium"
+        android:fontFamily="@font/montserrat_semibold"
         android:textColor="#000"
-        android:textSize="23dp"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="@id/imgperfil"
         app:layout_constraintLeft_toRightOf="@+id/imgperfil"
         app:layout_constraintTop_toTopOf="@id/imgperfil" />

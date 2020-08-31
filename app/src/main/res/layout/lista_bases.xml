@@ -20,9 +20,9 @@
         android:id="@+id/nombreBase"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:textColor="#000"
-        android:fontFamily="@font/helvetica_medium"
+        android:fontFamily="@font/montserrat_semibold"
 
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="60dp"
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:textSize="10dp"
         android:textColor="#000"
-        android:fontFamily="@font/helvetica_light"
+        android:fontFamily="@font/montserrat_regular"
 
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:textSize="10dp"
         android:textColor="#000"
-        android:fontFamily="@font/helvetica_light"
+        android:fontFamily="@font/montserrat_regular"
 
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
