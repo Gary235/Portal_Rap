@@ -46,7 +46,7 @@ import java.util.List;
 
 public class FragBases extends Fragment implements View.OnClickListener {
 
-    int textlength = 0, i = 0;
+    int textlength = 0;
     ArrayList<Base> array_sort = new ArrayList<>();
     ImageButton btnAnterior;
     Button btnInfo;

@@ -318,11 +318,11 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
                             base.setId(document.getId());
                             arrBasesFav.add(base);
                         }
-                       /* adaptadorBasesFav = new adaptadorBases(arrBasesFav, getActivity());
+                        adaptadorBasesFav = new adaptadorBases(arrBasesFav, getActivity());
                         if(lista.getAdapter() != adaptadorGrabacionesUsuarioFav)
                         {
                             lista.setAdapter(adaptadorBasesFav);
-                        }*/
+                        }
                     }
                 });
 
