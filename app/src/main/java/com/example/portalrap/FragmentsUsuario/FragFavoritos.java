@@ -56,7 +56,7 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
     public static List<Base> UserSelection = new ArrayList<>();
     FragmentManager adminFragment;
     FragmentTransaction transaccionFragment;
-    FrameLayout holder;
+    public static FrameLayout holder;
     FirebaseFirestore db;
     FirebaseUser user;
     TabItem item1,item2;
@@ -101,6 +101,26 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             //reproducir
+                            Fragment fragminireproductor;
+                            fragminireproductor = new FragMiniReproductor();
+
+                            Bundle args = new Bundle();
+                            args.putString("Artista", "Tú");
+                            args.putString("Nombre", arrGrabacionesFav.get(position).getNombre());
+                            args.putString("Url", arrGrabacionesFav.get(position).getUrl());
+                            args.putString("Duracion", "");
+
+                            fragminireproductor.setArguments(args);
+                            transaccionFragment = adminFragment.beginTransaction();
+                            transaccionFragment.replace(R.id.holder, fragminireproductor);
+                            transaccionFragment.commit();
+
+                            if(FragMiniReproductor.mediaplayer != null) {
+                                FragMiniReproductor.mediaplayer.stop();
+                                FragMiniReproductor.mediaplayer.reset();
+                            }
+
+                            holder.setVisibility(View.VISIBLE);
 
                         }
                     });
@@ -228,10 +248,317 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
+                if(tab.getPosition() == 0)
+                {
+                    lista.setAdapter(adaptadorGrabacionesUsuarioFav);
+                    lista.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+                    lista.setOnItemClickListener(new AbsListView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            //reproducir
+                            Fragment fragminireproductor;
+                            fragminireproductor = new FragMiniReproductor();
+
+                            Bundle args = new Bundle();
+                            args.putString("Artista", "Tú");
+                            args.putString("Nombre", arrGrabacionesFav.get(position).getNombre());
+                            args.putString("Url", arrGrabacionesFav.get(position).getUrl());
+                            args.putString("Duracion", "");
+
+                            fragminireproductor.setArguments(args);
+                            transaccionFragment = adminFragment.beginTransaction();
+                            transaccionFragment.replace(R.id.holder, fragminireproductor);
+                            transaccionFragment.commit();
+
+                            if(FragMiniReproductor.mediaplayer != null) {
+                                FragMiniReproductor.mediaplayer.stop();
+                                FragMiniReproductor.mediaplayer.reset();
+                            }
+
+                            holder.setVisibility(View.VISIBLE);
+
+                        }
+                    });
+
+                    if(arrGrabacionesFav.size() == 0){
+                        fotoNoHay.setVisibility(View.VISIBLE);
+                        btnNoHay.setVisibility(View.VISIBLE);
+
+                        fotoNoHay.setImageResource(R.drawable.ic_nolikegrab);
+                        btnNoHay.setText("Ir a grabaciones");
+
+                        btnNoHay.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                MainActivity main = (MainActivity) getActivity();
+                                main.PasaraFragUsuario();
+                            }
+                        });
+
+
+                    } else {
+                        fotoNoHay.setVisibility(View.GONE);
+                        btnNoHay.setVisibility(View.GONE);
+                    }
+
+                }
+                if(tab.getPosition() == 1)
+                {
+                    lista.setAdapter(adaptadorBasesFav);
+                    lista.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
+
+                    lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            //reproducir
+                            Fragment fragminireproductor;
+                            fragminireproductor = new FragMiniReproductor();
+                            Bundle args = new Bundle();
+                            args.putString("Nombre", arrBasesFav.get(position).getNombre());
+                            args.putString("Url", arrBasesFav.get(position).getUrl());
+                            args.putString("Artista", arrBasesFav.get(position).getArtista());
+                            args.putString("Duracion", arrBasesFav.get(position).getDuracion());
+
+                            fragminireproductor.setArguments(args);
+                            transaccionFragment = adminFragment.beginTransaction();
+                            transaccionFragment.replace(R.id.holder, fragminireproductor);
+                            transaccionFragment.commit();
+                            if(FragMiniReproductor.mediaplayer != null)
+                            {
+                                FragMiniReproductor.mediaplayer.stop();
+                                FragMiniReproductor.mediaplayer.reset();
+                            }
+                            holder.setVisibility(View.VISIBLE);
+                            lista.setPadding(0,0, 0, 160);
+                        }
+                    });
+
+                    lista.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
+                        @Override
+                        public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+                        }
+
+                        @Override
+                        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                            Log.d("mensaje", "hola");
+                            MenuInflater inflater = mode.getMenuInflater();
+                            inflater.inflate(R.menu.actionbar_menu, menu);
+                            isActionMode = true;
+                            actionMode = mode;
+                            return true;
+                        }
+
+                        @Override
+                        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                            if (item.getItemId() == R.id.usar && adaptadorBases.aja > 0) {
+                                //mandarAFragmentEntrenar
+                                MainActivity main = (MainActivity) getActivity();
+                                main.PasaraFragTodoListo("no");
+                                mode.finish();
+
+
+                                return true;
+                            } else {
+                                Toast toast1 = Toast.makeText(getActivity(), "Ninguna Base fue seleccionada", Toast.LENGTH_SHORT);
+                                toast1.show();
+                                return false;
+                            }
+                        }
+
+                        @Override
+                        public void onDestroyActionMode(ActionMode mode) {
+                            isActionMode = false;
+                            actionMode = null;
+                            //UserSelection.clear();
+                        }
+                    });
+
+                    if(arrBasesFav.size() == 0){
+                        fotoNoHay.setVisibility(View.VISIBLE);
+                        btnNoHay.setVisibility(View.VISIBLE);
+
+                        fotoNoHay.setImageResource(R.drawable.ic_nolikebase);
+                        btnNoHay.setText("Ir a bases");
+
+                        btnNoHay.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                MainActivity main = (MainActivity) getActivity();
+                                main.PasaraFragBases("no");
+                            }
+                        });
+
+
+                    } else {
+                        fotoNoHay.setVisibility(View.GONE);
+                        btnNoHay.setVisibility(View.GONE);
+                    }
+                }
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
+                if(tab.getPosition() == 0)
+                {
+                    lista.setAdapter(adaptadorGrabacionesUsuarioFav);
+                    lista.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+                    lista.setOnItemClickListener(new AbsListView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            //reproducir
+                            Fragment fragminireproductor;
+                            fragminireproductor = new FragMiniReproductor();
+
+                            Bundle args = new Bundle();
+                            args.putString("Artista", "Tú");
+                            args.putString("Nombre", arrGrabacionesFav.get(position).getNombre());
+                            args.putString("Url", arrGrabacionesFav.get(position).getUrl());
+                            args.putString("Duracion", "");
+
+                            fragminireproductor.setArguments(args);
+                            transaccionFragment = adminFragment.beginTransaction();
+                            transaccionFragment.replace(R.id.holder, fragminireproductor);
+                            transaccionFragment.commit();
+
+                            if(FragMiniReproductor.mediaplayer != null) {
+                                FragMiniReproductor.mediaplayer.stop();
+                                FragMiniReproductor.mediaplayer.reset();
+                            }
+
+                            holder.setVisibility(View.VISIBLE);
+
+                        }
+                    });
+
+                    if(arrGrabacionesFav.size() == 0){
+                        fotoNoHay.setVisibility(View.VISIBLE);
+                        btnNoHay.setVisibility(View.VISIBLE);
+
+                        fotoNoHay.setImageResource(R.drawable.ic_nolikegrab);
+                        btnNoHay.setText("Ir a grabaciones");
+
+                        btnNoHay.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                MainActivity main = (MainActivity) getActivity();
+                                main.PasaraFragUsuario();
+                            }
+                        });
+
+
+                    } else {
+                        fotoNoHay.setVisibility(View.GONE);
+                        btnNoHay.setVisibility(View.GONE);
+                    }
+
+                }
+                if(tab.getPosition() == 1)
+                {
+                    lista.setAdapter(adaptadorBasesFav);
+                    lista.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
+
+                    lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            //reproducir
+                            Fragment fragminireproductor;
+                            fragminireproductor = new FragMiniReproductor();
+                            Bundle args = new Bundle();
+                            args.putString("Nombre", arrBasesFav.get(position).getNombre());
+                            args.putString("Url", arrBasesFav.get(position).getUrl());
+                            args.putString("Artista", arrBasesFav.get(position).getArtista());
+                            args.putString("Duracion", arrBasesFav.get(position).getDuracion());
+
+                            fragminireproductor.setArguments(args);
+                            transaccionFragment = adminFragment.beginTransaction();
+                            transaccionFragment.replace(R.id.holder, fragminireproductor);
+                            transaccionFragment.commit();
+                            if(FragMiniReproductor.mediaplayer != null)
+                            {
+                                FragMiniReproductor.mediaplayer.stop();
+                                FragMiniReproductor.mediaplayer.reset();
+                            }
+                            holder.setVisibility(View.VISIBLE);
+                            lista.setPadding(0,0, 0, 160);
+                        }
+                    });
+
+                    lista.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
+                        @Override
+                        public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+                        }
+
+                        @Override
+                        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                            Log.d("mensaje", "hola");
+                            MenuInflater inflater = mode.getMenuInflater();
+                            inflater.inflate(R.menu.actionbar_menu, menu);
+                            isActionMode = true;
+                            actionMode = mode;
+                            return true;
+                        }
+
+                        @Override
+                        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                            if (item.getItemId() == R.id.usar && adaptadorBases.aja > 0) {
+                                //mandarAFragmentEntrenar
+                                MainActivity main = (MainActivity) getActivity();
+                                main.PasaraFragTodoListo("no");
+                                mode.finish();
+
+
+                                return true;
+                            } else {
+                                Toast toast1 = Toast.makeText(getActivity(), "Ninguna Base fue seleccionada", Toast.LENGTH_SHORT);
+                                toast1.show();
+                                return false;
+                            }
+                        }
+
+                        @Override
+                        public void onDestroyActionMode(ActionMode mode) {
+                            isActionMode = false;
+                            actionMode = null;
+                            //UserSelection.clear();
+                        }
+                    });
+
+
+
+
+
+
+                    if(arrBasesFav.size() == 0){
+                        fotoNoHay.setVisibility(View.VISIBLE);
+                        btnNoHay.setVisibility(View.VISIBLE);
+
+                        fotoNoHay.setImageResource(R.drawable.ic_nolikebase);
+                        btnNoHay.setText("Ir a bases");
+
+                        btnNoHay.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                MainActivity main = (MainActivity) getActivity();
+                                main.PasaraFragBases("no");
+                            }
+                        });
+
+
+                    } else {
+                        fotoNoHay.setVisibility(View.GONE);
+                        btnNoHay.setVisibility(View.GONE);
+                    }
+                }
             }
         });
 
@@ -273,6 +600,42 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
                             arrGrabacionesFav.add(grab);
                         }
 
+
+
+                        adaptadorGrabacionesUsuarioFav = new adaptadorGrabacionesUsuario(arrGrabacionesFav, getActivity());
+                        lista.setAdapter(adaptadorGrabacionesUsuarioFav);
+
+                        lista.setAdapter(adaptadorGrabacionesUsuarioFav);
+                        lista.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+                        lista.setOnItemClickListener(new AbsListView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                //reproducir
+                                Fragment fragminireproductor;
+                                fragminireproductor = new FragMiniReproductor();
+
+                                Bundle args = new Bundle();
+                                args.putString("Artista", "Tú");
+                                args.putString("Nombre", arrGrabacionesFav.get(position).getNombre());
+                                args.putString("Url", arrGrabacionesFav.get(position).getUrl());
+                                args.putString("Duracion", "");
+
+                                fragminireproductor.setArguments(args);
+                                transaccionFragment = adminFragment.beginTransaction();
+                                transaccionFragment.replace(R.id.holder, fragminireproductor);
+                                transaccionFragment.commit();
+
+                                if(FragMiniReproductor.mediaplayer != null) {
+                                    FragMiniReproductor.mediaplayer.stop();
+                                    FragMiniReproductor.mediaplayer.reset();
+                                }
+
+                                holder.setVisibility(View.VISIBLE);
+
+                            }
+                        });
+
+
                         if(arrGrabacionesFav.size() == 0){
                             fotoNoHay.setVisibility(View.VISIBLE);
                             btnNoHay.setVisibility(View.VISIBLE);
@@ -295,8 +658,7 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
 
 
 
-                        adaptadorGrabacionesUsuarioFav = new adaptadorGrabacionesUsuario(arrGrabacionesFav, getActivity());
-                        lista.setAdapter(adaptadorGrabacionesUsuarioFav);
+
                     }
 
                 });

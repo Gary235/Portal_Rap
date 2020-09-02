@@ -72,8 +72,11 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
 
             holder.btnFav = convertView.findViewById(R.id.btnFavlista);
             holder.Nombre = convertView.findViewById(R.id.textolista);
+            holder.btnOpciones = convertView.findViewById(R.id.btnOpciones);
             holder.btnFav.setFocusable(false);
             holder.Nombre.setFocusable(false);
+            holder.btnOpciones.setFocusable(false);
+
             db = FirebaseFirestore.getInstance();
             main = (MainActivity) getContext();
             user = main.obtenerUsuario();
@@ -130,13 +133,22 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
         });
 
 
+        holder.btnOpciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
         return convertView;
     }
     private class ViewHolder {
-        protected ImageButton btnFav;
+        protected ImageButton btnFav,btnOpciones;
         protected TextView Nombre;
 
     }
+
     private void actualizarFav(String nombre, String id, String url, Boolean fav) {
         Map<String, Object> grabacion = (new Grabacion(nombre, id, fav, url)).toMap();
 

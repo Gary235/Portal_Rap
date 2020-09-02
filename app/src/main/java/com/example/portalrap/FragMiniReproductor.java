@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.portalrap.FragmentsUsuario.FragFavoritos;
 import com.example.portalrap.FragmentsUsuario.FragUsuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -105,6 +106,11 @@ public class FragMiniReproductor extends Fragment {
                         FragUsuario.holder.setVisibility(View.GONE);
                     }}
 
+                if(FragFavoritos.holder != null) {
+                    if (FragFavoritos.holder.getVisibility() == View.VISIBLE){
+                        FragFavoritos.holder.setVisibility(View.GONE);
+                    }}
+
                 if(FragBases.holder != null){
                     if (FragBases.holder.getVisibility() == View.VISIBLE){
                         FragBases.holder.setVisibility(View.GONE);
@@ -117,6 +123,8 @@ public class FragMiniReproductor extends Fragment {
                             FragBases.listabases.setPadding(0,0, 0, 0);
 
                     } }
+
+                mediaplayer.stop();
             }
         });
 
@@ -161,7 +169,7 @@ public class FragMiniReproductor extends Fragment {
                     mediaplayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mp) {
-                            btnplay.setImageResource(R.drawable.ic_icono_play);
+                           // btnplay.setImageResource(R.drawable.ic_icono_play);
 
                         }
                     });
