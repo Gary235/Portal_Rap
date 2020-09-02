@@ -64,8 +64,6 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
-
-
     int anchoPantalla, altoPantalla;
     @Override
     public void onStart() {
@@ -78,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
             PasaraFragmentHome();
         }
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,7 +158,6 @@ public class MainActivity extends AppCompatActivity {
                     FragBases.UserSelection.clear();
                     break;
             }
-
 
             transaccionFragment=adminFragment.beginTransaction();
             transaccionFragment.replace(R.id.frameLayout, fragseleccionado,null);
