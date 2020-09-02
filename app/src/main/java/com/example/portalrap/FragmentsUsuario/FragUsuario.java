@@ -190,18 +190,21 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
                     grab.setId(document.getId());
                     Grabaciones.add(grab);
                 }
+                if(Grabaciones.size() == 0){
+                    fotoNograb.setVisibility(View.VISIBLE);
+                    btnNograb.setVisibility(View.VISIBLE);
+                } else {
+
+                    fotoNograb.setVisibility(View.GONE);
+                    btnNograb.setVisibility(View.GONE);
+                }
+
+
                 adaptador = new adaptadorGrabacionesUsuario(Grabaciones,getActivity());
                 lista.setAdapter(adaptador);
             }
         });
 
-        if(Grabaciones.size() == 0){
-            fotoNograb.setVisibility(View.GONE);
-            btnNograb.setVisibility(View.GONE);
-        } else {
-            fotoNograb.setVisibility(View.VISIBLE);
-            btnNograb.setVisibility(View.VISIBLE);
-        }
 
     }
 

@@ -98,7 +98,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
     private MediaObserver observer = null;
 
     String  path_file="", name, carpeta = "/Portal Rap/", archivo = "default_name";
-    File localfile;
+    public static File localfile;
     String palabrarandom;
     CountDownTimer timer,timerinicial;
     long tiemporestanteDuracion = 300000,tiemporestanteInicial = 3500;
@@ -553,7 +553,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             AlertDialog.Builder mensaje;
             mensaje = new AlertDialog.Builder(getActivity());
             mensaje.setTitle("Nombrar Grabacion");
-            mensaje.setMessage("No la nombres igual a otra grabacion porque se va a sobreescribir");
+            mensaje.setMessage("No la nombres igual a otra grabacion porque se va a sobreescribir \n \n");
             input = new EditText(getActivity());
             mensaje.setView(input);
             mensaje.setPositiveButton("Guardar", escuchadordealert);
@@ -616,13 +616,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                         mapGrab.put("Url", input.getText().toString().trim() + ".mp3");
 
                         firestore.collection("Usuarios").document(usuario.getUid()).collection("Grabaciones").add(mapGrab);
-
-
                     }
-
-
-
-
 
                     grabacion = null;
                 }
@@ -630,8 +624,6 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             else {
                 dialog.cancel();
             }
-
-
         }
     };
 

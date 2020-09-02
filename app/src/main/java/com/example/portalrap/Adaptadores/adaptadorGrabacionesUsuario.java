@@ -1,11 +1,14 @@
 package com.example.portalrap.Adaptadores;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,7 +30,7 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
     private ArrayList<Grabacion> arrGrabacion;
     private Context miContexto;
     private FirebaseFirestore db;
-
+    Integer posicioneliminar;
     FirebaseUser user;
     MainActivity main;
 
@@ -72,10 +75,10 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
 
             holder.btnFav = convertView.findViewById(R.id.btnFavlista);
             holder.Nombre = convertView.findViewById(R.id.textolista);
-            holder.btnOpciones = convertView.findViewById(R.id.btnOpciones);
+            holder.btnEliminar = convertView.findViewById(R.id.btnEliminar);
             holder.btnFav.setFocusable(false);
             holder.Nombre.setFocusable(false);
-            holder.btnOpciones.setFocusable(false);
+            holder.btnEliminar.setFocusable(false);
 
             db = FirebaseFirestore.getInstance();
             main = (MainActivity) getContext();
@@ -91,6 +94,8 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
         holder.btnFav.setTag(R.integer.btnplusview, convertView);
         holder.btnFav.setTag(position);
 
+        holder.btnEliminar.setTag(R.integer.btnplusview, convertView);
+        holder.btnEliminar.setTag(position);
         Log.d("corazon","Bool: " + arrGrabacion.get(position).getFavoritos() + ", Pos" + position);
 
         if(arrGrabacion.get(position).getFavoritos() != null)
@@ -133,9 +138,19 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
         });
 
 
-        holder.btnOpciones.setOnClickListener(new View.OnClickListener() {
+        holder.btnEliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                posicioneliminar = (Integer)  holder.btnEliminar.getTag();
+
+                AlertDialog.Builder mensaje;
+                mensaje = new AlertDialog.Builder(getContext());
+                mensaje.setTitle("Eliminar Grabacion");
+                mensaje.setMessage("No se puede recuperar una grabacion eliminada \n \n");
+                mensaje.setPositiveButton("Eliminar", escuchador);
+                mensaje.setNegativeButton("Cancelar", escuchador);
+                mensaje.create();
+                mensaje.show();
 
             }
         });
@@ -144,7 +159,7 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
         return convertView;
     }
     private class ViewHolder {
-        protected ImageButton btnFav,btnOpciones;
+        protected ImageButton btnFav,btnEliminar;
         protected TextView Nombre;
 
     }
@@ -171,7 +186,29 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
                 });
     }
 
+    DialogInterface.OnClickListener escuchador = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
 
+            if(which == -1)
+            {
+
+                MainActivity main = (MainActivity) getContext();
+                // borrar de storage
+                main.eliminarGrabDeStorage(arrGrabacion.get(posicioneliminar).getUrl());
+                // borrar de firestore
+                main.eliminarGrabDeFirestore(arrGrabacion.get(posicioneliminar).getId());
+                // borrar del almacenamiento interno
+                main.eliminarGrabDeAlmacenamiento(arrGrabacion.get(posicioneliminar).getUrl());
+
+            }
+            else if(which == -2)
+            {
+                dialog.cancel();
+            }
+
+        }
+    };
 
 
 }

@@ -39,10 +39,10 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btnOpciones"
+        android:id="@+id/btnEliminar"
 
         android:background="@drawable/btn_transparente"
-        android:src="@drawable/ic_opciones"
+        android:src="@drawable/ic_icono_basura"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

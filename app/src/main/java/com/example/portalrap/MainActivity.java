@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,7 +42,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -371,6 +375,56 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void eliminarGrabDeStorage(String url) {
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+
+        StorageReference grabRef  = storageRef.child("Grabaciones/" + usuarioActual.getUid() + "/" + url);
+
+
+        grabRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                // File deleted successfully
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Uh-oh, an error occurred!
+            }
+        });
+
+
+    }
+    public void eliminarGrabDeFirestore(String id) {
+
+        db.collection("Usuarios").document(usuarioActual.getUid()).collection("Grabaciones")
+                .document(id)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.e("CambiarFav", "Bien Ahi");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("CambiarFav", "Error al actualizar: " + e);
+                    }
+                });
+    }
+    public void eliminarGrabDeAlmacenamiento(String url) {
+
+        File file = new File(FragEntrenar.localfile, url);
+        boolean deleted = file.delete();
+        if(deleted)
+            Toast.makeText(getApplicationContext(), "Grabación Eliminada", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(getApplicationContext(), "Error en la eliminación", Toast.LENGTH_SHORT).show();
+
+    }
 
 
 
