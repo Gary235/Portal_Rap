@@ -553,7 +553,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             AlertDialog.Builder mensaje;
             mensaje = new AlertDialog.Builder(getActivity());
             mensaje.setTitle("Nombrar Grabacion");
-            mensaje.setMessage("No la nombres igual a otra grabacion porque se va a sobreescribir \n \n");
+            mensaje.setMessage(" \n No la nombres igual a otra grabacion porque se va a sobreescribir \n \n");
             input = new EditText(getActivity());
             mensaje.setView(input);
             mensaje.setPositiveButton("Guardar", escuchadordealert);

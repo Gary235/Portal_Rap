@@ -1,8 +1,10 @@
 package com.example.portalrap.FragmentsUsuario;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -167,12 +170,35 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
         }
         else if(idbotonapretado == R.id.logout){
 
-            mAuth.signOut();
-            main.PasaraFragmentIniciarSesion();
+            AlertDialog.Builder mensaje;
+            mensaje = new AlertDialog.Builder(getActivity());
+            mensaje.setTitle("Cerrar Sesion");
+            mensaje.setMessage(" \n ¿Seguro que quieres cerrar sesion? \n \n");
+            mensaje.setPositiveButton("Si", escuchador);
+            mensaje.setNegativeButton("No", escuchador);
+            mensaje.create();
+            mensaje.show();
 
         }
     }
+    DialogInterface.OnClickListener escuchador = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
 
+            if(which == -1)
+            {
+                MainActivity main=(MainActivity) getActivity();
+                mAuth.signOut();
+                main.PasaraFragmentIniciarSesion();
+
+            }
+            else if(which == -2)
+            {
+                dialog.cancel();
+            }
+
+        }
+    };
 
     private void obtenerListaGrabaciones() {
 
