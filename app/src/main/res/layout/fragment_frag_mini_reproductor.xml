@@ -62,7 +62,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="60dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginTop="50dp"
         />
 
         <ProgressBar
@@ -74,5 +74,17 @@
             android:indeterminate="true"
             android:layout_marginBottom="10dp"
             />
+    <ImageButton
+        android:layout_width="18dp"
+        android:layout_height="50dp"
+
+        android:id="@+id/flechitabajodemini"
+
+        android:layout_marginRight="50dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/btn_transparente"
+        android:src="@drawable/ic_flecha_fina_negra_abajo"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

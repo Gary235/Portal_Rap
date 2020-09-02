@@ -16,11 +16,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.portalrap.FragmentsUsuario.FragUsuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -28,27 +31,28 @@ import java.io.IOException;
 
 public class FragMiniReproductor extends Fragment {
 
-    ImageButton btnplay;
+    ImageButton btnplay,btnEsconder;
     TextView txtnombre,txtArtista, txtDuracion;
     public static MediaPlayer mediaplayer;
     String Nombre, Url, Artista, Duracion;
     ProgressBar progressBar;
-
-    double finalTime;
+    FirebaseUser user;
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_frag_mini_reproductor, container, false);
 
+        MainActivity mainActivity = (MainActivity) getActivity();
+        user = mainActivity.obtenerUsuario();
         Nombre = getArguments().getString("Nombre");
         Url = getArguments().getString("Url");
         Artista = getArguments().getString("Artista");
         Duracion = getArguments().getString("Duracion");
 
         mediaplayer = new MediaPlayer();
-
+        btnEsconder = v.findViewById(R.id.flechitabajodemini);
         btnplay = v.findViewById(R.id.btnPlaydeholder);
         txtDuracion = v.findViewById(R.id.txtdeholderDuracion);
         txtnombre = v.findViewById(R.id.txtdeholderBase);
@@ -91,6 +95,31 @@ public class FragMiniReproductor extends Fragment {
 
             }
         });
+
+
+        btnEsconder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(FragUsuario.holder != null) {
+                    if (FragUsuario.holder.getVisibility() == View.VISIBLE){
+                        FragUsuario.holder.setVisibility(View.GONE);
+                    }}
+
+                if(FragBases.holder != null){
+                    if (FragBases.holder.getVisibility() == View.VISIBLE){
+                        FragBases.holder.setVisibility(View.GONE);
+
+                        if(FragBases.desdedur.equals("si")) {
+                            FragBases.listabases.setPadding(0, 0, 0, 300);
+
+                        }
+                        else
+                            FragBases.listabases.setPadding(0,0, 0, 0);
+
+                    } }
+            }
+        });
+
         return v;
     }
 
@@ -101,9 +130,15 @@ public class FragMiniReproductor extends Fragment {
 
         final FirebaseStorage storage = FirebaseStorage.getInstance();
         // Create a storage reference from our app
-
+        StorageReference storageRef = null;
         mediaplayer = new MediaPlayer();
-        StorageReference storageRef = storage.getReferenceFromUrl("gs://portal-rap-4b1fe.appspot.com/Beats/" + Url);
+        if(Duracion.equals("")){
+            storageRef = storage.getReferenceFromUrl("gs://portal-rap-4b1fe.appspot.com/Grabaciones/" + user.getUid() + "/" + Url);
+            //gs://portal-rap-4b1fe.appspot.com/Grabaciones/QN0UtiL1VMQZ4MuD7pcAiBOTp7i1/pruebaDeGrabacion.mp3
+        }   else {
+            storageRef = storage.getReferenceFromUrl("gs://portal-rap-4b1fe.appspot.com/Beats/" + Url);
+        }
+
         Log.d("TAGERROR", "error:3 " );
 
         storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -121,6 +156,13 @@ public class FragMiniReproductor extends Fragment {
                     mediaplayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                         @Override
                         public void onPrepared(MediaPlayer mp) {
+                        }
+                    });
+                    mediaplayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            btnplay.setImageResource(R.drawable.ic_icono_play);
+
                         }
                     });
                     // wait for media player to get prepare

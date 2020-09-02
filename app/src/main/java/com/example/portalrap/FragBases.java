@@ -48,12 +48,12 @@ public class FragBases extends Fragment implements View.OnClickListener {
 
     int textlength = 0;
     ArrayList<Base> array_sort = new ArrayList<>();
-    ImageButton btnAnterior;
+    public static ImageButton btnAnterior;
     Button btnInfo;
     ImageView fondo1,paso4;
     TextView txtTitulo,lbl,lbl2,lbl3;
     EditText edtBuscar;
-    ListView listabases;
+    public static ListView listabases;
 
     adaptadorBases adaptador,adaptador2;
     public static Boolean isActionMode = false;
@@ -61,11 +61,11 @@ public class FragBases extends Fragment implements View.OnClickListener {
     public static ActionMode actionMode = null;
     FirebaseFirestore db;
     ArrayList<Base> Beats = new ArrayList<>();
-    String desdedur;
+    public static String desdedur;
     ScrollView scrol;
     FragmentManager adminFragment;
     FragmentTransaction transaccionFragment;
-    FrameLayout holder;
+    public static FrameLayout holder;
     FirebaseUser user;
 
 
@@ -223,7 +223,7 @@ public class FragBases extends Fragment implements View.OnClickListener {
                 if(desdedur.equals("si")) {
                     listabases.setPadding(0,0, 0, 400);
                     ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) v.findViewById(R.id.botonanteriordebases).getLayoutParams();
-                    layoutParams.setMargins(0, 0, 0, 0);
+                    layoutParams.setMargins(0, 0, 0, 150);
                 }
                 else {
                     listabases.setPadding(0,0, 0, 160);

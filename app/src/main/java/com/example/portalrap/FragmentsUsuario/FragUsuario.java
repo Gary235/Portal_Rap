@@ -1,6 +1,8 @@
 package com.example.portalrap.FragmentsUsuario;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -9,15 +11,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.portalrap.Adaptadores.adaptadorGrabacionesUsuario;
 import com.example.portalrap.Clases.Grabacion;
+import com.example.portalrap.FragMiniReproductor;
 import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
 import com.google.android.material.tabs.TabLayout;
@@ -48,6 +53,9 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
     private FirebaseAuth mAuth;
     ImageView fotoNograb;
     Button btnNograb;
+    public static FrameLayout holder;
+    FragmentManager adminFragment;
+    FragmentTransaction transaccionFragment;
 
 
     @Override
@@ -61,9 +69,11 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
-        View v=inflater.inflate(R.layout.fragment_frag_usuario, container, false);
+        final View v = inflater.inflate(R.layout.fragment_frag_usuario, container, false);
+        adminFragment = getFragmentManager();
 
         TabLayout tabLayout = v.findViewById(R.id.tabusuario);
+        holder = v.findViewById(R.id.holderdeusuario);
         btneditar =  v.findViewById(R.id.btneditar);
         btnfav = v.findViewById(R.id.btnfav);
         fotoperfil = v.findViewById(R.id.imgperfil);
@@ -84,6 +94,27 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 Log.d("Funciona","siiiiiiiiii");
+                Fragment fragminireproductor;
+                fragminireproductor = new FragMiniReproductor();
+
+                Bundle args = new Bundle();
+                args.putString("Artista", "Tú");
+                args.putString("Nombre", Grabaciones.get(position).getNombre());
+                args.putString("Url", Grabaciones.get(position).getUrl());
+                args.putString("Duracion", "");
+
+                fragminireproductor.setArguments(args);
+                transaccionFragment = adminFragment.beginTransaction();
+                transaccionFragment.replace(R.id.holderdeusuario, fragminireproductor);
+                transaccionFragment.commit();
+
+                if(FragMiniReproductor.mediaplayer != null) {
+                    FragMiniReproductor.mediaplayer.stop();
+                    FragMiniReproductor.mediaplayer.reset();
+                }
+
+                holder.setVisibility(View.VISIBLE);
+
             }
         });
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

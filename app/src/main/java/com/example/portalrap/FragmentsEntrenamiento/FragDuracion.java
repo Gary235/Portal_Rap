@@ -96,7 +96,7 @@ public class FragDuracion extends Fragment implements View.OnClickListener {
                 if(MainActivity.Segundos != -1 && MainActivity.Minutos != -1)
                 {
                     MainActivity main=(MainActivity) getActivity();
-                    main.PasaraFragBases(desdedur);
+                    main.PasaraFragBases("si");
                 }
                 else{
                     Toast toast1 = Toast.makeText(getActivity(),"Tiempo de Duración inválido", Toast.LENGTH_SHORT);
