@@ -146,7 +146,7 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
                 AlertDialog.Builder mensaje;
                 mensaje = new AlertDialog.Builder(getContext());
                 mensaje.setTitle("Eliminar Grabacion");
-                mensaje.setMessage("No se puede recuperar una grabacion eliminada \n \n");
+                mensaje.setMessage("\n No se puede recuperar una grabacion eliminada \n \n");
                 mensaje.setPositiveButton("Eliminar", escuchador);
                 mensaje.setNegativeButton("Cancelar", escuchador);
                 mensaje.create();
