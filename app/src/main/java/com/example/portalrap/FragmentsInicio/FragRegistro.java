@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,7 +35,7 @@ public class FragRegistro extends Fragment{
     EditText edtusu,edtcontra,edtconf;
     Button btn;
     private FirebaseAuth mAuth;
-
+    TextView txtVolver;
 
     @Nullable
     @Override
@@ -46,6 +47,16 @@ public class FragRegistro extends Fragment{
         edtcontra = v.findViewById(R.id.editcontra);
         edtconf = v.findViewById(R.id.editconf);
         btn = v.findViewById(R.id.btnRegistrarse);
+        txtVolver = v.findViewById(R.id.VolverdeRegistro);
+
+        txtVolver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity main = (MainActivity) getActivity();
+                main.PasaraFragmentIniciarSesion();
+            }
+        });
+
         ListenerBoton();
 
         return v;

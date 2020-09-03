@@ -179,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void PasaraFragmentRegistro()
     {
+        bottom.setVisibility(View.GONE);
         FragGlobal = new FragRegistro();
         transaccionFragment=adminFragment.beginTransaction();
         transaccionFragment.replace(R.id.frameLayout, FragGlobal);

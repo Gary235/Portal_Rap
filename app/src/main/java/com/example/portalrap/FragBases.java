@@ -296,30 +296,41 @@ public class FragBases extends Fragment implements View.OnClickListener {
                             beat.setId(document.getId());
                             Beats.add(beat);
                         }
-                    }
-                });
 
-        db.collection("Usuarios").document(user.getUid()).collection("BeatsFav")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
-                        listabases.setAdapter(null);
-                        for (DocumentSnapshot document : snapshots) {
-                            Base beat = document.toObject(Base.class);
-                            assert beat != null;
-                            beat.setId(document.getId());
-                            for(int j = 0; j < Beats.size();j++) {
-                                if(Beats.get(j).getNombre().equals(beat.getNombre())) {
-                                    Beats.get(j).setFavoritos(beat.getFavoritos());
-                                }
-                            }
+                        if(user == null){
+                            adaptador = new adaptadorBases(Beats, getActivity());
+                            listabases.setAdapter(adaptador);
                         }
 
-
-                        adaptador = new adaptadorBases(Beats, getActivity());
-                        listabases.setAdapter(adaptador);
                     }
                 });
+
+        if(user != null){
+            db.collection("Usuarios").document(user.getUid()).collection("BeatsFav")
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
+                            listabases.setAdapter(null);
+                            for (DocumentSnapshot document : snapshots) {
+                                Base beat = document.toObject(Base.class);
+                                assert beat != null;
+                                beat.setId(document.getId());
+
+                                for(int j = 0; j < Beats.size();j++) {
+                                    if(Beats.get(j).getNombre().equals(beat.getNombre())) {
+                                        Beats.get(j).setFavoritos(beat.getFavoritos());
+                                    }
+                                }
+
+                            }
+                            adaptador = new adaptadorBases(Beats, getActivity());
+                            listabases.setAdapter(adaptador);
+                        }
+                    });
+
+        }
+
+
     }
 
 

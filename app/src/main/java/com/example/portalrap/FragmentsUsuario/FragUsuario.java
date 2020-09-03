@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -19,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -26,6 +28,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.portalrap.Adaptadores.adaptadorGrabacionesUsuario;
 import com.example.portalrap.Clases.Grabacion;
 import com.example.portalrap.FragMiniReproductor;
+import com.example.portalrap.FragmentsEntrenamiento.FragEntrenar;
 import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
 import com.google.android.material.tabs.TabLayout;
@@ -52,7 +55,7 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
     FirebaseFirestore db;
     FirebaseUser user;
     ArrayList<Grabacion> Grabaciones = new ArrayList<>();
-    TextView txtUsuario;
+    TextView txtUsuario,txtArchivos;
     private FirebaseAuth mAuth;
     ImageView fotoNograb;
     Button btnNograb;
@@ -81,6 +84,7 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
         btnfav = v.findViewById(R.id.btnfav);
         fotoperfil = v.findViewById(R.id.imgperfil);
         txtUsuario = v.findViewById(R.id.txtusuario);
+        //txtArchivos = v.findViewById(R.id.txtVerArchivos);
         logout = v.findViewById(R.id.logout);
         btnNograb = v.findViewById(R.id.btnNoGrabUsuario);
         fotoNograb = v.findViewById(R.id.fotoUsuarioNoGrab);
@@ -91,6 +95,17 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
         logout.setOnClickListener(this);
         fotoNograb.setVisibility(View.GONE);
         btnNograb.setVisibility(View.GONE);
+
+
+        /*txtArchivos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                //intent.setType(String.valueOf(FragEntrenar.localfile));
+                startActivity(intent);
+            }
+        });*/
+
 
         lista = v.findViewById(R.id.lista);
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -141,13 +156,7 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
         obtenerListaGrabaciones();
 
 
-        btnNograb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity main = (MainActivity) getActivity();
-                main.PasaraFragmentModo();
-            }
-        });
+
 
         return v;
     }
@@ -162,11 +171,21 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
 
         if(idbotonapretado == R.id.btneditar)
         {
-            main.PasaraFragEditarPerfil();
+            if(user != null)
+                main.PasaraFragEditarPerfil();
+            else {
+                Toast toast1 = Toast.makeText(getContext(),"Registrate para poder editar tu perfil", Toast.LENGTH_SHORT);
+                toast1.show();
+            }
         }
         else if(idbotonapretado == R.id.btnfav)
         {
-            main.PasaraFragFavoritos();
+            if(user != null)
+                main.PasaraFragFavoritos();
+            else {
+                Toast toast1 = Toast.makeText(getContext(),"Registrate para acceder a favoritos", Toast.LENGTH_SHORT);
+                toast1.show();
+            }
         }
         else if(idbotonapretado == R.id.logout){
 
@@ -202,34 +221,60 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
 
     private void obtenerListaGrabaciones() {
 
-        db.collection("Usuarios").document(user.getUid()).collection("Grabaciones")
-                .whereGreaterThan("Nombre","")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
-                Grabaciones.clear();
-                lista.setAdapter(null);
+        if(user != null){
+            db.collection("Usuarios").document(user.getUid()).collection("Grabaciones")
+                    .whereGreaterThan("Nombre","")
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
+                            Grabaciones.clear();
+                            lista.setAdapter(null);
 
-                for (DocumentSnapshot document : snapshots) {
-                    Grabacion grab = document.toObject(Grabacion.class);
-                    assert grab != null;
-                    grab.setId(document.getId());
-                    Grabaciones.add(grab);
+                            for (DocumentSnapshot document : snapshots) {
+                                Grabacion grab = document.toObject(Grabacion.class);
+                                assert grab != null;
+                                grab.setId(document.getId());
+                                Grabaciones.add(grab);
+                            }
+                            if(Grabaciones.size() == 0){
+                                fotoNograb.setVisibility(View.VISIBLE);
+                                btnNograb.setVisibility(View.VISIBLE);
+
+                                btnNograb.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        MainActivity main = (MainActivity) getActivity();
+                                        main.PasaraFragmentModo();
+                                    }
+                                });
+                            } else {
+
+                                fotoNograb.setVisibility(View.GONE);
+                                btnNograb.setVisibility(View.GONE);
+                            }
+
+
+                            adaptador = new adaptadorGrabacionesUsuario(Grabaciones,getActivity());
+                            lista.setAdapter(adaptador);
+                        }
+                    });
+
+        }
+        else {
+            fotoNograb.setImageResource(R.drawable.ic_foto_nousuario);
+            btnNograb.setText("Ir a registro");
+            btnNograb.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MainActivity main = (MainActivity) getActivity();
+                    main.PasaraFragmentRegistro();
                 }
-                if(Grabaciones.size() == 0){
-                    fotoNograb.setVisibility(View.VISIBLE);
-                    btnNograb.setVisibility(View.VISIBLE);
-                } else {
+            });
 
-                    fotoNograb.setVisibility(View.GONE);
-                    btnNograb.setVisibility(View.GONE);
-                }
+            fotoNograb.setVisibility(View.VISIBLE);
+            btnNograb.setVisibility(View.VISIBLE);
 
-
-                adaptador = new adaptadorGrabacionesUsuario(Grabaciones,getActivity());
-                lista.setAdapter(adaptador);
-            }
-        });
+        }
 
 
     }
