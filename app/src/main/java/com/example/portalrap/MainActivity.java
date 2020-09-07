@@ -424,5 +424,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
+/*Paso en limpio lo que hablamos:
+- Detener el tiempo cuando grabas
+- Grabación automática cuando termina la pista
+- AlertDialog para preguntar si está seguro de que desea grabar
+*/
 }

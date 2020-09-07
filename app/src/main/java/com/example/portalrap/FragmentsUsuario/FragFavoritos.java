@@ -95,6 +95,7 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
             public void onTabSelected(TabLayout.Tab tab) {
                 if(tab.getPosition() == 0)
                 {
+
                     lista.setAdapter(adaptadorGrabacionesUsuarioFav);
                     lista.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
                     lista.setOnItemClickListener(new AbsListView.OnItemClickListener() {
@@ -149,6 +150,7 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
                 }
                 if(tab.getPosition() == 1)
                 {
+
                     lista.setAdapter(adaptadorBasesFav);
                     lista.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
 
@@ -250,6 +252,7 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
             public void onTabUnselected(TabLayout.Tab tab) {
                 if(tab.getPosition() == 0)
                 {
+
                     lista.setAdapter(adaptadorGrabacionesUsuarioFav);
                     lista.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
                     lista.setOnItemClickListener(new AbsListView.OnItemClickListener() {
@@ -304,6 +307,7 @@ public class FragFavoritos extends Fragment implements View.OnClickListener {
                 }
                 if(tab.getPosition() == 1)
                 {
+
                     lista.setAdapter(adaptadorBasesFav);
                     lista.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
 

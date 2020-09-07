@@ -53,9 +53,9 @@
         android:elevation="300dp"
         android:translationZ="100dp"
         app:tabGravity="fill"
-        app:tabIndicatorColor="@color/tab_item_text"
+        app:tabIndicatorColor="#7d6fa8"
         app:tabMode="fixed"
-        app:tabTextColor="@color/tab_item_text"
+        app:tabTextColor="#7d6fa8"
         tools:ignore="MissingConstraints"
         app:layout_constraintTop_toBottomOf="@id/fondo2"
 
@@ -65,18 +65,19 @@
             android:id="@+id/tabitem1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:icon="@drawable/ic_icono_grabado"
+            android:icon="@drawable/ic_micro_2"
             android:text="Grabado"
-            android:tint="@color/tab_item_text"
+
+            android:tint="#7d6fa8"
             />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabitem2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:icon="@drawable/ic_icono_bases"
+            android:icon="@drawable/ic_bases_2"
             android:text="Bases"
-            android:tint="@color/tab_item_text"
+            android:tint="#7d6fa8"
             />
 
     </com.google.android.material.tabs.TabLayout>
@@ -86,6 +87,7 @@
         android:layout_height="match_parent"
         android:id="@+id/listagrabacionesbasesfav"
 
+        android:scrollbars="none"
         android:layout_marginBottom="100dp"
         android:layout_marginTop="150dp"
         android:layout_marginLeft="10dp"
