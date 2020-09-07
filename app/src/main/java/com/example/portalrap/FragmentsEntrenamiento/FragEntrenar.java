@@ -283,7 +283,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         public void onClick(DialogInterface dialog, int which) {
             if (which == -1) {
                 MainActivity main = (MainActivity) getActivity();
-                main.PasaraFragmentHome();
+                main.PasaraFragBases("no");
             }
             else if (which == -2) {
                 dialog.cancel();
