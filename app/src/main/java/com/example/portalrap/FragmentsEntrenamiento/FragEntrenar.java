@@ -88,7 +88,7 @@ import static android.os.Environment.getExternalStorageDirectory;
 public class FragEntrenar extends Fragment implements View.OnClickListener {
 
     ImageButton btnFav, btnPlay, btnRepetir, btnCola, btnVolver, btnGrabar;
-    TextView txtArtista, txtBase, txtDuracion,txtConfirmar;
+    TextView txtArtista, txtBase, txtDuracion, txtConfirmar;
     ImageView fondoDifuminado, fotoObjeto;
     SeekBar barradebeat;
     Bitmap bm = null;
@@ -97,18 +97,18 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
     MediaPlayer mediaPlayer = new MediaPlayer();
     private MediaObserver observer = null;
 
-    String  path_file="", name, carpeta = "/Portal Rap/", archivo = "default_name";
+    String path_file = "", name, carpeta = "/Portal Rap/", archivo = "default_name";
     public static File localfile;
     String palabrarandom;
-    CountDownTimer timer,timerinicial;
-    long tiemporestanteDuracion = 300000,tiemporestanteInicial = 3500;
+    CountDownTimer timer = null, timerinicial;
+    long tiemporestanteDuracion = 300000, tiemporestanteInicial = 3500;
 
     public static FrameLayout holderparacola;
     FragmentManager adminFragment;
     FragmentTransaction transaccionFragment;
     Fragment fragdeCola;
 
-    int ModoElegido = MainActivity.PosModo,FrecuenciaElegida = MainActivity.Frecuencia, aleatorio, index = 0;
+    int ModoElegido = MainActivity.PosModo, FrecuenciaElegida = MainActivity.Frecuencia, aleatorio, index = 0;
     FirebaseFirestore db;
     Random generador = new Random();
     Boolean repetirverde = false;
@@ -124,13 +124,12 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         MainActivity main = (MainActivity) getActivity();
 
         int alto = main.obtenerAlto();
-        Log.d("Dimensiones" , "alto: " + alto);
+        Log.d("Dimensiones", "alto: " + alto);
         View v;
-        if(alto <= 1600){
+        if (alto <= 1600) {
             v = inflater.inflate(R.layout.entrenar_pantalla_chica, container, false);
             SetearPantallaChica(v);
-        }
-        else {
+        } else {
             v = inflater.inflate(R.layout.entrenar, container, false);
             Setear(v);
         }
@@ -141,34 +140,37 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         if (MainActivity.PosModo != -1 && MainActivity.Segundos != -1 && MainActivity.Minutos != -1 && MainActivity.Frecuencia != -1) {
             //personalizado
             tiemporestanteDuracion = (MainActivity.Minutos * 60000) + (MainActivity.Segundos * 1000);
-        }
-        else {
+        } else {
             //predeterminado
             ModoElegido = 2;
             FrecuenciaElegida = 1;
         }
-        if(FragBases.UserSelection.size() == 1){
+        if (FragBases.UserSelection.size() == 1) {
             btnRepetir.setImageResource(R.drawable.ic_repetir_verde);
             repetirverde = true;
-        }
-        else {
+        } else {
             btnRepetir.setImageResource(R.drawable.ic_icono_repetir);
         }
 
         obtenerPalabraRandom();
 
-        Log.d("Entrenamiento","Frecuencia Elegida: " + FrecuenciaElegida + "Frecuencia Seleccionada: " + MainActivity.Frecuencia);
-        Log.d("Entrenamiento","Modo Elegido: " + ModoElegido + "Modo Seleccionado: " + MainActivity.PosModo);
+        Log.d("Entrenamiento", "Frecuencia Elegida: " + FrecuenciaElegida + "Frecuencia Seleccionada: " + MainActivity.Frecuencia);
+        Log.d("Entrenamiento", "Modo Elegido: " + ModoElegido + "Modo Seleccionado: " + MainActivity.PosModo);
         switch (FrecuenciaElegida) {
-            case 0: FrecuenciaElegida = 2 * 1000;
+            case 0:
+                FrecuenciaElegida = 2 * 1000;
                 break;
-            case 1: FrecuenciaElegida = 5 * 1000;
+            case 1:
+                FrecuenciaElegida = 5 * 1000;
                 break;
-            case 2: FrecuenciaElegida = 10 * 1000;
+            case 2:
+                FrecuenciaElegida = 10 * 1000;
                 break;
-            case 3: FrecuenciaElegida = 20 * 1000;
+            case 3:
+                FrecuenciaElegida = 20 * 1000;
                 break;
-            case 4: FrecuenciaElegida = 30 * 1000;
+            case 4:
+                FrecuenciaElegida = 30 * 1000;
                 break;
         }
 
@@ -216,6 +218,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
         aleatorio = (int) (Math.random() * 2) + 1;
     }
+
     public void SetearPantallaChica(View v) {
 
         btnGrabar = v.findViewById(R.id.btnGrabardeentrenarpantallachica);
@@ -278,19 +281,6 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
     }
 
-    DialogInterface.OnClickListener escuchador = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            if (which == -1) {
-                MainActivity main = (MainActivity) getActivity();
-                main.PasaraFragBases("no");
-            }
-            else if (which == -2) {
-                dialog.cancel();
-            }
-        }
-    };
-
 
     @Override
     public void onClick(View v) {
@@ -308,8 +298,8 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                 mensaje = new AlertDialog.Builder(getActivity());
                 mensaje.setTitle("Salir del Entrenamiento");
                 mensaje.setMessage("Si sales, la grabación se va a borrar");
-                mensaje.setPositiveButton("Aceptar", escuchador);
-                mensaje.setNegativeButton("Cancelar", escuchador);
+                mensaje.setPositiveButton("Aceptar", escuchadordesalir);
+                mensaje.setNegativeButton("Cancelar", escuchadordesalir);
                 mensaje.create();
                 mensaje.show();
 
@@ -318,7 +308,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             case R.id.btnColadeentrenar:
                 adminFragment = getFragmentManager();
                 fragdeCola = new FragCola();
-                transaccionFragment=adminFragment.beginTransaction();
+                transaccionFragment = adminFragment.beginTransaction();
                 transaccionFragment.replace(R.id.holderdecola, fragdeCola);
                 transaccionFragment.commit();
 
@@ -327,11 +317,10 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
             case R.id.btnrepetirbasedeentrenar:
             case R.id.btnrepetirbasedeentrenarpantallachica:
-                if(!repetirverde) {
+                if (!repetirverde) {
                     btnRepetir.setImageResource(R.drawable.ic_repetir_verde);
                     repetirverde = true;
-                }
-                else {
+                } else {
                     btnRepetir.setImageResource(R.drawable.ic_icono_repetir);
                     repetirverde = false;
                 }
@@ -339,16 +328,15 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
             case R.id.favdeentrenar:
             case R.id.favdeentrenarpantallachica:
-                if(FragBases.UserSelection.get(index).getFavoritos() != null)
-                {
-                    if(FragBases.UserSelection.get(index).getFavoritos()){
+                if (FragBases.UserSelection.get(index).getFavoritos() != null) {
+                    if (FragBases.UserSelection.get(index).getFavoritos()) {
                         FragBases.UserSelection.get(index).setFavoritos(false);
                         btnFav.setImageResource(R.drawable.ic_icono_nofav_blanco);
                         main.eliminarFav(FragBases.UserSelection.get(index).getId());
-                    }else{
+                    } else {
                         FragBases.UserSelection.get(index).setFavoritos(true);
                         btnFav.setImageResource(R.drawable.ic_icono_fav_blanco);
-                        main.agregarFav(FragBases.UserSelection.get(index).getNombre(),FragBases.UserSelection.get(index).getArtista(),false,FragBases.UserSelection.get(index).getId(),FragBases.UserSelection.get(index).getUrl(),FragBases.UserSelection.get(index).getFavoritos(),FragBases.UserSelection.get(index).getDuracion());
+                        main.agregarFav(FragBases.UserSelection.get(index).getNombre(), FragBases.UserSelection.get(index).getArtista(), false, FragBases.UserSelection.get(index).getId(), FragBases.UserSelection.get(index).getUrl(), FragBases.UserSelection.get(index).getFavoritos(), FragBases.UserSelection.get(index).getDuracion());
                     }
                 }
                 break;
@@ -356,7 +344,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             case R.id.btnColadeentrenarpantallachica:
                 adminFragment = getFragmentManager();
                 fragdeCola = new FragCola();
-                transaccionFragment=adminFragment.beginTransaction();
+                transaccionFragment = adminFragment.beginTransaction();
                 transaccionFragment.replace(R.id.holderdecolapantallachica, fragdeCola);
                 transaccionFragment.commit();
 
@@ -367,8 +355,9 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         }
     }
 
-    public void empezarTimerDuracion(){
-        timer = new CountDownTimer(tiemporestanteDuracion,1000) {
+    public void empezarTimerDuracion() {
+        timer = new CountDownTimer(tiemporestanteDuracion, 1000) {
+
             @Override
             public void onTick(long millisUntilFinished) {
                 tiemporestanteDuracion = millisUntilFinished;
@@ -377,67 +366,94 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
             @Override
             public void onFinish() {
-                txtDuracion.setText("yey");
+                timer.cancel();
+                mediaPlayer.stop();
+
+
+                if(grabacion != null){
+
+
+                    AlertDialog.Builder mensaje;
+                    mensaje = new AlertDialog.Builder(getActivity());
+                    mensaje.setTitle("Nombrar Grabacion");
+                    mensaje.setMessage(" \n No la nombres igual a otra grabacion porque se va a sobreescribir \n \n");
+                    input = new EditText(getActivity());
+                    input.setTag("timer");
+                    mensaje.setView(input);
+                    mensaje.setPositiveButton("Guardar", escuchadordeguardargrabacion);
+                    mensaje.setNegativeButton("Volver", escuchadordeguardargrabacion);
+                    mensaje.create();
+                    mensaje.show();
+                }
+
+
             }
+
         }.start();
     }
+
     public void actualizarTimerDuracion() {
-        int minutos =(int) (tiemporestanteDuracion / 1000) / 60;
-        int segundos =(int) (tiemporestanteDuracion / 1000) % 60;
+        int minutos = (int) (tiemporestanteDuracion / 1000) / 60;
+        int segundos = (int) (tiemporestanteDuracion / 1000) % 60;
         String txttiempores;
         Log.d("timer", "" + MainActivity.Segundos);
         Log.d("timer", "" + segundos);
 
         txttiempores = "" + minutos;
         txttiempores += ":";
-        if(segundos < 10) {txttiempores += "0";}
+        if (segundos < 10) {
+            txttiempores += "0";
+        }
         txttiempores += "" + segundos;
 
         txtDuracion.setText(txttiempores);
     }
 
     public void empezarTimerInicial() {
-        timerinicial = new CountDownTimer(tiemporestanteInicial,1000) {
-        @Override
-        public void onTick(long millisUntilFinished) {
-            tiemporestanteInicial = millisUntilFinished;
-            actualizarTimerInicial();
-        }
+        timerinicial = new CountDownTimer(tiemporestanteInicial, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                tiemporestanteInicial = millisUntilFinished;
+                actualizarTimerInicial();
+            }
 
-        @Override
-        public void onFinish() {
-            actualizarTimerDuracion();
-            empezarTimerDuracion();
-            actualizarTimerFrecuencia();
-            empezarTimerFrecuencia();
-            //empezarReproduccion();
-            runMedia();
+            @Override
+            public void onFinish() {
+                actualizarTimerDuracion();
+                empezarTimerDuracion();
+                actualizarTimerFrecuencia();
+                empezarTimerFrecuencia();
+                //empezarReproduccion();
+                runMedia();
 
-            btnVolver.setEnabled(true);
-            btnRepetir.setEnabled(true);
-            btnCola.setEnabled(true);
-            btnFav.setEnabled(true);
-            btnGrabar.setEnabled(true);
-            btnPlay.setEnabled(true);
-            barradebeat.setEnabled(true);
-            fondoDifuminado.setVisibility(View.GONE);
-            txtConfirmar.setEnabled(false);
+                btnVolver.setEnabled(true);
+                btnRepetir.setEnabled(true);
+                btnCola.setEnabled(true);
+                btnFav.setEnabled(true);
+                btnGrabar.setEnabled(true);
+                btnPlay.setEnabled(true);
+                barradebeat.setEnabled(true);
+                fondoDifuminado.setVisibility(View.GONE);
+                txtConfirmar.setEnabled(false);
 
-        }
-    }.start();
+            }
+        }.start();
 
     }
-    public void actualizarTimerInicial(){
-        int segundos =(int) (tiemporestanteInicial / 1000) % 60;
+
+    public void actualizarTimerInicial() {
+        int segundos = (int) (tiemporestanteInicial / 1000) % 60;
         String txttiempores = "";
 
         txttiempores += "" + segundos;
-        if(segundos < 1){txttiempores = "TIEMPO!!";}
+        if (segundos < 1) {
+            txttiempores = "TIEMPO!!";
+        }
         txtConfirmar.setText(txttiempores);
     }
 
     public void empezarTimerFrecuencia() {
-        timerinicial = new CountDownTimer(tiemporestanteDuracion,FrecuenciaElegida) {
+        timerinicial = new CountDownTimer(tiemporestanteDuracion, FrecuenciaElegida) {
             @Override
             public void onTick(long millisUntilFinished) {
                 tiemporestanteDuracion = millisUntilFinished;
@@ -450,9 +466,10 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         }.start();
 
     }
-    public void actualizarTimerFrecuencia(){
 
-        switch (ModoElegido){
+    public void actualizarTimerFrecuencia() {
+
+        switch (ModoElegido) {
             case 0:
                 ModoElegido = aleatorio;
                 break;
@@ -462,90 +479,77 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                 descargarFotoObjeto();
 
 
-
                 break;
             case 2:
                 fotoObjeto.setVisibility(View.GONE);
                 obtenerPalabraRandom();
                 txtConfirmar.setTextSize(50);
-                if (palabrarandom != null )txtConfirmar.setText(palabrarandom.toUpperCase());
+                if (palabrarandom != null) txtConfirmar.setText(palabrarandom.toUpperCase());
                 break;
         }
 
 
     }
 
-    public void obtenerPalabraRandom(){
-     arrPalabras = new ArrayList<>();
-     db.collection("Palabras")
-             .get()
-             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                 @Override
-                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                     if (task.isSuccessful()) {
-                         for (QueryDocumentSnapshot document : task.getResult()) {
-                             Palabras pal = document.toObject(Palabras.class);
-                             pal.setId(document.getId());
-                             arrPalabras.add(pal);
-                         }
-                         if(arrPalabras != null) {
-                             if (arrPalabras.isEmpty()) {
-                                 Log.d("PalabraRandom", "vacio");
-                             } else{
-                                 palabrarandom = arrPalabras.get(generador.nextInt(arrPalabras.size())).getPalabra();
-                                 Log.d("PalabraRandom", palabrarandom + "");
-                             }
-                         }
-                     }
-                 }
-             });
+    public void obtenerPalabraRandom() {
+        arrPalabras = new ArrayList<>();
+        db.collection("Palabras")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Palabras pal = document.toObject(Palabras.class);
+                                pal.setId(document.getId());
+                                arrPalabras.add(pal);
+                            }
+                            if (arrPalabras != null) {
+                                if (arrPalabras.isEmpty()) {
+                                    Log.d("PalabraRandom", "vacio");
+                                } else {
+                                    palabrarandom = arrPalabras.get(generador.nextInt(arrPalabras.size())).getPalabra();
+                                    Log.d("PalabraRandom", palabrarandom + "");
+                                }
+                            }
+                        }
+                    }
+                });
 
     }
 
-    public void Recorder(){
-        if(grabacion == null){
-            btnGrabar.setImageResource(R.drawable.ic_icono_grabar_rojo);
-            grabacion = new MediaRecorder();
-            grabacion.setAudioSource(MediaRecorder.AudioSource.MIC);
-            grabacion.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-            grabacion.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-
-            path_file = Environment.getExternalStorageDirectory() + carpeta;
-            localfile = new File(path_file);
-
-            if(!localfile.exists()) {
-                localfile.mkdir();
-            }
-
-            name = archivo + ".mp3";
-            file = new File(localfile, name);
-
-            grabacion.setOutputFile(file.getAbsolutePath());
+    public void Recorder() {
 
 
-            try{
-                grabacion.prepare();
-                grabacion.start();
-            } catch (IOException e){
-            }
-            grabacion.setOnErrorListener(new MediaRecorder.OnErrorListener() {
-                @Override
-                public void onError(MediaRecorder mr, int what, int extra) {
-                    Toast.makeText(getActivity(), "error...", Toast.LENGTH_SHORT).show();
-                }
-            });
-            //Toast.makeText(getActivity(), "Grabando...", Toast.LENGTH_SHORT).show();
+        if (grabacion == null) {
+            if (mediaPlayer.isPlaying())
+                mediaPlayer.pause();
+
+            timer.cancel();
+
+            AlertDialog.Builder mensaje;
+            mensaje = new AlertDialog.Builder(getActivity());
+            mensaje.setTitle("Empezar Grabacion");
+            mensaje.setPositiveButton("Empezar", escuchadordeempezargrabacion);
+            mensaje.setNegativeButton("Cancelar", escuchadordeempezargrabacion);
+            mensaje.create();
+            mensaje.show();
         } else {
             btnGrabar.setImageResource(R.drawable.ic_icono_grabar_blanco);
+
+            if (mediaPlayer.isPlaying())
+                mediaPlayer.pause();
+
+            timer.cancel();
+
             try {
                 grabacion.stop();
-            }catch (RuntimeException e){
+            } catch (RuntimeException e) {
                 Log.d("Grabacion", "grabacion: " + grabacion);
             }
             grabacion.release();
 
-            if(mediaPlayer.isPlaying())
-            {
+            if (mediaPlayer.isPlaying()) {
                 mediaPlayer.pause();
                 btnPlay.setImageResource(R.drawable.ic_icono_play_blanco);
             }
@@ -555,93 +559,32 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             mensaje.setTitle("Nombrar Grabacion");
             mensaje.setMessage(" \n No la nombres igual a otra grabacion porque se va a sobreescribir \n \n");
             input = new EditText(getActivity());
+            input.setTag(null);
             mensaje.setView(input);
-            mensaje.setPositiveButton("Guardar", escuchadordealert);
-            mensaje.setNegativeButton("Volver", escuchadordealert);
+            mensaje.setPositiveButton("Guardar", escuchadordeguardargrabacion);
+            mensaje.setNegativeButton("Volver", escuchadordeguardargrabacion);
             mensaje.create();
             mensaje.show();
+
         }
+
     }
 
-    DialogInterface.OnClickListener escuchadordealert = new DialogInterface.OnClickListener() {
-        @RequiresApi(api = Build.VERSION_CODES.O)
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            MainActivity main = (MainActivity) getActivity();
-            if(which == -1)
-            {
-                if(input.getText().toString().trim().length() == 0)
-                {
-                    Toast.makeText(getActivity(), "Nombre de grabacion invalido", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    FirebaseUser usuario = main.obtenerUsuario();
-
-                    //cambiar nombre del archivo
-                    File currentFile = new File(localfile, name);
-                    File newFile = new File(localfile, input.getText().toString().trim() + ".mp3");
-
-                    if (rename(currentFile, newFile))
-                        Log.i("Tag", "Success");
-                     else
-                        Log.i("Tag", "Fail");
-
-                    if(usuario != null){
-                        FirebaseStorage storage =  FirebaseStorage.getInstance();
-                        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-
-                        StorageReference reference = storage.getReference();
-                        Uri fromFile = Uri.fromFile(newFile);
-                        StorageReference ref = reference.child("Grabaciones/"+ usuario.getUid() + "/" + fromFile.getLastPathSegment());
-
-                        ref.putFile(fromFile)
-                                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                    @Override
-                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                        // Get a URL to the uploaded content
-                                        //Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception exception) {
-                                        // Handle unsuccessful uploads
-                                        // ...
-                                    }
-                                });
-
-                        HashMap<String, Object> mapGrab = new HashMap<>();
-                        mapGrab.put("Nombre", input.getText().toString().trim());
-                        mapGrab.put("Favoritos", false);
-                        mapGrab.put("Url", input.getText().toString().trim() + ".mp3");
-
-                        firestore.collection("Usuarios").document(usuario.getUid()).collection("Grabaciones").add(mapGrab);
-                    }
-
-                    grabacion = null;
-                }
-            }
-            else {
-                dialog.cancel();
-            }
-        }
-    };
 
     private boolean rename(File from, File to) {
         return from.getParentFile().exists() && from.exists() && from.renameTo(to);
     }
 
-    public void pausayReproducir(){
+    public void pausayReproducir() {
 
-        if(!mediaPlayer.isPlaying()) {
+        if (!mediaPlayer.isPlaying()) {
             btnPlay.setImageResource(R.drawable.ic_icono_pausa_blanco);
             //Toast toast1 = Toast.makeText(getActivity(), "Reproduciendo", Toast.LENGTH_SHORT);
             //toast1.show();
             while (!mediaPlayer.isPlaying()) {
                 mediaPlayer.start();
             }
-        }
-        else {
+        } else {
             //Toast toast1 = Toast.makeText(getActivity(), "Pausa", Toast.LENGTH_SHORT);
             //toast1.show();
             mediaPlayer.pause();
@@ -660,15 +603,14 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
     }
 
 
-    public void descargarAudioDeEntrenamiento()
-    {
-            final FirebaseStorage storage = FirebaseStorage.getInstance();
+    public void descargarAudioDeEntrenamiento() {
+        final FirebaseStorage storage = FirebaseStorage.getInstance();
 
-            //mediaPlayer = new MediaPlayer();
-            mediaPlayer.setWakeMode(getActivity(), PowerManager.FULL_WAKE_LOCK);
-            mediaPlayer.reset();
-            StorageReference storageRef = storage.getReferenceFromUrl("gs://portal-rap-4b1fe.appspot.com/Beats/" + FragBases.UserSelection.get(index).getUrl());
-            storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        //mediaPlayer = new MediaPlayer();
+        mediaPlayer.setWakeMode(getActivity(), PowerManager.FULL_WAKE_LOCK);
+        mediaPlayer.reset();
+        StorageReference storageRef = storage.getReferenceFromUrl("gs://portal-rap-4b1fe.appspot.com/Beats/" + FragBases.UserSelection.get(index).getUrl());
+        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 try {
@@ -680,8 +622,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                     mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                         @Override
                         public void onPrepared(MediaPlayer mp) {
-                            if (index > 0)
-                            {
+                            if (index > 0) {
                                 while (!mediaPlayer.isPlaying()) {
                                     mediaPlayer.start();
                                 }
@@ -710,9 +651,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         // termina de cargar los beats, habilita la palabra empezar y saca la progress bar en forma de circulo
     }
 
-
-
-    private class MediaObserver implements Runnable {
+    public class MediaObserver implements Runnable {
         private AtomicBoolean stop = new AtomicBoolean(false);
 
         public void stop() {
@@ -736,10 +675,9 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
         txtBase.setText(FragBases.UserSelection.get(index).getNombre());
         txtArtista.setText(FragBases.UserSelection.get(index).getArtista());
-        if(FragBases.UserSelection.get(index).getFavoritos()) {
+        if (FragBases.UserSelection.get(index).getFavoritos()) {
             btnFav.setImageResource(R.drawable.ic_icono_fav_blanco);
-        }
-        else if(!FragBases.UserSelection.get(index).getFavoritos()) {
+        } else if (!FragBases.UserSelection.get(index).getFavoritos()) {
             btnFav.setImageResource(R.drawable.ic_icono_nofav_blanco);
         }
 
@@ -754,11 +692,11 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                 //index =  1;
                 Log.d("Reproduccion", "setea barra y va a descargar audio");
 
-                descargarAudioDeEntrenamiento();
+                //descargarAudioDeEntrenamiento();
                 //descargarXBytes();
                 Log.d("Reproduccion", "termino de descargar audio y va a runMedia");
 
-                runMedia();
+                //runMedia();
                 Log.d("Reproduccion", "ejecuto runMedia");
 
             }
@@ -767,7 +705,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         observer = new MediaObserver();
 
         while (!mediaPlayer.isPlaying()) {
-                mediaPlayer.start();
+            mediaPlayer.start();
         }
 
         btnPlay.setImageResource(R.drawable.ic_icono_pausa_blanco);
@@ -775,7 +713,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
     }
 
 
-    private void descargarXBytes(){
+    private void descargarXBytes() {
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
@@ -790,13 +728,12 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         //StorageReference httpsReference = storage.getReferenceFromUrl("https://firebasestorage.googleapis.com/v0/b/portal-rap-4b1fe.appspot.com/o/Beats%2FPumkin_Spice.mp3?alt=media&token=3880dd02-2a9c-4263-b8d0-a5a6836b780c");
 
 
-
         final long tope = 5500000;
         pathReference.getBytes(tope).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
                 // Data for "images/island.jpg" is returns, use this as needed
-                FileInputStream rawmp3file= null;
+                FileInputStream rawmp3file = null;
                 try {
                     rawmp3file = new FileInputStream(Arrays.toString(bytes));
                     mediaPlayer.setDataSource(rawmp3file.getFD());
@@ -815,7 +752,6 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                     e.printStackTrace();
                     Log.d("TAGERROR", "error: " + e.getMessage());
                 }
-
 
 
             }
@@ -841,38 +777,26 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             public void onSuccess(Uri uri) {
                 InputStream is = null;
                 BufferedInputStream bis = null;
-                try
-                {
+                try {
                     URLConnection conn = new URL(uri.toString()).openConnection();
                     conn.connect();
                     is = conn.getInputStream();
                     bis = new BufferedInputStream(is, 8192);
                     bm = BitmapFactory.decodeStream(bis);
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
-                }
-                finally {
-                    if (bis != null)
-                    {
-                        try
-                        {
+                } finally {
+                    if (bis != null) {
+                        try {
                             bis.close();
-                        }
-                        catch (IOException e)
-                        {
+                        } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
-                    if (is != null)
-                    {
-                        try
-                        {
+                    if (is != null) {
+                        try {
                             is.close();
-                        }
-                        catch (IOException e)
-                        {
+                        } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
@@ -882,8 +806,160 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         fotoObjeto.setImageBitmap(bm);
 
 
-
     }
 
+
+    DialogInterface.OnClickListener escuchadordeempezargrabacion = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            if (which == -1) {
+                mediaPlayer.start();
+                if(timer  != null){
+                    timer.cancel();
+                    empezarTimerDuracion();
+                }
+
+                btnGrabar.setImageResource(R.drawable.ic_icono_grabar_rojo);
+                grabacion = new MediaRecorder();
+                grabacion.setAudioSource(MediaRecorder.AudioSource.MIC);
+                grabacion.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+                grabacion.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+
+                path_file = Environment.getExternalStorageDirectory() + carpeta;
+                localfile = new File(path_file);
+
+                if (!localfile.exists()) {
+                    localfile.mkdir();
+                }
+
+                name = archivo + ".mp3";
+                file = new File(localfile, name);
+
+                grabacion.setOutputFile(file.getAbsolutePath());
+
+                try {
+                    grabacion.prepare();
+                    grabacion.start();
+                } catch (IOException e) {
+                }
+                grabacion.setOnErrorListener(new MediaRecorder.OnErrorListener() {
+                    @Override
+                    public void onError(MediaRecorder mr, int what, int extra) {
+                        Toast.makeText(getActivity(), "error...", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            else if (which == -2) {
+                mediaPlayer.start();
+                if(timer  != null){
+                    timer.cancel();
+                    empezarTimerDuracion();
+                }
+                dialog.cancel();
+            }
+        }
+    };
+
+
+    DialogInterface.OnClickListener escuchadordesalir = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            if (which == -1) {
+                mediaPlayer.stop();
+                grabacion = null;
+                MainActivity main = (MainActivity) getActivity();
+                main.PasaraFragBases("no");
+            }
+            else if (which == -2) {
+                dialog.cancel();
+            }
+        }
+    };
+
+
+    DialogInterface.OnClickListener escuchadordeguardargrabacion = new DialogInterface.OnClickListener() {
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            if (which == -1) {
+
+                if (input.getText().toString().trim().length() == 0) {
+                    Toast.makeText(getActivity(), "Nombre de grabacion invalido", Toast.LENGTH_SHORT).show();
+                } else {
+                    mediaPlayer.start();
+                    if(timer  != null){
+                        timer.cancel();
+                        empezarTimerDuracion();
+                    }
+
+                    guardarGrabacion();
+                    if(input.getTag() != null){
+                        MainActivity main = (MainActivity) getActivity();
+                        main.PasaraFragUsuario();
+                    }
+
+                }
+            }
+            else {
+                mediaPlayer.start();
+                if(timer  != null){
+                    timer.cancel();
+                    empezarTimerDuracion();
+                }
+
+                dialog.cancel();
+            }
+        }
+    };
+
+    public void guardarGrabacion() {
+        MainActivity main = (MainActivity) getActivity();
+        FirebaseUser usuario = main.obtenerUsuario();
+
+        //cambiar nombre del archivo
+        File currentFile = new File(localfile, name);
+        File newFile = new File(localfile, input.getText().toString().trim() + ".mp3");
+
+        if (rename(currentFile, newFile))
+            Log.i("Tag", "Success");
+        else
+            Log.i("Tag", "Fail");
+
+        if (usuario != null) {
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
+            StorageReference reference = storage.getReference();
+            Uri fromFile = Uri.fromFile(newFile);
+            StorageReference ref = reference.child("Grabaciones/" + usuario.getUid() + "/" + fromFile.getLastPathSegment());
+
+            ref.putFile(fromFile)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            // Get a URL to the uploaded content
+                            //Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle unsuccessful uploads
+                            // ...
+                        }
+                    });
+
+            HashMap<String, Object> mapGrab = new HashMap<>();
+            mapGrab.put("Nombre", input.getText().toString().trim());
+            mapGrab.put("Favoritos", false);
+            mapGrab.put("Url", input.getText().toString().trim() + ".mp3");
+
+            firestore.collection("Usuarios").document(usuario.getUid()).collection("Grabaciones").add(mapGrab);
+            grabacion = null;
+
+        }
+
+    }
 
 }
