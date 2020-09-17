@@ -167,14 +167,11 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
         holder.btnCompartir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*int poscompartir = (Integer)  holder.btnCompartir.getTag();
+                int poscompartir = (Integer)  holder.btnCompartir.getTag();
 
 
-                Uri uri = convertirAudioAURI(poscompartir);
-                Intent compartir = new Intent(android.content.Intent.ACTION_SEND);
-                compartir.putExtra(Intent.EXTRA_STREAM, uri);
-                compartir.setType("audio/*");
-                miContexto.startActivity(Intent.createChooser(compartir, "Compartir Grabacion"));*/
+                Intent compartir = devolverIntent(poscompartir);
+                miContexto.startActivity(Intent.createChooser(compartir, "Compartir Grabacion"));
     }
 });
 
@@ -209,12 +206,16 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
     }
 
 
-    private Uri convertirAudioAURI(int pos){
-        String path_file = Environment.getExternalStorageDirectory() + "/Portal Rap/";
+    private Intent devolverIntent(int pos){
 
-        File file = new File(path_file, arrGrabacion.get(pos).getUrl());
+        String path = Environment.getExternalStorageDirectory()
+                + "/Portal Rap/" + arrGrabacion.get(pos).getUrl(); //aquí selecciona el path dónde se almacena el audio y su extensión
+        Uri uri = Uri.parse(path);
+        Intent compartiraudio = new Intent(Intent.ACTION_SEND);
+        compartiraudio.setType("audio/*"); //el tipo es un audio
+        compartiraudio.putExtra(Intent.EXTRA_STREAM, uri);
 
-        return FileProvider.getUriForFile(getContext(), "com.example.portalrap.fileprovider", file);
+        return compartiraudio;
     }
 
 
