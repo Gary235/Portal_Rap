@@ -15,26 +15,36 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Objects;
 
 
 public class FragEditarPerfil extends Fragment {
 
-    ImageButton btnVolver, btnVernoVerContra,btnCambiar;
+    ImageButton btnVolver, btnVernoVerContra;
+    Button btnCambiar;
     TextView cambiarFoto;
     EditText edtNombre,edtContra;
     Boolean Ver = false;
     ImageView fotoperfil;
-
+    FirebaseUser user;
+    Bitmap bmp;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,8 +65,10 @@ public class FragEditarPerfil extends Fragment {
         edtContra = v.findViewById(R.id.edtContradeEditar);
         fotoperfil = v.findViewById(R.id.foto);
 
-        btnCambiar.setElevation(10000);
-        btnCambiar.setTranslationZ(100);
+        MainActivity main = (MainActivity) getActivity();
+        user = main.obtenerUsuario();
+        edtNombre.setText(user.getEmail());
+
     }
 
     public void ListenersAdicionales(){
@@ -68,8 +80,8 @@ public class FragEditarPerfil extends Fragment {
                 mensaje = new AlertDialog.Builder(getActivity());
                 mensaje.setTitle("Volver");
                 mensaje.setMessage("Todos lo cambios que hayas hecho no se confirmaran");
-                mensaje.setPositiveButton("Aceptar",escuchador2);
-                mensaje.setNegativeButton("Cancelar", escuchador2);
+                mensaje.setPositiveButton("Aceptar",escuchadordevolver);
+                mensaje.setNegativeButton("Cancelar", escuchadordevolver);
                 mensaje.create();
                 mensaje.show();
             }
@@ -98,14 +110,25 @@ public class FragEditarPerfil extends Fragment {
             @Override
             public void onClick(View v) {
                 //alertDialog
-                AlertDialog.Builder mensaje;
-                mensaje = new AlertDialog.Builder(getActivity());
-                mensaje.setTitle("Confirmar Cambio");
-                mensaje.setMessage("Todos lo cambios que hayas hecho se confirmaran");
-                mensaje.setPositiveButton("Aceptar",escuchador2);
-                mensaje.setNegativeButton("Cancelar", escuchador2);
-                mensaje.create();
-                mensaje.show();
+
+                if(edtContra.getText().toString().length() == 0 || edtNombre.getText().toString().equals(user.getEmail())) {
+                    Toast.makeText(getActivity(), "No hubo cambios detectados", Toast.LENGTH_SHORT).show();
+                }   else {
+                        if(edtContra.getText().toString().length() <6){
+                            Toast.makeText(getActivity(), "La contraseña debe contener, al menos, 6 caracteres", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            AlertDialog.Builder mensaje;
+                            mensaje = new AlertDialog.Builder(getActivity());
+                            mensaje.setTitle("Confirmar Cambio");
+                            mensaje.setMessage("Todos lo cambios que hayas hecho se confirmaran");
+                            mensaje.setPositiveButton("Aceptar",escuchadordecambiar);
+                            mensaje.setNegativeButton("Cancelar", escuchadordecambiar);
+                            mensaje.create();
+                            mensaje.show();
+
+                    }
+                }
             }
         });
 
@@ -116,53 +139,83 @@ public class FragEditarPerfil extends Fragment {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(
-                        Intent.createChooser(intent, "Seleccione una imagen"), 1);
-            }
-        });
+                getActivity().startActivityForResult(Intent.createChooser(intent, "Seleccione una imagen"), 1);
 
-    }
+        }
+
+    });
+
+
+}
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode,
-                                 Intent imageReturnedIntent) {
-        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-        Uri selectedImageUri = null;
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         Uri selectedImage;
 
-        String filePath = null;
+        bmp = null;
         switch (requestCode) {
             case 1:
                 if (resultCode == Activity.RESULT_OK) {
-                    selectedImage = imageReturnedIntent.getData();
-                    String selectedPath=selectedImage.getPath();
+                    selectedImage = data.getData();
+                    String selectedPath = selectedImage.getPath();
+
                     if (selectedPath != null) {
                         InputStream imageStream = null;
                         try {
-                            imageStream = getActivity().getContentResolver().openInputStream(
-                                    selectedImage);
+                            imageStream = getActivity().getContentResolver().openInputStream(selectedImage);
+
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         }
                         // Transformamos la URI de la imagen a inputStream y este a un Bitmap
-                        Bitmap bmp = BitmapFactory.decodeStream(imageStream);
+                        bmp = BitmapFactory.decodeStream(imageStream);
+                        Log.d("Servicio", "Imagen: " + bmp);
                         // Ponemos nuestro bitmap en un ImageView que tengamos en la vista
                         fotoperfil.setImageBitmap(bmp);
-                        fotoperfil.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     }
                 }
                 break;
+            case 2:
+                if (resultCode == Activity.RESULT_OK) {
+                    bmp = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
+                    fotoperfil.setImageBitmap(bmp);
+                    Log.d("Servicio", "Imagen: " + bmp);
+                }
+                break;
         }
+
+
     }
 
 
 
-    DialogInterface.OnClickListener escuchador2 = new DialogInterface.OnClickListener() {
+    DialogInterface.OnClickListener escuchadordecambiar = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
 
             if(which == -1)
             {
+                user.updateEmail(edtNombre.getText().toString())
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    //Log.d(TAG, "User email address updated.");
+                                }
+                            }
+                        });
+
+                user.updatePassword(edtContra.getText().toString())
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                   //Log.d(TAG, "User password updated.");
+                                }
+                            }
+                        });
+
                 MainActivity main=(MainActivity) getActivity();
                 main.PasaraFragUsuario();
             }
@@ -173,4 +226,22 @@ public class FragEditarPerfil extends Fragment {
 
         }
     };
+    DialogInterface.OnClickListener escuchadordevolver = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+
+            if(which == -1)
+            {
+
+                MainActivity main=(MainActivity) getActivity();
+                main.PasaraFragUsuario();
+            }
+            else if(which == -2)
+            {
+                dialog.cancel();
+            }
+
+        }
+    };
+
 }

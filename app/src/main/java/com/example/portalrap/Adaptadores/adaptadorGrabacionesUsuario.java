@@ -3,6 +3,9 @@ package com.example.portalrap.Adaptadores;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.FileProvider;
 
 import com.example.portalrap.Clases.Grabacion;
 import com.example.portalrap.MainActivity;
@@ -23,6 +27,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -76,9 +81,11 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
             holder.btnFav = convertView.findViewById(R.id.btnFavlista);
             holder.Nombre = convertView.findViewById(R.id.textolista);
             holder.btnEliminar = convertView.findViewById(R.id.btnEliminar);
+            holder.btnCompartir = convertView.findViewById(R.id.btnCompartir);
             holder.btnFav.setFocusable(false);
             holder.Nombre.setFocusable(false);
             holder.btnEliminar.setFocusable(false);
+            holder.btnCompartir.setFocusable(false);
 
             db = FirebaseFirestore.getInstance();
             main = (MainActivity) getContext();
@@ -96,16 +103,17 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
 
         holder.btnEliminar.setTag(R.integer.btnplusview, convertView);
         holder.btnEliminar.setTag(position);
-        Log.d("corazon","Bool: " + arrGrabacion.get(position).getFavoritos() + ", Pos" + position);
 
-        if(arrGrabacion.get(position).getFavoritos() != null)
-        {
-        if(arrGrabacion.get(position).getFavoritos()) {
-            holder.btnFav.setImageResource(R.drawable.ic_icono_fav_rojo);
-        }
-        else if(!arrGrabacion.get(position).getFavoritos()) {
-            holder.btnFav.setImageResource(R.drawable.ic_icono_nofav);
-        }
+        holder.btnCompartir.setTag(R.integer.btnplusview, convertView);
+        holder.btnCompartir.setTag(position);
+
+        if(arrGrabacion.get(position).getFavoritos() != null) {
+            if(arrGrabacion.get(position).getFavoritos()) {
+                holder.btnFav.setImageResource(R.drawable.ic_icono_fav_rojo);
+            }
+            else if(!arrGrabacion.get(position).getFavoritos()) {
+                holder.btnFav.setImageResource(R.drawable.ic_icono_nofav);
+            }
         }
 
         holder.btnFav.setOnClickListener(new View.OnClickListener() {
@@ -156,10 +164,24 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
         });
 
 
+        holder.btnCompartir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*int poscompartir = (Integer)  holder.btnCompartir.getTag();
+
+
+                Uri uri = convertirAudioAURI(poscompartir);
+                Intent compartir = new Intent(android.content.Intent.ACTION_SEND);
+                compartir.putExtra(Intent.EXTRA_STREAM, uri);
+                compartir.setType("audio/*");
+                miContexto.startActivity(Intent.createChooser(compartir, "Compartir Grabacion"));*/
+    }
+});
+
         return convertView;
     }
     private class ViewHolder {
-        protected ImageButton btnFav,btnEliminar;
+        protected ImageButton btnFav,btnEliminar,btnCompartir;
         protected TextView Nombre;
 
     }
@@ -185,6 +207,17 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
                     }
                 });
     }
+
+
+    private Uri convertirAudioAURI(int pos){
+        String path_file = Environment.getExternalStorageDirectory() + "/Portal Rap/";
+
+        File file = new File(path_file, arrGrabacion.get(pos).getUrl());
+
+        return FileProvider.getUriForFile(getContext(), "com.example.portalrap.fileprovider", file);
+    }
+
+
 
     DialogInterface.OnClickListener escuchador = new DialogInterface.OnClickListener() {
         @Override

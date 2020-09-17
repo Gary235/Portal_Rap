@@ -52,45 +52,34 @@
 
 
 
-    <ImageButton
+    <Button
         android:id="@+id/btnCambiar"
         android:layout_width="180dp"
         android:layout_height="43dp"
 
-        android:src="@drawable/ic_palabra_cambiar"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="40dp"
-        android:background="@drawable/btn_redondeado_negro_2"
-        android:elevation="100dp"
-        android:translationZ="100dp"
-        app:layout_constraintBottom_toBottomOf="@id/cardfondo"
-        app:layout_constraintEnd_toEndOf="@id/cardfondo" />
+        android:layout_marginBottom="100dp"
+        android:background="@drawable/redondeado_violeta"
 
-    <ImageView
-        android:id="@+id/cardfondo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:textColor="#fff"
+        android:text="Cambiar"
+        android:fontFamily="@font/montserrat_semibold"
+        android:textAllCaps="false"
 
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="110dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginBottom="130dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
 
-        android:translationZ="10dp"
-        android:background="@drawable/rectangulo_redondeado_girs"
-        />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
 
     <ImageView
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:id="@+id/foto"
 
-        app:layout_constraintLeft_toLeftOf="@id/cardfondo"
-        app:layout_constraintRight_toRightOf="@id/cardfondo"
-        app:layout_constraintTop_toTopOf="@id/cardfondo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/fondo2"
         android:layout_marginTop="50dp"
         android:src="@drawable/logo"
         android:background="@drawable/rec_stroke_negro2"
@@ -103,7 +92,6 @@
         android:layout_height="wrap_content"
 
         android:layout_marginTop="5dp"
-        android:elevation="11dp"
         android:fontFamily="@font/montserrat_regular"
         android:text="Cambiar foto de perfil"
 
@@ -119,20 +107,20 @@
         android:layout_height="50dp"
         android:id="@+id/edtNombreUsuariodeEditar"
 
-        app:layout_constraintLeft_toLeftOf="@id/cardfondo"
-        app:layout_constraintRight_toRightOf="@id/cardfondo"
-        app:layout_constraintTop_toTopOf="@id/cardfondo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtCambiarFoto"
 
 
         android:background="@drawable/edttext_conmarcos"
-        android:layout_marginTop="250dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:elevation="11dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
 
+        android:hint="Email"
+        android:textColorHint="#808080"
         android:textColor="#000"
-        android:text="*Usuario*"
-        android:paddingStart="13dp"
+        android:paddingStart="20dp"
         />
 
 
@@ -141,18 +129,18 @@
         android:layout_height="50dp"
         android:id="@+id/edtContradeEditar"
 
-        app:layout_constraintLeft_toLeftOf="@id/cardfondo"
-        app:layout_constraintRight_toRightOf="@id/cardfondo"
-        app:layout_constraintTop_toTopOf="@id/cardfondo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edtNombreUsuariodeEditar"
 
         android:background="@drawable/edttext_conmarcos"
-        android:layout_marginTop="320dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:elevation="11dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
 
+        android:hint="Nueva Contraseña"
+        android:textColorHint="#808080"
         android:paddingStart="20dp"
-        android:text="12345678"
         android:textColor="#000"
         android:inputType="textPassword"
         />
@@ -162,7 +150,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/ojo"
 
-        android:elevation="12dp"
+        android:elevation="5dp"
         app:layout_constraintRight_toRightOf="@id/edtContradeEditar"
         app:layout_constraintTop_toTopOf="@id/edtContradeEditar"
         app:layout_constraintBottom_toBottomOf="@id/edtContradeEditar"
@@ -170,6 +158,21 @@
 
         android:src="@drawable/ic_ojo_tachado"
         android:background="@drawable/btn_transparente"
+        />
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+
+        android:text="La contraseña debe contener, al menos, 6 caracteres. No necesitas cambiar la contraseña para cambiar el mail y viceversa"
+        android:textColor="#000"
+        android:fontFamily="@font/montserrat_light"
+
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/edtContradeEditar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
