@@ -4,13 +4,11 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
-import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,7 +16,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.PowerManager;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +24,6 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,53 +32,35 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.Registry;
-import com.bumptech.glide.annotation.GlideModule;
-import com.bumptech.glide.module.AppGlideModule;
-import com.example.portalrap.Clases.Base;
-import com.example.portalrap.Clases.ImageLoader;
+import com.example.portalrap.Clases.Objetos;
 import com.example.portalrap.Clases.Palabras;
 import com.example.portalrap.FragBases;
-import com.example.portalrap.FragmentsInicio.FragIniciarSesion;
 import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import static android.os.Environment.DIRECTORY_PICTURES;
-import static android.os.Environment.getExternalStorageDirectory;
 
 
 public class FragEntrenar extends Fragment implements View.OnClickListener {
@@ -91,7 +69,6 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
     TextView txtArtista, txtBase, txtDuracion, txtConfirmar;
     ImageView fondoDifuminado, fotoObjeto;
     SeekBar barradebeat;
-    Bitmap bm = null;
     EditText input;
     MediaRecorder grabacion = null;
     MediaPlayer mediaPlayer = new MediaPlayer();
@@ -114,13 +91,26 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
     Boolean repetirverde = false;
 
     ArrayList<Palabras> arrPalabras;
-    ArrayList<MediaPlayer> arrMediaPlayer = new ArrayList<>();
-
+    ArrayList<Objetos> arrObjetos =  new ArrayList<>();
     File file;
 
+    ProgressDialog dialog;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        db = FirebaseFirestore.getInstance();
+        aleatorio = (int) (Math.random() * 2) + 1;
+
+        if(MainActivity.PosModo == 1  || aleatorio == 1){
+            dialog = new ProgressDialog(getActivity());
+            dialog.setMessage("Cargando Objetos");
+            dialog.show();
+            obtenerURLS();}
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         MainActivity main = (MainActivity) getActivity();
 
         int alto = main.obtenerAlto();
@@ -134,8 +124,6 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             Setear(v);
         }
         ListenersAdicionales();
-        db = FirebaseFirestore.getInstance();
-
 
         if (MainActivity.PosModo != -1 && MainActivity.Segundos != -1 && MainActivity.Minutos != -1 && MainActivity.Frecuencia != -1) {
             //personalizado
@@ -216,7 +204,6 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         btnCola.setOnClickListener(this);
         btnFav.setOnClickListener(this);
 
-        aleatorio = (int) (Math.random() * 2) + 1;
     }
 
     public void SetearPantallaChica(View v) {
@@ -280,7 +267,6 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         });
 
     }
-
 
     @Override
     public void onClick(View v) {
@@ -477,8 +463,6 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                 txtConfirmar.setVisibility(View.GONE);
                 fotoObjeto.setVisibility(View.VISIBLE);
                 descargarFotoObjeto();
-
-
                 break;
             case 2:
                 fotoObjeto.setVisibility(View.GONE);
@@ -487,8 +471,6 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                 if (palabrarandom != null) txtConfirmar.setText(palabrarandom.toUpperCase());
                 break;
         }
-
-
     }
 
     public void obtenerPalabraRandom() {
@@ -570,7 +552,6 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
     }
 
-
     private boolean rename(File from, File to) {
         return from.getParentFile().exists() && from.exists() && from.renameTo(to);
     }
@@ -602,9 +583,8 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
     }
 
-
     public void descargarAudioDeEntrenamiento() {
-        final FirebaseStorage storage = FirebaseStorage.getInstance();
+        FirebaseStorage storage = FirebaseStorage.getInstance();
 
         //mediaPlayer = new MediaPlayer();
         mediaPlayer.setWakeMode(getActivity(), PowerManager.FULL_WAKE_LOCK);
@@ -622,11 +602,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                     mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                         @Override
                         public void onPrepared(MediaPlayer mp) {
-                            if (index > 0) {
-                                while (!mediaPlayer.isPlaying()) {
-                                    mediaPlayer.start();
-                                }
-                            }
+
                         }
                     });
 
@@ -689,7 +665,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                 observer.stop();
                 barradebeat.setProgress(mediaPlayer.getCurrentPosition());
                 btnPlay.setImageResource(R.drawable.ic_icono_play_blanco);
-                //index =  1;
+                //index ++;
                 Log.d("Reproduccion", "setea barra y va a descargar audio");
 
                 //descargarAudioDeEntrenamiento();
@@ -711,7 +687,6 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         btnPlay.setImageResource(R.drawable.ic_icono_pausa_blanco);
         new Thread(observer).start();
     }
-
 
     private void descargarXBytes() {
 
@@ -769,49 +744,41 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
     public void descargarFotoObjeto() {
 
-        final FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReferenceFromUrl("gs://portal-rap-4b1fe.appspot.com/Imagenes/Acuario.png");
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
 
-        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        Random randomGenerator = new Random();
+        int i = randomGenerator.nextInt(arrObjetos.size());
+        Objetos objeto = arrObjetos.get(i);
+
+        storageRef.child("Imagenes/" + objeto.getObjeto()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                InputStream is = null;
-                BufferedInputStream bis = null;
-                try {
-                    URLConnection conn = new URL(uri.toString()).openConnection();
-                    conn.connect();
-                    is = conn.getInputStream();
-                    bis = new BufferedInputStream(is, 8192);
-                    bm = BitmapFactory.decodeStream(bis);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    if (bis != null) {
-                        try {
-                            bis.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    if (is != null) {
-                        try {
-                            is.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
+                // Got the download URL for 'users/me/profile.png'
+                Log.d("Foto", "success");
+                Log.d("Foto", "uri: " + uri);
+
+                Picasso.get()
+                        .load(uri.toString())
+                        .fit()
+                        .into(fotoObjeto);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+                Log.d("Foto", "fail");
             }
         });
-        fotoObjeto.setImageBitmap(bm);
 
 
+        arrObjetos.remove(i);
     }
-
 
     DialogInterface.OnClickListener escuchadordeempezargrabacion = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
+
             if (which == -1) {
                 mediaPlayer.start();
                 if(timer  != null){
@@ -849,7 +816,6 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                     }
                 });
             }
-
             else if (which == -2) {
                 mediaPlayer.start();
                 if(timer  != null){
@@ -861,10 +827,10 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         }
     };
 
-
     DialogInterface.OnClickListener escuchadordesalir = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
+
             if (which == -1) {
                 mediaPlayer.stop();
                 grabacion = null;
@@ -877,13 +843,12 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         }
     };
 
-
     DialogInterface.OnClickListener escuchadordeguardargrabacion = new DialogInterface.OnClickListener() {
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void onClick(DialogInterface dialog, int which) {
-            if (which == -1) {
 
+            if (which == -1) {
                 if (input.getText().toString().trim().length() == 0) {
                     Toast.makeText(getActivity(), "Nombre de grabacion invalido", Toast.LENGTH_SHORT).show();
                 } else {
@@ -959,6 +924,26 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             grabacion = null;
 
         }
+
+    }
+
+
+    private void obtenerURLS(){
+        db.collection("Objetos")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
+                        assert snapshots != null;
+                        for (DocumentSnapshot document : snapshots) {
+                            Objetos objetos = document.toObject(Objetos.class);
+                            assert objetos != null;
+                            objetos.setId(document.getId());
+                            arrObjetos.add(objetos);
+                        }
+
+                        dialog.dismiss();
+                    }
+                });
 
     }
 

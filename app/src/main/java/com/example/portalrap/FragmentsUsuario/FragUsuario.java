@@ -4,17 +4,19 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -22,15 +24,22 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Registry;
+import com.bumptech.glide.annotation.GlideModule;
+import com.bumptech.glide.module.AppGlideModule;
 import com.example.portalrap.Adaptadores.adaptadorGrabacionesUsuario;
 import com.example.portalrap.Clases.Grabacion;
 import com.example.portalrap.FragMiniReproductor;
-import com.example.portalrap.FragmentsEntrenamiento.FragEntrenar;
 import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,12 +48,13 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Array;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Map;
 
 public class FragUsuario extends Fragment implements View.OnClickListener{
 
@@ -62,7 +72,7 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
     public static FrameLayout holder;
     FragmentManager adminFragment;
     FragmentTransaction transaccionFragment;
-
+    Bitmap bm;
 
     @Override
     public void onStart() {
@@ -295,6 +305,39 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
         txtUsuario.setText(emailCortado);
 
         //fotoperfil.setImageBitmap(user.getPhotoUrl());
+        //descargarFotoPerfil();
+
+
+    }
+
+
+    private void descargarFotoPerfil(){
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+
+        storageRef.child("Imagenes/Balsa.png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // Got the download URL for 'users/me/profile.png'
+                Log.d("Foto", "success");
+                Log.d("Foto", "uri: " + uri);
+
+                Picasso.get()
+                        .load(uri.toString())
+                        .fit()
+                        .into(fotoperfil);
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+                Log.d("Foto", "fail");
+            }
+        });
+
+
 
     }
 

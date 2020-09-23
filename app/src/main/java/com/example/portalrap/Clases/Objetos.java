@@ -2,15 +2,20 @@ package com.example.portalrap.Clases;
 
 public class Objetos {
 
-    private String url;
+    private String Objeto, Id;
 
-    public Objetos() {
+    public Objetos(){
+
     }
 
-    public Objetos(String url) {
-        this.url = url;
+    public Objetos(String objeto, String id) {
+        Objeto = objeto;
+        Id = id;
     }
 
-    public String getUrl() { return url; }
-    public void setUrl(String url) { this.url = url; }
+    public String getObjeto() { return Objeto; }
+    public void setObjeto(String objeto) { Objeto = objeto; }
+
+    public String getId() { return Id; }
+    public void setId(String id) { Id = id; }
 }
