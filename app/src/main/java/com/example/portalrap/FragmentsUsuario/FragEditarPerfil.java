@@ -43,7 +43,7 @@ import java.util.Objects;
 
 public class FragEditarPerfil extends Fragment {
 
-    ImageButton btnVolver, btnVernoVerContra;
+    ImageButton btnVolver;
     Button btnConfirmarCambios,btnCambiarContra,btnCambiarEmail;
     TextView cambiarFoto;
     ImageView fotoperfil;
@@ -67,7 +67,6 @@ public class FragEditarPerfil extends Fragment {
 
     public void Setear(View v) {
         btnVolver = v.findViewById(R.id.flechitabajodeeditarperfil);
-        btnVernoVerContra = v.findViewById(R.id.ojo);
         btnConfirmarCambios = v.findViewById(R.id.btnCambiar);
         cambiarFoto = v.findViewById(R.id.txtCambiarFoto);
         fotoperfil = v.findViewById(R.id.foto);
@@ -142,8 +141,6 @@ public class FragEditarPerfil extends Fragment {
         }
 
     });
-
-
 }
 
     @Override
