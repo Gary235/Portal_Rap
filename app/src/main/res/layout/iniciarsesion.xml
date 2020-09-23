@@ -45,7 +45,8 @@
 
         android:background="@drawable/edttext_sinmarcos"
         android:cursorVisible="true"
-        android:drawableStart="@drawable/icono_usuario"
+        android:drawableStart="@drawable/ic_usuario_gris_2"
+        android:drawableTint="#000"
         android:drawablePadding="19dp"
         android:elevation="0dp"
         android:hint="Email"

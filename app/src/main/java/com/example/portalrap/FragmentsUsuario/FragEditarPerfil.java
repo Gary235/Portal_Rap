@@ -5,29 +5,35 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
-import android.text.InputType;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 
 import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.io.FileNotFoundException;
@@ -38,17 +44,20 @@ import java.util.Objects;
 public class FragEditarPerfil extends Fragment {
 
     ImageButton btnVolver, btnVernoVerContra;
-    Button btnCambiar;
+    Button btnConfirmarCambios,btnCambiarContra,btnCambiarEmail;
     TextView cambiarFoto;
-    EditText edtNombre,edtContra;
-    Boolean Ver = false;
     ImageView fotoperfil;
     FirebaseUser user;
     Bitmap bmp;
+    public static String contravieja = null, contra = null, email = null;
+    private FirebaseAuth mAuth;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_frag_editar_perfil, container, false);
+        View v = inflater.inflate(R.layout.editar_perfil_dos, container, false);
+        mAuth = FirebaseAuth.getInstance();
 
         Setear(v);
         ListenersAdicionales();
@@ -59,19 +68,36 @@ public class FragEditarPerfil extends Fragment {
     public void Setear(View v) {
         btnVolver = v.findViewById(R.id.flechitabajodeeditarperfil);
         btnVernoVerContra = v.findViewById(R.id.ojo);
-        btnCambiar = v.findViewById(R.id.btnCambiar);
+        btnConfirmarCambios = v.findViewById(R.id.btnCambiar);
         cambiarFoto = v.findViewById(R.id.txtCambiarFoto);
-        edtNombre = v.findViewById(R.id.edtNombreUsuariodeEditar);
-        edtContra = v.findViewById(R.id.edtContradeEditar);
         fotoperfil = v.findViewById(R.id.foto);
+        btnCambiarContra = v.findViewById(R.id.btnCambiarContraseña);
+        btnCambiarEmail = v.findViewById(R.id.btnCambiarEmail);
 
         MainActivity main = (MainActivity) getActivity();
         user = main.obtenerUsuario();
-        edtNombre.setText(user.getEmail());
 
     }
 
     public void ListenersAdicionales(){
+
+
+        btnCambiarEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity main=(MainActivity) getActivity();
+                main.PasaraFragEditarEmail();
+
+            }
+        });
+        btnCambiarContra.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity main=(MainActivity) getActivity();
+                main.PasaraFragEditarContra();
+
+            }
+        });
         btnVolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,49 +112,21 @@ public class FragEditarPerfil extends Fragment {
                 mensaje.show();
             }
         });
-
-
-        btnVernoVerContra.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Cambiar el input Type y el src del boton
-                if(!Ver){
-                    edtContra.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                    btnVernoVerContra.setImageResource(R.drawable.ic_ojo_notachado);
-                    Ver = true;
-                }
-                else if(Ver){
-                    edtContra.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    btnVernoVerContra.setImageResource(R.drawable.ic_ojo_tachado);
-                    Ver = false;
-                }
-                Log.d("Verrrrr",""+Ver);
-            }
-        });
-
-        btnCambiar.setOnClickListener(new View.OnClickListener() {
+        btnConfirmarCambios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //alertDialog
 
-                if(edtContra.getText().toString().length() == 0 || edtNombre.getText().toString().equals(user.getEmail())) {
-                    Toast.makeText(getActivity(), "No hubo cambios detectados", Toast.LENGTH_SHORT).show();
-                }   else {
-                        if(edtContra.getText().toString().length() <6){
-                            Toast.makeText(getActivity(), "La contraseña debe contener, al menos, 6 caracteres", Toast.LENGTH_SHORT).show();
-                        }
-                        else {
-                            AlertDialog.Builder mensaje;
+                       AlertDialog.Builder mensaje;
                             mensaje = new AlertDialog.Builder(getActivity());
-                            mensaje.setTitle("Confirmar Cambio");
+                            mensaje.setTitle("Confirmar Cambios");
                             mensaje.setMessage("Todos lo cambios que hayas hecho se confirmaran");
                             mensaje.setPositiveButton("Aceptar",escuchadordecambiar);
                             mensaje.setNegativeButton("Cancelar", escuchadordecambiar);
                             mensaje.create();
                             mensaje.show();
 
-                    }
-                }
+
             }
         });
 
@@ -194,27 +192,52 @@ public class FragEditarPerfil extends Fragment {
         @Override
         public void onClick(DialogInterface dialog, int which) {
 
-            if(which == -1)
+          if(which == -1)
             {
-                user.updateEmail(edtNombre.getText().toString())
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    //Log.d(TAG, "User email address updated.");
+                if (contra != null) {
+                    user.updatePassword(contra)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d("editarperfil", "User password updated.");
+                                        Toast.makeText(getActivity(), "Cambio exitoso " , Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
-                        });
+                            })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d("editarperfil", "User password not updated.");
+                            Toast.makeText(getActivity(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
 
-                user.updatePassword(edtContra.getText().toString())
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                   //Log.d(TAG, "User password updated.");
+                        }
+                    })
+
+                    ;
+                }
+                if(email != null){
+                     user.updateEmail(email)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d("editarperfil", "User email address updated.");
+                                        Toast.makeText(getActivity(), "Cambio exitoso " , Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
-                        });
+                            })
+                             .addOnFailureListener(new OnFailureListener() {
+                                 @Override
+                                 public void onFailure(@NonNull Exception e) {
+                                     Log.d("editarperfil", "User email address not updated: " + e.getMessage());
+                                     Toast.makeText(getActivity(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                                 }
+                             });
+                }
+                Log.d("editarperfil", "email" + email);
+                Log.d("editarperfil", "password" + contra);
 
                 MainActivity main=(MainActivity) getActivity();
                 main.PasaraFragUsuario();

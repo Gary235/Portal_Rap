@@ -33,6 +33,8 @@ import com.example.portalrap.FragmentsInicio.FragFoto2;
 import com.example.portalrap.FragmentsInicio.FragFoto3;
 import com.example.portalrap.FragmentsInicio.FragIniciarSesion;
 import com.example.portalrap.FragmentsInicio.FragRegistro;
+import com.example.portalrap.FragmentsUsuario.FragEditarContra;
+import com.example.portalrap.FragmentsUsuario.FragEditarEmail;
 import com.example.portalrap.FragmentsUsuario.FragEditarPerfil;
 import com.example.portalrap.FragmentsUsuario.FragFavoritos;
 import com.example.portalrap.FragmentsUsuario.FragUsuario;
@@ -261,6 +263,22 @@ public class MainActivity extends AppCompatActivity {
 
         transaccionFragment.commit();
     }
+    public void PasaraFragEditarContra()
+    {
+        FragGlobal = new FragEditarContra();
+        transaccionFragment=adminFragment.beginTransaction();
+        transaccionFragment.replace(R.id.frameLayout, FragGlobal);
+        transaccionFragment.addToBackStack(null);
+        transaccionFragment.commit();
+    }
+    public void PasaraFragEditarEmail()
+    {
+        FragGlobal = new FragEditarEmail();
+        transaccionFragment=adminFragment.beginTransaction();
+        transaccionFragment.replace(R.id.frameLayout, FragGlobal);
+        transaccionFragment.addToBackStack(null);
+        transaccionFragment.commit();
+    }
     public void PasaraFragUsuario()
     {
         FragFavoritos.UserSelection.clear();
@@ -305,6 +323,9 @@ public class MainActivity extends AppCompatActivity {
         transaccionFragment.addToBackStack(null);
         transaccionFragment.commit();
     }
+
+
+
 
     public void actualizarUsuario(FirebaseUser user){
         usuarioActual = user;

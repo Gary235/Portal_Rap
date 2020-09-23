@@ -48,7 +48,6 @@ public class FragRegistro extends Fragment{
         edtconf = v.findViewById(R.id.editconf);
         btn = v.findViewById(R.id.btnRegistrarse);
         txtVolver = v.findViewById(R.id.VolverdeRegistro);
-
         txtVolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
