@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MenuItem;
@@ -52,7 +53,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseFirestore db;
 
     int anchoPantalla, altoPantalla;
-    @Override
+
+   /* @Override
     public void onStart() {
         super.onStart();
         mAuth = FirebaseAuth.getInstance();
@@ -82,9 +86,10 @@ public class MainActivity extends AppCompatActivity {
             //Redirijo a donde necesite. Esto es si ya hay un usuario logueado.
             actualizarUsuario(usuarioActual);
             PasaraFragmentHome();
+            Log.d("FotoPerfil", "Redirigio " );
         }
     }
-
+*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,14 +99,16 @@ public class MainActivity extends AppCompatActivity {
                 ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED ||
                 ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED   ||
                 ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
-                ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WAKE_LOCK) != PackageManager.PERMISSION_GRANTED
+                ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WAKE_LOCK) != PackageManager.PERMISSION_GRANTED  ||
+                ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.RECORD_AUDIO,
                     Manifest.permission.INTERNET,
                     Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WAKE_LOCK
+                    Manifest.permission.WAKE_LOCK,
+                    Manifest.permission.CAMERA
             }, 1);
         }
         db = FirebaseFirestore.getInstance();
@@ -255,7 +262,9 @@ public class MainActivity extends AppCompatActivity {
         FragGlobal.setArguments(args);
         transaccionFragment=adminFragment.beginTransaction();
         transaccionFragment.replace(R.id.frameLayout, FragGlobal);
-       transaccionFragment.addToBackStack(null);
+        transaccionFragment.addToBackStack(null);
+        FragFavoritos.UserSelection.clear();
+        FragBases.UserSelection.clear();
 
         transaccionFragment.commit();
     }
@@ -345,18 +354,6 @@ public class MainActivity extends AppCompatActivity {
     }
     public int obtenerAncho(){
         return anchoPantalla;
-    }
-
-    @Override
-    public void onBackPressed() {
-
-        //si no queda ningún fragment sale de este activity
-        if (getFragmentManager().getBackStackEntryCount() == 0) {
-            // super.onBackPressed();
-            finish();
-        } else { //si no manda al fragment anterior.
-            getFragmentManager().popBackStack();
-        }
     }
 
 

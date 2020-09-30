@@ -72,7 +72,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
     EditText input;
     MediaRecorder grabacion = null;
     MediaPlayer mediaPlayer = new MediaPlayer();
-    private MediaObserver observer = null;
+    MediaObserver observer = null;
 
     String path_file = "", name, carpeta = "/Portal Rap/", archivo = "default_name";
     public static File localfile;
@@ -102,73 +102,44 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         db = FirebaseFirestore.getInstance();
         aleatorio = (int) (Math.random() * 2) + 1;
 
-        if(MainActivity.PosModo == 1  || aleatorio == 1){
+        if(ModoElegido == 1  || aleatorio == 1){
             dialog = new ProgressDialog(getActivity());
             dialog.setMessage("Cargando Objetos");
             dialog.show();
-            obtenerURLS();}
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        MainActivity main = (MainActivity) getActivity();
-
-        int alto = main.obtenerAlto();
-        Log.d("Dimensiones", "alto: " + alto);
-        View v;
-        if (alto <= 1600) {
-            v = inflater.inflate(R.layout.entrenar_pantalla_chica, container, false);
-            SetearPantallaChica(v);
-        } else {
-            v = inflater.inflate(R.layout.entrenar, container, false);
-            Setear(v);
-        }
-        ListenersAdicionales();
-
-        if (MainActivity.PosModo != -1 && MainActivity.Segundos != -1 && MainActivity.Minutos != -1 && MainActivity.Frecuencia != -1) {
-            //personalizado
-            tiemporestanteDuracion = (MainActivity.Minutos * 60000) + (MainActivity.Segundos * 1000);
-        } else {
-            //predeterminado
-            ModoElegido = 2;
-            FrecuenciaElegida = 1;
-        }
-        if (FragBases.UserSelection.size() == 1) {
-            btnRepetir.setImageResource(R.drawable.ic_repetir_verde);
-            repetirverde = true;
-        } else {
-            btnRepetir.setImageResource(R.drawable.ic_icono_repetir);
-        }
-
-        obtenerPalabraRandom();
-
-        Log.d("Entrenamiento", "Frecuencia Elegida: " + FrecuenciaElegida + "Frecuencia Seleccionada: " + MainActivity.Frecuencia);
-        Log.d("Entrenamiento", "Modo Elegido: " + ModoElegido + "Modo Seleccionado: " + MainActivity.PosModo);
-        switch (FrecuenciaElegida) {
-            case 0:
-                FrecuenciaElegida = 2 * 1000;
-                break;
-            case 1:
-                FrecuenciaElegida = 5 * 1000;
-                break;
-            case 2:
-                FrecuenciaElegida = 10 * 1000;
-                break;
-            case 3:
-                FrecuenciaElegida = 20 * 1000;
-                break;
-            case 4:
-                FrecuenciaElegida = 30 * 1000;
-                break;
+            obtenerURLS();
         }
 
         descargarAudioDeEntrenamiento();
 
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v;
+        
+        MainActivity main = (MainActivity) getActivity();
+        int alto = main.obtenerAlto();
+
+        if (alto <= 1600) {
+            v = inflater.inflate(R.layout.entrenar_pantalla_chica, container, false);
+            SetearVariablesPantallaChica(v);
+        } else {
+            v = inflater.inflate(R.layout.entrenar, container, false);
+            SetearVariables(v);
+        }
+
+
+        ListenersAdicionales();
+        SetearEntrenamiento();
+
+        obtenerPalabraRandom();
 
         return v;
     }
 
-    public void Setear(View v) {
+
+
+    public void SetearVariables(View v) {
 
         btnGrabar = v.findViewById(R.id.btnGrabardeentrenar);
         btnVolver = v.findViewById(R.id.btnVOlverdeentrenar);
@@ -193,7 +164,6 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         btnGrabar.setEnabled(false);
         btnPlay.setEnabled(false);
         barradebeat.setEnabled(false);
-        //fotoObjeto.setVisibility(View.GONE);
 
         holderparacola = v.findViewById(R.id.holderdecola);
 
@@ -205,8 +175,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         btnFav.setOnClickListener(this);
 
     }
-
-    public void SetearPantallaChica(View v) {
+    public void SetearVariablesPantallaChica(View v) {
 
         btnGrabar = v.findViewById(R.id.btnGrabardeentrenarpantallachica);
         btnVolver = v.findViewById(R.id.btnVOlverdeentrenarpantallachica);
@@ -244,13 +213,12 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
         aleatorio = (int) (Math.random() * 2) + 1;
     }
-
     public void ListenersAdicionales() {
         btnGrabar.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-                Recorder();
+                Grabar();
             }
         });
         btnPlay.setOnClickListener(new View.OnClickListener() {
@@ -265,8 +233,66 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                 empezarTimerInicial();
             }
         });
+       /* mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                Log.d("Reproduccion", "termino de reproducir");
+                observer.stop();
+                barradebeat.setProgress(mediaPlayer.getCurrentPosition());
+                btnPlay.setImageResource(R.drawable.ic_icono_play_blanco);
+                index ++;
+                Log.d("Reproduccion", "setea barra y va a descargar audio");
+
+                descargarAudioDeEntrenamiento();
+                //descargarXBytes();
+                Log.d("Reproduccion", "termino de descargar audio y va a runMedia");
+
+                runMedia();
+                Log.d("Reproduccion", "ejecuto runMedia");
+
+            }
+        });*/
+    }
+    public void SetearEntrenamiento(){
+        if (MainActivity.PosModo != -1 && MainActivity.Segundos != -1 && MainActivity.Minutos != -1 && MainActivity.Frecuencia != -1) {
+            //personalizado
+            tiemporestanteDuracion = (MainActivity.Minutos * 60000) + (MainActivity.Segundos * 1000);
+        } else {
+            //predeterminado
+            ModoElegido = 2;
+            FrecuenciaElegida = 1;
+        }
+
+        if (FragBases.UserSelection.size() == 1) {
+            btnRepetir.setImageResource(R.drawable.ic_repetir_verde);
+            repetirverde = true;
+        } else {
+            btnRepetir.setImageResource(R.drawable.ic_icono_repetir);
+        }
+
+
+        Log.d("Entrenamiento", "Frecuencia Elegida: " + FrecuenciaElegida + "Frecuencia Seleccionada: " + MainActivity.Frecuencia);
+        Log.d("Entrenamiento", "Modo Elegido: " + ModoElegido + "Modo Seleccionado: " + MainActivity.PosModo);
+        switch (FrecuenciaElegida) {
+            case 0:
+                FrecuenciaElegida = 2 * 1000;
+                break;
+            case 1:
+                FrecuenciaElegida = 5 * 1000;
+                break;
+            case 2:
+                FrecuenciaElegida = 10 * 1000;
+                break;
+            case 3:
+                FrecuenciaElegida = 20 * 1000;
+                break;
+            case 4:
+                FrecuenciaElegida = 30 * 1000;
+                break;
+        }
 
     }
+
 
     @Override
     public void onClick(View v) {
@@ -341,6 +367,49 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         }
     }
 
+    public void empezarTimerInicial() {
+        timerinicial = new CountDownTimer(tiemporestanteInicial, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                tiemporestanteInicial = millisUntilFinished;
+                actualizarTimerInicial();
+            }
+
+            @Override
+            public void onFinish() {
+                actualizarTimerDuracion();
+                empezarTimerDuracion();
+                actualizarTimerFrecuencia();
+                empezarTimerFrecuencia();
+                //empezarReproduccion();
+                runMedia();
+
+                btnVolver.setEnabled(true);
+                btnRepetir.setEnabled(true);
+                btnCola.setEnabled(true);
+                btnFav.setEnabled(true);
+                btnGrabar.setEnabled(true);
+                btnPlay.setEnabled(true);
+                barradebeat.setEnabled(true);
+                fondoDifuminado.setVisibility(View.GONE);
+                txtConfirmar.setEnabled(false);
+
+            }
+        }.start();
+
+    }
+
+    public void actualizarTimerInicial() {
+        int segundos = (int) (tiemporestanteInicial / 1000) % 60;
+        String txttiempores = "";
+
+        txttiempores += "" + segundos;
+        if (segundos < 1) {
+            txttiempores = "TIEMPO!!";
+        }
+        txtConfirmar.setText(txttiempores);
+    }
+
     public void empezarTimerDuracion() {
         timer = new CountDownTimer(tiemporestanteDuracion, 1000) {
 
@@ -395,49 +464,6 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         txtDuracion.setText(txttiempores);
     }
 
-    public void empezarTimerInicial() {
-        timerinicial = new CountDownTimer(tiemporestanteInicial, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                tiemporestanteInicial = millisUntilFinished;
-                actualizarTimerInicial();
-            }
-
-            @Override
-            public void onFinish() {
-                actualizarTimerDuracion();
-                empezarTimerDuracion();
-                actualizarTimerFrecuencia();
-                empezarTimerFrecuencia();
-                //empezarReproduccion();
-                runMedia();
-
-                btnVolver.setEnabled(true);
-                btnRepetir.setEnabled(true);
-                btnCola.setEnabled(true);
-                btnFav.setEnabled(true);
-                btnGrabar.setEnabled(true);
-                btnPlay.setEnabled(true);
-                barradebeat.setEnabled(true);
-                fondoDifuminado.setVisibility(View.GONE);
-                txtConfirmar.setEnabled(false);
-
-            }
-        }.start();
-
-    }
-
-    public void actualizarTimerInicial() {
-        int segundos = (int) (tiemporestanteInicial / 1000) % 60;
-        String txttiempores = "";
-
-        txttiempores += "" + segundos;
-        if (segundos < 1) {
-            txttiempores = "TIEMPO!!";
-        }
-        txtConfirmar.setText(txttiempores);
-    }
-
     public void empezarTimerFrecuencia() {
         timerinicial = new CountDownTimer(tiemporestanteDuracion, FrecuenciaElegida) {
             @Override
@@ -473,36 +499,76 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         }
     }
 
-    public void obtenerPalabraRandom() {
-        arrPalabras = new ArrayList<>();
-        db.collection("Palabras")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Palabras pal = document.toObject(Palabras.class);
-                                pal.setId(document.getId());
-                                arrPalabras.add(pal);
-                            }
-                            if (arrPalabras != null) {
-                                if (arrPalabras.isEmpty()) {
-                                    Log.d("PalabraRandom", "vacio");
-                                } else {
-                                    palabrarandom = arrPalabras.get(generador.nextInt(arrPalabras.size())).getPalabra();
-                                    Log.d("PalabraRandom", palabrarandom + "");
-                                }
-                            }
-                        }
-                    }
-                });
 
+    public void SetearInfodeBase(){
+        txtBase.setText(FragBases.UserSelection.get(index).getNombre());
+        txtArtista.setText(FragBases.UserSelection.get(index).getArtista());
+        if (FragBases.UserSelection.get(index).getFavoritos()) {
+            btnFav.setImageResource(R.drawable.ic_icono_fav_blanco);
+        } else if (!FragBases.UserSelection.get(index).getFavoritos()) {
+            btnFav.setImageResource(R.drawable.ic_icono_nofav_blanco);
+        }
+
+        barradebeat.setMax(mediaPlayer.getDuration());
+
+        observer = new MediaObserver();
     }
 
-    public void Recorder() {
+    public void runMedia() {
+        SetearInfodeBase();
 
+        while (!mediaPlayer.isPlaying()) {
+            mediaPlayer.start();
+        }
 
+        btnPlay.setImageResource(R.drawable.ic_icono_pausa_blanco);
+
+        new Thread(observer).start();
+    }
+
+    public void descargarAudioDeEntrenamiento() {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+
+        //mediaPlayer = new MediaPlayer();
+        mediaPlayer.setWakeMode(getActivity(), PowerManager.FULL_WAKE_LOCK);
+        mediaPlayer.reset();
+        StorageReference storageRef = storage.getReferenceFromUrl("gs://portal-rap-4b1fe.appspot.com/Beats/" + FragBases.UserSelection.get(index).getUrl());
+        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                try {
+                    final String url = uri.toString();
+                    Log.d("Reproduccion", "Url: " + url);
+                    Log.d("Reproduccion", "Index: " + index);
+
+                    mediaPlayer.setDataSource(url);
+                    mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                        @Override
+                        public void onPrepared(MediaPlayer mp) {
+
+                        }
+                    });
+
+                    // wait for media player to get prepare
+                    mediaPlayer.prepareAsync();
+                } catch (IOException e) {
+                    Log.d("TAGERROR", "error: " + e.getMessage());
+                    Toast toast1 = Toast.makeText(getActivity(), "Error de Red", Toast.LENGTH_SHORT);
+                    toast1.show();
+                }
+            }
+        });
+        storageRef.getDownloadUrl().addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("TAGERROR", "error: " + e.getMessage());
+                Toast toast1 = Toast.makeText(getActivity(), "Error de Red", Toast.LENGTH_SHORT);
+                toast1.show();
+            }
+        });
+    }
+
+    public void Grabar() {
         if (grabacion == null) {
             if (mediaPlayer.isPlaying())
                 mediaPlayer.pause();
@@ -552,10 +618,6 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
     }
 
-    private boolean rename(File from, File to) {
-        return from.getParentFile().exists() && from.exists() && from.renameTo(to);
-    }
-
     public void pausayReproducir() {
 
         if (!mediaPlayer.isPlaying()) {
@@ -574,57 +636,103 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
     }
 
-    public void empezarReproduccion() {
+    public void guardarGrabacion() {
+        MainActivity main = (MainActivity) getActivity();
+        FirebaseUser usuario = main.obtenerUsuario();
 
-        while (!mediaPlayer.isPlaying()) {
-            mediaPlayer.start();
-        }
-        btnPlay.setImageResource(R.drawable.ic_icono_pausa_blanco);
+        //cambiar nombre del archivo
+        File currentFile = new File(localfile, name);
+        File newFile = new File(localfile, input.getText().toString().trim() + ".mp3");
 
-    }
+        if (NombrarFile(currentFile, newFile))
+            Log.i("Tag", "Success");
+        else
+            Log.i("Tag", "Fail");
 
-    public void descargarAudioDeEntrenamiento() {
-        FirebaseStorage storage = FirebaseStorage.getInstance();
+        if (usuario != null) {
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
-        //mediaPlayer = new MediaPlayer();
-        mediaPlayer.setWakeMode(getActivity(), PowerManager.FULL_WAKE_LOCK);
-        mediaPlayer.reset();
-        StorageReference storageRef = storage.getReferenceFromUrl("gs://portal-rap-4b1fe.appspot.com/Beats/" + FragBases.UserSelection.get(index).getUrl());
-        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                try {
-                    final String url = uri.toString();
-                    Log.d("Reproduccion", "Url: " + url);
-                    Log.d("Reproduccion", "Index: " + index);
+            StorageReference reference = storage.getReference();
+            Uri fromFile = Uri.fromFile(newFile);
+            StorageReference ref = reference.child("Grabaciones/" + usuario.getUid() + "/" + fromFile.getLastPathSegment());
 
-                    mediaPlayer.setDataSource(url);
-                    mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            ref.putFile(fromFile)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
-                        public void onPrepared(MediaPlayer mp) {
-
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            // Get a URL to the uploaded content
+                            //Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle unsuccessful uploads
+                            // ...
                         }
                     });
 
-                    // wait for media player to get prepare
-                    mediaPlayer.prepareAsync();
-                } catch (IOException e) {
-                    Log.d("TAGERROR", "error: " + e.getMessage());
-                    Toast toast1 = Toast.makeText(getActivity(), "Error de Red", Toast.LENGTH_SHORT);
-                    toast1.show();
-                }
-            }
-        });
-        storageRef.getDownloadUrl().addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d("TAGERROR", "error: " + e.getMessage());
-                Toast toast1 = Toast.makeText(getActivity(), "Error de Red", Toast.LENGTH_SHORT);
-                toast1.show();
-            }
-        });
-        //arrMediaPlayer.add(mediaPlayer);
-        // termina de cargar los beats, habilita la palabra empezar y saca la progress bar en forma de circulo
+            HashMap<String, Object> mapGrab = new HashMap<>();
+            mapGrab.put("Nombre", input.getText().toString().trim());
+            mapGrab.put("Favoritos", false);
+            mapGrab.put("Url", input.getText().toString().trim() + ".mp3");
+
+            firestore.collection("Usuarios").document(usuario.getUid()).collection("Grabaciones").add(mapGrab);
+            grabacion = null;
+
+        }
+
+    }
+
+    private void obtenerURLS(){
+        db.collection("Objetos")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
+                        assert snapshots != null;
+                        for (DocumentSnapshot document : snapshots) {
+                            Objetos objetos = document.toObject(Objetos.class);
+                            assert objetos != null;
+                            objetos.setId(document.getId());
+                            arrObjetos.add(objetos);
+                        }
+
+                        dialog.dismiss();
+                    }
+                });
+
+    }
+
+    private boolean NombrarFile(File from, File to) {
+        return from.getParentFile().exists() && from.exists() && from.renameTo(to);
+    }
+
+    public void obtenerPalabraRandom() {
+        arrPalabras = new ArrayList<>();
+        db.collection("Palabras")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Palabras pal = document.toObject(Palabras.class);
+                                pal.setId(document.getId());
+                                arrPalabras.add(pal);
+                            }
+                            if (arrPalabras != null) {
+                                if (arrPalabras.isEmpty()) {
+                                    Log.d("PalabraRandom", "vacio");
+                                } else {
+                                    palabrarandom = arrPalabras.get(generador.nextInt(arrPalabras.size())).getPalabra();
+                                    Log.d("PalabraRandom", palabrarandom + "");
+                                }
+                            }
+                        }
+                    }
+                });
+
     }
 
     public class MediaObserver implements Runnable {
@@ -637,108 +745,38 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         @Override
         public void run() {
             while (!stop.get()) {
-                barradebeat.setProgress(mediaPlayer.getCurrentPosition());
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                if(mediaPlayer.getCurrentPosition() != mediaPlayer.getDuration()){
+                    barradebeat.setProgress(mediaPlayer.getCurrentPosition());
+
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-        }
-    }
+                else{
+                    Log.d("Reproduccion", "termino de reproducir");
+                    observer.stop();
+                    btnPlay.setImageResource(R.drawable.ic_icono_play_blanco);
+                    index ++;
+                    Log.d("Reproduccion", "setea barra y va a descargar audio");
 
-    public void runMedia() {
+                    descargarAudioDeEntrenamiento();
 
-        txtBase.setText(FragBases.UserSelection.get(index).getNombre());
-        txtArtista.setText(FragBases.UserSelection.get(index).getArtista());
-        if (FragBases.UserSelection.get(index).getFavoritos()) {
-            btnFav.setImageResource(R.drawable.ic_icono_fav_blanco);
-        } else if (!FragBases.UserSelection.get(index).getFavoritos()) {
-            btnFav.setImageResource(R.drawable.ic_icono_nofav_blanco);
-        }
+                    Log.d("Reproduccion", "termino de descargar audio y va a runMedia");
 
-        barradebeat.setMax(mediaPlayer.getDuration());
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                Log.d("Reproduccion", "termino de reproducir");
-                observer.stop();
-                barradebeat.setProgress(mediaPlayer.getCurrentPosition());
-                btnPlay.setImageResource(R.drawable.ic_icono_play_blanco);
-                //index ++;
-                Log.d("Reproduccion", "setea barra y va a descargar audio");
-
-                //descargarAudioDeEntrenamiento();
-                //descargarXBytes();
-                Log.d("Reproduccion", "termino de descargar audio y va a runMedia");
-
-                //runMedia();
-                Log.d("Reproduccion", "ejecuto runMedia");
-
-            }
-        });
-
-        observer = new MediaObserver();
-
-        while (!mediaPlayer.isPlaying()) {
-            mediaPlayer.start();
-        }
-
-        btnPlay.setImageResource(R.drawable.ic_icono_pausa_blanco);
-        new Thread(observer).start();
-    }
-
-    private void descargarXBytes() {
-
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference();
-
-        mediaPlayer.setWakeMode(getActivity(), PowerManager.FULL_WAKE_LOCK);
-        mediaPlayer.reset();
+                    runMedia();
+                    Log.d("Reproduccion", "ejecuto runMedia");
+                    //barradebeat.setProgress(mediaPlayer.getCurrentPosition());
 
 
-        //StorageReference gsReference = storage.getReferenceFromUrl("gs://portal-rap-4b1fe.appspot.com/Beats/" + FragBases.UserSelection.get(index).getUrl());
-        //StorageReference gsReference = storage.getReferenceFromUrl("gs://bucket/Beats/" + FragBases.UserSelection.get(index).getUrl());
-        StorageReference pathReference = storageRef.child("Beats/Pumkin_Spice.mp3");
-        //StorageReference httpsReference = storage.getReferenceFromUrl("https://firebasestorage.googleapis.com/v0/b/portal-rap-4b1fe.appspot.com/o/Beats%2FPumkin_Spice.mp3?alt=media&token=3880dd02-2a9c-4263-b8d0-a5a6836b780c");
-
-
-        final long tope = 5500000;
-        pathReference.getBytes(tope).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                // Data for "images/island.jpg" is returns, use this as needed
-                FileInputStream rawmp3file = null;
-                try {
-                    rawmp3file = new FileInputStream(Arrays.toString(bytes));
-                    mediaPlayer.setDataSource(rawmp3file.getFD());
-
-                    mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                        @Override
-                        public void onPrepared(MediaPlayer mp) {
-                            mp.start();
-                        }
-                    });
-
-                    // wait for media player to get prepare
-                    mediaPlayer.prepareAsync();
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Log.d("TAGERROR", "error: " + e.getMessage());
                 }
 
 
+
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-                Log.d("TAGERROR", "error: " + exception.getMessage());
-                Toast toast1 = Toast.makeText(getActivity(), "Error de Red", Toast.LENGTH_SHORT);
-                toast1.show();
-            }
-        });
+        }
+
 
     }
 
@@ -878,73 +916,5 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         }
     };
 
-    public void guardarGrabacion() {
-        MainActivity main = (MainActivity) getActivity();
-        FirebaseUser usuario = main.obtenerUsuario();
-
-        //cambiar nombre del archivo
-        File currentFile = new File(localfile, name);
-        File newFile = new File(localfile, input.getText().toString().trim() + ".mp3");
-
-        if (rename(currentFile, newFile))
-            Log.i("Tag", "Success");
-        else
-            Log.i("Tag", "Fail");
-
-        if (usuario != null) {
-            FirebaseStorage storage = FirebaseStorage.getInstance();
-            FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-
-            StorageReference reference = storage.getReference();
-            Uri fromFile = Uri.fromFile(newFile);
-            StorageReference ref = reference.child("Grabaciones/" + usuario.getUid() + "/" + fromFile.getLastPathSegment());
-
-            ref.putFile(fromFile)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            // Get a URL to the uploaded content
-                            //Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            // Handle unsuccessful uploads
-                            // ...
-                        }
-                    });
-
-            HashMap<String, Object> mapGrab = new HashMap<>();
-            mapGrab.put("Nombre", input.getText().toString().trim());
-            mapGrab.put("Favoritos", false);
-            mapGrab.put("Url", input.getText().toString().trim() + ".mp3");
-
-            firestore.collection("Usuarios").document(usuario.getUid()).collection("Grabaciones").add(mapGrab);
-            grabacion = null;
-
-        }
-
-    }
-
-
-    private void obtenerURLS(){
-        db.collection("Objetos")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
-                        assert snapshots != null;
-                        for (DocumentSnapshot document : snapshots) {
-                            Objetos objetos = document.toObject(Objetos.class);
-                            assert objetos != null;
-                            objetos.setId(document.getId());
-                            arrObjetos.add(objetos);
-                        }
-
-                        dialog.dismiss();
-                    }
-                });
-
-    }
 
 }

@@ -24,11 +24,12 @@
         android:layout_width="120dp"
         android:layout_height="120dp"
 
-        android:scaleType="fitCenter"
+        android:background="#DFDFDF"
+        android:src="@drawable/ic_usuario_2"
+        android:scaleType="centerInside"
+
         android:layout_marginLeft="32dp"
         android:layout_marginTop="40dp"
-        android:background="@drawable/rec_stroke_negro2"
-        android:src="@drawable/logo"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

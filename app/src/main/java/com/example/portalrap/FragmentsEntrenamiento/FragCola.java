@@ -123,8 +123,10 @@ public class FragCola extends Fragment{
         }
 
 
-        if(arrBasesSiguiente.size() <= 1) txtSiguiente.setVisibility(View.GONE);
-        else  txtSiguiente.setVisibility(View.VISIBLE);
+        if(arrBasesSiguiente.size() == 0)
+            txtSiguiente.setVisibility(View.GONE);
+        else
+            txtSiguiente.setVisibility(View.VISIBLE);
 
     }
 

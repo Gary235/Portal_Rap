@@ -7,9 +7,13 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
+import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,6 +47,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -52,6 +57,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -210,6 +218,7 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
 
         }
     }
+
     DialogInterface.OnClickListener escuchador = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
@@ -305,7 +314,13 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
         txtUsuario.setText(emailCortado);
 
         //fotoperfil.setImageBitmap(user.getPhotoUrl());
-        //descargarFotoPerfil();
+        String root = Environment.getExternalStorageDirectory().toString();
+        File myDir = new File(root + "/Portal Rap/Fotos");
+        String fname = "FotoDePerfil: " + user.getUid() + ".jpg";
+        File file = new File (myDir, fname);
+
+        if(file.exists())
+            descargarFotoPerfil();
 
 
     }
@@ -313,32 +328,49 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
 
     private void descargarFotoPerfil(){
 
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference();
 
-        storageRef.child("Imagenes/Balsa.png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                // Got the download URL for 'users/me/profile.png'
-                Log.d("Foto", "success");
-                Log.d("Foto", "uri: " + uri);
 
-                Picasso.get()
-                        .load(uri.toString())
-                        .fit()
-                        .into(fotoperfil);
+        Log.d("FotoPerfil", "url: " + user.getPhotoUrl());
 
+        buscarfotoPerfil buscarfotoPerfil = new buscarfotoPerfil();
+        buscarfotoPerfil.execute();
+
+
+
+    }
+
+    private class buscarfotoPerfil extends AsyncTask<Void, Void, Bitmap> {
+        protected Bitmap doInBackground(Void... voids) {
+            Bitmap bitmap = null;
+
+
+            String root = Environment.getExternalStorageDirectory().toString();
+            File myDir = new File(root + "/Portal Rap/Fotos");
+            String fname = "FotoDePerfil: " + user.getUid() + ".jpg";
+            File file = new File (myDir, fname);
+            Uri uri = Uri.fromFile(file);
+
+            try {
+                bitmap = getBitmapFromUri(uri);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-                Log.d("Foto", "fail");
-            }
-        });
 
+            return bitmap;
+        }
 
+        protected void onPostExecute(Bitmap result) {
+            fotoperfil.setImageBitmap(result);
+            fotoperfil.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        }
 
+    }
+    private Bitmap getBitmapFromUri(Uri uri) throws IOException {
+        ParcelFileDescriptor parcelFileDescriptor = getActivity().getContentResolver().openFileDescriptor(uri, "r");
+        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+        Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+        parcelFileDescriptor.close();
+        return image;
     }
 
 }

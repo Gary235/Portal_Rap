@@ -46,12 +46,12 @@
                 />
 
             <ImageView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:id="@+id/imagenObjetopantallachica"
 
-                android:elevation="50dp"
-                android:translationZ="50dp"
+                android:elevation="49dp"
+                android:layout_marginTop="50dp"
                 app:layout_constraintLeft_toLeftOf="@id/recfondopantallachica"
                 app:layout_constraintRight_toRightOf="@id/recfondopantallachica"
                 app:layout_constraintTop_toTopOf="@id/recfondopantallachica"

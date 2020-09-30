@@ -46,8 +46,7 @@
                 android:layout_height="200dp"
                 android:id="@+id/imagenObjeto"
 
-                android:elevation="50dp"
-                android:translationZ="50dp"
+                android:elevation="49dp"
                 app:layout_constraintLeft_toLeftOf="@id/recfondo"
                 app:layout_constraintRight_toRightOf="@id/recfondo"
                 app:layout_constraintTop_toTopOf="@id/recfondo"

@@ -46,18 +46,37 @@
 
         />
 
+    
+    <ImageButton
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:id="@+id/btnEliminardeEditarPerfil"
+        android:elevation="1dp"
+
+        android:background="@drawable/circulo_rojo"
+        android:src="@drawable/ic_cruz_blanca"
+
+        app:layout_constraintLeft_toRightOf="@id/foto"
+        app:layout_constraintRight_toRightOf="@id/foto"
+        app:layout_constraintBottom_toTopOf="@id/foto"
+        app:layout_constraintTop_toTopOf="@id/foto"
+
+        />
+    
+    
     <ImageView
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:id="@+id/foto"
 
+        android:background="#DFDFDF"
+        android:src="@drawable/ic_usuario_2"
+        android:scaleType="center"
+
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/fondo2"
         android:layout_marginTop="50dp"
-        android:src="@drawable/logo"
-        android:background="@drawable/rec_stroke_negro2"
-        android:elevation="11dp"
         />
 
     <TextView
@@ -69,7 +88,7 @@
         android:fontFamily="@font/montserrat_regular"
         android:text="Cambiar foto de perfil"
 
-        android:textColor="#FF0000"
+        android:textColor="#7D6FA8"
         android:textSize="20dp"
         app:layout_constraintLeft_toLeftOf="@id/foto"
         app:layout_constraintRight_toRightOf="@id/foto"
