@@ -93,14 +93,20 @@ public class FragDuracion extends Fragment implements View.OnClickListener {
         btnSiguiente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(MainActivity.Segundos != -1 && MainActivity.Minutos != -1)
+                if(MainActivity.Segundos == -1 && MainActivity.Minutos == -1)
                 {
-                    MainActivity main=(MainActivity) getActivity();
-                    main.PasaraFragBases("si");
+                    Toast.makeText(getActivity(),"Tiempo de Duración inválido", Toast.LENGTH_SHORT).show();
+
                 }
                 else{
-                    Toast toast1 = Toast.makeText(getActivity(),"Tiempo de Duración inválido", Toast.LENGTH_SHORT);
-                    toast1.show();
+                    if(MainActivity.Segundos == -1)
+                        MainActivity.Segundos = 0;
+                    if(MainActivity.Minutos == -1)
+                        MainActivity.Minutos = 0;
+
+                    MainActivity main=(MainActivity) getActivity();
+                    main.PasaraFragBases("si");
+
                 }
             }
         });

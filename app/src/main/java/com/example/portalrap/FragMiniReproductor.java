@@ -156,9 +156,6 @@ public class FragMiniReproductor extends Fragment {
                     // Download url of file
                     Log.d("TAGERROR", "error: " );
 
-                    //Toast toast1 = Toast.makeText(getActivity(), "Cargando Base", Toast.LENGTH_SHORT);
-                    //toast1.show();
-
                     final String url = uri.toString();
                     mediaplayer.setDataSource(url);
                     mediaplayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {

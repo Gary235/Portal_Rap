@@ -111,6 +111,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
         descargarAudioDeEntrenamiento();
 
+
     }
 
     @Override
@@ -128,7 +129,8 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             SetearVariables(v);
         }
 
-
+        mediaPlayer = new MediaPlayer();
+        observer = new MediaObserver();
         ListenersAdicionales();
         SetearEntrenamiento();
 
@@ -155,7 +157,6 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         txtConfirmar = v.findViewById(R.id.txtConfirmar);
         fondoDifuminado = v.findViewById(R.id.recdifuminado);
         barradebeat = v.findViewById(R.id.Barradeentrenar);
-        mediaPlayer = new MediaPlayer();
 
         btnVolver.setEnabled(false);
         btnRepetir.setEnabled(false);
@@ -191,7 +192,6 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         txtConfirmar = v.findViewById(R.id.txtConfirmarpantallachica);
         fondoDifuminado = v.findViewById(R.id.recdifuminadopantallachica);
         barradebeat = v.findViewById(R.id.Barradeentrenarpantallachica);
-        mediaPlayer = new MediaPlayer();
 
         btnVolver.setEnabled(false);
         btnRepetir.setEnabled(false);
@@ -233,7 +233,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                 empezarTimerInicial();
             }
         });
-       /* mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+        /* mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 Log.d("Reproduccion", "termino de reproducir");
@@ -242,14 +242,11 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                 btnPlay.setImageResource(R.drawable.ic_icono_play_blanco);
                 index ++;
                 Log.d("Reproduccion", "setea barra y va a descargar audio");
-
                 descargarAudioDeEntrenamiento();
                 //descargarXBytes();
                 Log.d("Reproduccion", "termino de descargar audio y va a runMedia");
-
                 runMedia();
                 Log.d("Reproduccion", "ejecuto runMedia");
-
             }
         });*/
     }
@@ -266,6 +263,8 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         if (FragBases.UserSelection.size() == 1) {
             btnRepetir.setImageResource(R.drawable.ic_repetir_verde);
             repetirverde = true;
+            mediaPlayer.setLooping(true);
+            btnRepetir.setEnabled(false);
         } else {
             btnRepetir.setImageResource(R.drawable.ic_icono_repetir);
         }
@@ -332,9 +331,11 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                 if (!repetirverde) {
                     btnRepetir.setImageResource(R.drawable.ic_repetir_verde);
                     repetirverde = true;
+                    mediaPlayer.setLooping(true);
                 } else {
                     btnRepetir.setImageResource(R.drawable.ic_icono_repetir);
                     repetirverde = false;
+                    mediaPlayer.setLooping(false);
                 }
                 break;
 
@@ -381,11 +382,13 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                 empezarTimerDuracion();
                 actualizarTimerFrecuencia();
                 empezarTimerFrecuencia();
-                //empezarReproduccion();
                 runMedia();
 
                 btnVolver.setEnabled(true);
-                btnRepetir.setEnabled(true);
+
+                if (FragBases.UserSelection.size() > 1)
+                    btnRepetir.setEnabled(true);
+
                 btnCola.setEnabled(true);
                 btnFav.setEnabled(true);
                 btnGrabar.setEnabled(true);
@@ -423,7 +426,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             public void onFinish() {
                 timer.cancel();
                 mediaPlayer.stop();
-
+                observer.stop();
 
                 if(grabacion != null){
 
@@ -440,7 +443,12 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                     mensaje.create();
                     mensaje.show();
                 }
+                else {
+                    MainActivity mainActivity = (MainActivity) getActivity();
+                    mainActivity.PasaraFragUsuario();
+                    MainActivity.bottom.setSelectedItemId(R.id.item3);
 
+                }
 
             }
 
@@ -512,6 +520,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         barradebeat.setMax(mediaPlayer.getDuration());
 
         observer = new MediaObserver();
+
     }
 
     public void runMedia() {
@@ -745,7 +754,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         @Override
         public void run() {
             while (!stop.get()) {
-                if(mediaPlayer.getCurrentPosition() != mediaPlayer.getDuration()){
+
                     barradebeat.setProgress(mediaPlayer.getCurrentPosition());
 
                     try {
@@ -753,27 +762,6 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                }
-                else{
-                    Log.d("Reproduccion", "termino de reproducir");
-                    observer.stop();
-                    btnPlay.setImageResource(R.drawable.ic_icono_play_blanco);
-                    index ++;
-                    Log.d("Reproduccion", "setea barra y va a descargar audio");
-
-                    descargarAudioDeEntrenamiento();
-
-                    Log.d("Reproduccion", "termino de descargar audio y va a runMedia");
-
-                    runMedia();
-                    Log.d("Reproduccion", "ejecuto runMedia");
-                    //barradebeat.setProgress(mediaPlayer.getCurrentPosition());
-
-
-                }
-
-
-
             }
         }
 
@@ -873,7 +861,27 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                 mediaPlayer.stop();
                 grabacion = null;
                 MainActivity main = (MainActivity) getActivity();
-                main.PasaraFragBases("no");
+
+                if(MainActivity.PosModo == -1)
+                {
+                    MainActivity.Frecuencia = -1;
+                    MainActivity.PosModo = -1;
+                    MainActivity.Minutos = -1;
+                    MainActivity.Segundos = -1;
+                    main.PasaraFragBases("no");
+                    MainActivity.bottom.setSelectedItemId(R.id.item2);
+
+
+                }else {
+                    MainActivity.Frecuencia = -1;
+                    MainActivity.PosModo = -1;
+                    MainActivity.Minutos = -1;
+                    MainActivity.Segundos = -1;
+                    main.PasaraFragmentHome();
+                    MainActivity.bottom.setSelectedItemId(R.id.item1);
+
+                }
+
             }
             else if (which == -2) {
                 dialog.cancel();
@@ -900,6 +908,8 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
                     if(input.getTag() != null){
                         MainActivity main = (MainActivity) getActivity();
                         main.PasaraFragUsuario();
+                        MainActivity.bottom.setSelectedItemId(R.id.item3);
+
                     }
 
                 }

@@ -76,18 +76,24 @@ public class FragIniciarSesion extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         Button botonapretado;
         botonapretado = (Button)v;
-        int idbotonapretado = botonapretado.getId();
         MainActivity main=(MainActivity) getActivity();
-
+        String Mail;
         if(botonapretado.getId() == R.id.btnIniciarSesion)
         {
-            //progressBar.setVisibility(View.VISIBLE);
             dialogo.show();
             validar();
-            if (validar())
-                loguearUsuario(editUsuario.getText().toString().trim(), editContrasenia.getText().toString().trim());
-            dialogo.dismiss();
-            //progressBar.setVisibility(View.GONE);
+            if (validar()){
+                Boolean validarMail = validarEmail(editUsuario.getText().toString().trim());
+                if(validarMail){
+                    Mail = editUsuario.getText().toString().trim();
+                }
+                else {
+                    Mail = editUsuario.getText().toString().trim() + "@gmail.com";
+                }
+                loguearUsuario(Mail, editContrasenia.getText().toString().trim());
+
+            }
+                dialogo.dismiss();
         }
         else if (botonapretado.getId() == R.id.btnRegistrarse)
         {
@@ -105,9 +111,9 @@ public class FragIniciarSesion extends Fragment implements View.OnClickListener{
         if(mail.length() == 0 || contra.length() == 0)
             Toast.makeText(getActivity(), "Ingreso Invalido", Toast.LENGTH_SHORT).show();
         else {
-            Boolean mailValido = validarEmail(mail);
-            if (!mailValido) {
-                Toast.makeText(getActivity(), "Email Invalido", Toast.LENGTH_SHORT).show();
+
+            if (contra.length() <= 5) {
+                Toast.makeText(getActivity(), "La contraseña debe contener al menos 6 caracteres", Toast.LENGTH_SHORT).show();
                 return false;
             } else
                 return true;
@@ -118,6 +124,9 @@ public class FragIniciarSesion extends Fragment implements View.OnClickListener{
         Pattern pattern = Patterns.EMAIL_ADDRESS;
         return pattern.matcher(mail).matches();
     }
+
+
+
     private void loguearUsuario(String email, String password) {
         dialogo.setMessage("Iniciando Sesion de " + email);
 
@@ -144,8 +153,6 @@ public class FragIniciarSesion extends Fragment implements View.OnClickListener{
                                     Toast.makeText(getActivity(), "Fallo en el Ingreso", Toast.LENGTH_SHORT).show();
 
                         }
-
-                        // ...
                     }
                 });
 

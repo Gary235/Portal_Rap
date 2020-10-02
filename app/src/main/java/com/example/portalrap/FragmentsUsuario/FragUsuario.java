@@ -175,7 +175,6 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
 
 
 
-
         return v;
     }
 
@@ -278,6 +277,9 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
                         }
                     });
 
+
+
+
         }
         else {
             fotoNograb.setImageResource(R.drawable.ic_foto_nousuario);
@@ -307,6 +309,16 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
             String email = user.getEmail();
             int posArroba = email.indexOf("@");
             emailCortado = email.substring(0, posArroba);
+
+
+            String root = Environment.getExternalStorageDirectory().toString();
+            File myDir = new File(root + "/Portal Rap/Fotos");
+            String fname = "FotoDePerfil: " + user.getUid() + ".jpg";
+            File file = new File (myDir, fname);
+
+            if(file.exists())
+                descargarFotoPerfil();
+
         }
         else {
             emailCortado = "anonimo";
@@ -314,13 +326,7 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
         txtUsuario.setText(emailCortado);
 
         //fotoperfil.setImageBitmap(user.getPhotoUrl());
-        String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + "/Portal Rap/Fotos");
-        String fname = "FotoDePerfil: " + user.getUid() + ".jpg";
-        File file = new File (myDir, fname);
 
-        if(file.exists())
-            descargarFotoPerfil();
 
 
     }

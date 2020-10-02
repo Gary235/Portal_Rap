@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="145dp"
         android:id="@+id/fondo1debases"
-        android:background="@drawable/fondo_degradado_oscuro"
+        android:background="#7D6FA8"
         tools:ignore="MissingConstraints" />
 
     <ImageView
@@ -28,11 +28,10 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
 
-        android:background="@drawable/edttext_conmarcos"
-        android:backgroundTint="#fff"
+        android:background="@drawable/stroke_blanco"
         android:text="?"
         android:textSize="18dp"
-        android:textColor="#000"
+        android:textColor="#fff"
         android:gravity="center"
 
         android:layout_marginTop="15dp"

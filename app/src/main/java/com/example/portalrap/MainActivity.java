@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     Fragment FragGlobal;
     ViewPager pager;
     PagerAdapter pagerAdapter;
-    BottomNavigationView bottom;
+    public static BottomNavigationView bottom;
     public static int PosModo = -1, Frecuencia = -1, Segundos = -1 , Minutos = -1;
     FirebaseUser usuarioActual;
     private FirebaseAuth mAuth;
@@ -77,19 +77,21 @@ public class MainActivity extends AppCompatActivity {
 
     int anchoPantalla, altoPantalla;
 
-   /* @Override
+    @Override
     public void onStart() {
         super.onStart();
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser usuarioActual = mAuth.getCurrentUser();
-        if(usuarioActual != null){
+
+
+        if(usuarioActual != null    &&    getFragmentManager().getBackStackEntryCount() == 0){
             //Redirijo a donde necesite. Esto es si ya hay un usuario logueado.
             actualizarUsuario(usuarioActual);
             PasaraFragmentHome();
             Log.d("FotoPerfil", "Redirigio " );
         }
     }
-*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
         pager = findViewById(R.id.pager);
 
         bottom.setOnNavigationItemSelectedListener(listenernav);
-
         adminFragment = getFragmentManager();
         PasaraFragmentIniciarSesion();
     }
@@ -217,6 +218,7 @@ public class MainActivity extends AppCompatActivity {
     {
         pager.setVisibility(View.GONE);
         bottom.setVisibility(View.VISIBLE);
+
         FragFavoritos.UserSelection.clear();
         FragBases.UserSelection.clear();
         FragGlobal = new FragHome();
