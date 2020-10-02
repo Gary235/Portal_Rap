@@ -218,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
     {
         pager.setVisibility(View.GONE);
         bottom.setVisibility(View.VISIBLE);
-
+        bottom.setSelectedItemId(R.id.item1);
         FragFavoritos.UserSelection.clear();
         FragBases.UserSelection.clear();
         FragGlobal = new FragHome();
@@ -258,6 +258,7 @@ public class MainActivity extends AppCompatActivity {
     public void PasaraFragBases(String desdedur)
     {
         bottom.setVisibility(View.VISIBLE);
+        bottom.setSelectedItemId(R.id.item2);
         FragGlobal = new FragBases();
         Bundle args = new Bundle();
         args.putString("desdedur",desdedur);
@@ -300,6 +301,7 @@ public class MainActivity extends AppCompatActivity {
     {
         FragFavoritos.UserSelection.clear();
         FragBases.UserSelection.clear();
+        bottom.setSelectedItemId(R.id.item3);
         FragGlobal = new FragUsuario();
         transaccionFragment=adminFragment.beginTransaction();
         transaccionFragment.replace(R.id.frameLayout, FragGlobal);
