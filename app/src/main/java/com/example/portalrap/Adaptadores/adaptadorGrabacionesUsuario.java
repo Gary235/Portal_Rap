@@ -177,6 +177,7 @@ public class adaptadorGrabacionesUsuario extends BaseAdapter {
 
         return convertView;
     }
+
     private class ViewHolder {
         protected ImageButton btnFav,btnEliminar,btnCompartir;
         protected TextView Nombre;

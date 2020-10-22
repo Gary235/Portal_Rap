@@ -213,6 +213,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
         aleatorio = (int) (Math.random() * 2) + 1;
     }
+
     public void ListenersAdicionales() {
         btnGrabar.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -291,8 +292,6 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         }
 
     }
-
-
     @Override
     public void onClick(View v) {
         ImageButton botonapretado;
