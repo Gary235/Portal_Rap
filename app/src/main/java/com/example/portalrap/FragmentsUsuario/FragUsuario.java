@@ -224,7 +224,9 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
 
             if(which == -1)
             {
-                MainActivity main=(MainActivity) getActivity();
+                MainActivity main = (MainActivity) getActivity();
+                user = null;
+                main.actualizarUsuario(user);
                 mAuth.signOut();
                 main.PasaraFragmentIniciarSesion();
 
@@ -247,7 +249,7 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
                         public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
                             Grabaciones.clear();
                             lista.setAdapter(null);
-
+                            if(user != null){
                             for (DocumentSnapshot document : snapshots) {
                                 Grabacion grab = document.toObject(Grabacion.class);
                                 assert grab != null;
@@ -270,7 +272,7 @@ public class FragUsuario extends Fragment implements View.OnClickListener{
                                 fotoNograb.setVisibility(View.GONE);
                                 btnNograb.setVisibility(View.GONE);
                             }
-
+                            }
 
                             adaptador = new adaptadorGrabacionesUsuario(Grabaciones,getActivity());
                             lista.setAdapter(adaptador);

@@ -22,6 +22,7 @@ import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -38,13 +39,15 @@ public class FragCola extends Fragment{
     adaptadorDeColaSiguiente adaptador;
     int index = 0;
     private FirebaseFirestore db;
+    FirebaseUser user;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_frag_cola, container, false);
         db = FirebaseFirestore.getInstance();
-
+        MainActivity main = (MainActivity) getActivity();
+        user = main.obtenerUsuario();
 
         Setear(v);
         CargarSonando();
@@ -103,12 +106,12 @@ public class FragCola extends Fragment{
         txtTituloSonando.setText(baseSonando.getNombre());
         txtArtistaSonando.setText(baseSonando.getArtista());
 
-        if(baseSonando.getFavoritos())
+        if(baseSonando.getFavoritos() && user != null)
         {
             //desfavear
             btnFav.setImageResource(R.drawable.ic_icono_fav_blanco);
         }
-        else if(!baseSonando.getFavoritos()) {
+        else if(!baseSonando.getFavoritos() && user != null) {
             //fav
             btnFav.setImageResource(R.drawable.ic_icono_nofav_blanco);
 

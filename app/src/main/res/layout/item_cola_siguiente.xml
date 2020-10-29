@@ -41,7 +41,6 @@
         android:layout_width="25dp"
         android:layout_height="23dp"
         android:background="@drawable/btn_transparente"
-        android:src="@drawable/ic_icono_nofav_blanco"
         android:scaleType="fitCenter"
 
         app:layout_constraintLeft_toLeftOf="parent"

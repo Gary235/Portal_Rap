@@ -17,6 +17,7 @@ import com.example.portalrap.MainActivity;
 import com.example.portalrap.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class adaptadorDeColaSiguiente extends BaseAdapter {
     private Context miContexto;
     private FirebaseFirestore db;
     MainActivity main;
+    FirebaseUser user;
 
     public adaptadorDeColaSiguiente(ArrayList<Base> arrBasesSiguiente, Context miContexto) {
         this.arrBasesSiguiente = arrBasesSiguiente;
@@ -74,7 +76,7 @@ public class adaptadorDeColaSiguiente extends BaseAdapter {
             holder.Artista.setFocusable(false);
             db = FirebaseFirestore.getInstance();
             main = (MainActivity) getContext();
-
+            user = main.obtenerUsuario();
 
             convertView.setTag(holder);
         }else {
@@ -89,12 +91,12 @@ public class adaptadorDeColaSiguiente extends BaseAdapter {
         holder.btnFav.setTag(position);
 
 
-        if(arrBasesSiguiente.get(position).getFavoritos())
+        if(arrBasesSiguiente.get(position).getFavoritos() && user != null)
         {
             //desfavear
             holder.btnFav.setImageResource(R.drawable.ic_icono_fav_blanco);
         }
-        else if(!arrBasesSiguiente.get(position).getFavoritos()) {
+        else if(!arrBasesSiguiente.get(position).getFavoritos() && user != null) {
             //fav
             holder.btnFav.setImageResource(R.drawable.ic_icono_nofav_blanco);
 

@@ -87,6 +87,8 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
     int ModoElegido = MainActivity.PosModo, FrecuenciaElegida = MainActivity.Frecuencia, aleatorio, index = 0;
     FirebaseFirestore db;
+    FirebaseUser user ;
+
     Random generador = new Random();
     Boolean repetirverde = false;
 
@@ -101,6 +103,9 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         super.onAttach(context);
         db = FirebaseFirestore.getInstance();
         aleatorio = (int) (Math.random() * 2) + 1;
+
+        MainActivity main = (MainActivity) getActivity();
+        user = main.obtenerUsuario();
 
         if(ModoElegido == 1  || aleatorio == 1){
             dialog = new ProgressDialog(getActivity());
@@ -340,7 +345,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
             case R.id.favdeentrenar:
             case R.id.favdeentrenarpantallachica:
-                if (FragBases.UserSelection.get(index).getFavoritos() != null) {
+                if (FragBases.UserSelection.get(index).getFavoritos() != null && user != null ) {
                     if (FragBases.UserSelection.get(index).getFavoritos()) {
                         FragBases.UserSelection.get(index).setFavoritos(false);
                         btnFav.setImageResource(R.drawable.ic_icono_nofav_blanco);
@@ -510,9 +515,9 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
     public void SetearInfodeBase(){
         txtBase.setText(FragBases.UserSelection.get(index).getNombre());
         txtArtista.setText(FragBases.UserSelection.get(index).getArtista());
-        if (FragBases.UserSelection.get(index).getFavoritos()) {
+        if (FragBases.UserSelection.get(index).getFavoritos() && user != null) {
             btnFav.setImageResource(R.drawable.ic_icono_fav_blanco);
-        } else if (!FragBases.UserSelection.get(index).getFavoritos()) {
+        } else if (!FragBases.UserSelection.get(index).getFavoritos() && user != null) {
             btnFav.setImageResource(R.drawable.ic_icono_nofav_blanco);
         }
 
@@ -646,7 +651,6 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
 
     public void guardarGrabacion() {
         MainActivity main = (MainActivity) getActivity();
-        FirebaseUser usuario = main.obtenerUsuario();
 
         //cambiar nombre del archivo
         File currentFile = new File(localfile, name);
@@ -657,13 +661,13 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
         else
             Log.i("Tag", "Fail");
 
-        if (usuario != null) {
+        if (user != null) {
             FirebaseStorage storage = FirebaseStorage.getInstance();
             FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
             StorageReference reference = storage.getReference();
             Uri fromFile = Uri.fromFile(newFile);
-            StorageReference ref = reference.child("Grabaciones/" + usuario.getUid() + "/" + fromFile.getLastPathSegment());
+            StorageReference ref = reference.child("Grabaciones/" + user.getUid() + "/" + fromFile.getLastPathSegment());
 
             ref.putFile(fromFile)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -686,7 +690,7 @@ public class FragEntrenar extends Fragment implements View.OnClickListener {
             mapGrab.put("Favoritos", false);
             mapGrab.put("Url", input.getText().toString().trim() + ".mp3");
 
-            firestore.collection("Usuarios").document(usuario.getUid()).collection("Grabaciones").add(mapGrab);
+            firestore.collection("Usuarios").document(user.getUid()).collection("Grabaciones").add(mapGrab);
             grabacion = null;
 
         }

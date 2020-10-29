@@ -2,6 +2,7 @@ package com.example.portalrap.Adaptadores;
 
 import android.content.Context;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -161,11 +162,14 @@ public class adaptadorBases extends BaseAdapter {
             }
         });
 
-            if(arrBases.get(position).getFavoritos()) {
+            if(arrBases.get(position).getFavoritos() && user != null) {
                 holder.btnFav.setImageResource(R.drawable.ic_icono_fav_rojo);
-            } else if(!arrBases.get(position).getFavoritos()) {
+            } else if(!arrBases.get(position).getFavoritos() && user != null)  {
                 holder.btnFav.setImageResource(R.drawable.ic_icono_nofav);
+            } else if(user == null){
+
             }
+
 
 
         holder.btnFav.setOnClickListener(new View.OnClickListener() {
